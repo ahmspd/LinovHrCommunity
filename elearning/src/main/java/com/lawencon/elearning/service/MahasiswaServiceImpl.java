@@ -1,7 +1,6 @@
 package com.lawencon.elearning.service;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,7 +50,7 @@ public class MahasiswaServiceImpl extends BaseServiceImpl implements MahasiswaSe
 	}
 
 	@Override
-	public Mahasiswa findById(UUID id) throws Exception {
+	public Mahasiswa findById(String id) throws Exception {
 		return mahasiswaDao.findById(id);
 	}
 
@@ -61,7 +60,7 @@ public class MahasiswaServiceImpl extends BaseServiceImpl implements MahasiswaSe
 	}
 
 	@Override
-	public boolean deleteById(UUID id) throws Exception {
+	public boolean deleteById(String id) throws Exception {
 		try {
 			begin();
 			boolean isDeleted = mahasiswaDao.deleteById(id);

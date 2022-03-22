@@ -1,7 +1,6 @@
 package com.lawencon.elearning.dao;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.stereotype.Repository;
 
@@ -17,7 +16,7 @@ public class MahasiswaDaoImpl extends BaseDaoImpl<Mahasiswa> implements Mahasisw
 	}
 
 	@Override
-	public Mahasiswa findById(UUID id) throws Exception {
+	public Mahasiswa findById(String id) throws Exception {
 		return getById(id);
 	}
 
@@ -27,7 +26,7 @@ public class MahasiswaDaoImpl extends BaseDaoImpl<Mahasiswa> implements Mahasisw
 	}
 
 	@Override
-	public boolean deleteById(UUID id) throws Exception {
+	public boolean deleteById(String id) throws Exception {
 		return super.deleteById(id);
 	}
 

@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.UUID;
-
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -26,15 +24,17 @@ public class MahasiswaDaoTest {
 	@Autowired
 	private MahasiswaDao mhsDao;
 
-	private UUID idInserted = null;
+	private String idInserted = null;
 
 	@Test
 	@Order(1)
 	public void insert() throws Exception {
 		ConnHandler.begin();
+		
 		Mahasiswa mhs = new Mahasiswa();
 		mhs.setNama("John");
 		mhsDao.save(mhs);
+		
 		ConnHandler.commit();
 
 		idInserted = mhs.getId();

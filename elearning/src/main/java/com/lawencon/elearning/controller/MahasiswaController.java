@@ -1,7 +1,5 @@
 package com.lawencon.elearning.controller;
 
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +22,7 @@ public class MahasiswaController {
 	private MahasiswaService mahasiswaService;
 
 	@GetMapping("{id}")
-	public ResponseEntity<?> getMhs(@PathVariable("id") UUID id) throws Exception {
+	public ResponseEntity<?> getMhs(@PathVariable("id") String id) throws Exception {
 		Mahasiswa mhs = mahasiswaService.findById(id);
 		return new ResponseEntity<>(mhs, HttpStatus.OK);
 
