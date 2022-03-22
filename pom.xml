@@ -27,6 +27,7 @@
 		<module>core</module>
 		<module>elearning</module>
 		<module>l-community</module>
+		<module>LinovHrCommunity</module>
 	</modules>
 
 	<build>
