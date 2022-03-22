@@ -2,7 +2,6 @@ package com.lawencon.base;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -12,23 +11,26 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Version;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
 	public static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "id")
-	@GeneratedValue(generator = "uuid")
-	private UUID id;
+	@Column(length = 36)
+	@GeneratedValue(generator = "uuid2")
+	@GenericGenerator(name = "uuid2", strategy = "uuid2")
+	private String id;
 
 	@Column(name = "created_by")
-	private UUID createdBy;
+	private String createdBy;
 
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
 
 	@Column(name = "updated_by")
-	private UUID updatedBy;
+	private String updatedBy;
 
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
@@ -69,19 +71,19 @@ public abstract class BaseEntity implements Serializable {
 		this.version = version;
 	}
 
-	public UUID getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(UUID id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public UUID getCreatedBy() {
+	public String getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(UUID createdBy) {
+	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -93,11 +95,11 @@ public abstract class BaseEntity implements Serializable {
 		this.createdAt = createdAt;
 	}
 
-	public UUID getUpdatedBy() {
+	public String getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(UUID updatedBy) {
+	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 
