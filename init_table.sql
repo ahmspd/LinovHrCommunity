@@ -133,6 +133,7 @@ create table t_user(
 	"password" varchar(255) NOT NULL,
 	id_role uuid NOT NULL,
 	registration_code varchar(10) NOT NULL,
+	is_member boolean default false,
 	created_by uuid,
 	created_at timestamp without time zone,
 	updated_by uuid,
@@ -213,7 +214,6 @@ alter table t_profile add constraint profile_city_fk foreign key(id_city) refere
 create table t_user_member(
 	id uuid DEFAULT uuid_generate_v4 (),
 	id_price_list uuid NOT NULL,
-	is_member boolean default false,
 	date_end timestamp,
 	created_by uuid,
 	created_at timestamp without time zone,
