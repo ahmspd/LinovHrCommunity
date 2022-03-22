@@ -64,11 +64,11 @@ alter table t_thread_type add constraint thread_type_bk unique(code);
 alter table t_thread_type add constraint thread_type_ck unique(id, code);
 
 --berisi tipe dari event
---ex. event / course
+--ex. event_course / course
 create table t_event_course_type(
 	id varchar(36) DEFAULT uuid_generate_v4 (),
 	code varchar(10) NOT NULL,
-	event_type_name varchar(30) NOT NULL,
+	event_course_type_name varchar(30) NOT NULL,
 	created_by varchar(36),
 	created_at timestamp without time zone,
 	updated_by varchar(36),
@@ -76,9 +76,9 @@ create table t_event_course_type(
 	"version" int,
 	is_active boolean default true
 );
-alter table t_event_course_type add constraint event_type_pk primary key(id);
-alter table t_event_course_type add constraint event_type_bk unique(code);
-alter table t_event_course_type add constraint event_type_ck unique(id, code);
+alter table t_event_course_type add constraint event_course_type_pk primary key(id);
+alter table t_event_course_type add constraint event_course_type_bk unique(code);
+alter table t_event_course_type add constraint event_course_type_ck unique(id, code);
 
 create table t_file(
 	id varchar(36) DEFAULT uuid_generate_v4 (),
@@ -331,9 +331,9 @@ alter table t_like add constraint t_like_thread_fk foreign key(id_thread) refere
 
 create table t_event_course(
 	id varchar(36) DEFAULT uuid_generate_v4 (),
-	id_event_type varchar(36)NOT NULL,
+	id_event_course_type varchar(36)NOT NULL,
 	title varchar(35) NOT NULL,
-	event_location varchar(50) NOT NULL,
+	event_course_location varchar(50) NOT NULL,
 	price int NOT NULL,
 	date_start timestamp NOT NULL,
 	date_end timestamp NOT NULL,
@@ -347,13 +347,13 @@ create table t_event_course(
 	"version" int,
 	is_active boolean default true
 );
-alter table t_event_course add constraint event_pk primary key(id);
-alter table t_event_course add constraint event_type_fk foreign key(id_event_type) references t_event_course_type(id);
+alter table t_event_course add constraint event_course_pk primary key(id);
+alter table t_event_course add constraint event_course_type_fk foreign key(id_event_course_type) references t_event_course_type(id);
 alter table t_event_course add constraint id_file_fk foreign key(id_file)  references t_file(id) ;
 
 create table t_event_course_payment(
 	id varchar(36) DEFAULT uuid_generate_v4 (),
---	id_event varchar(36),
+--	id_event_course varchar(36),
 	id_payment_method varchar(36),
 	is_accept boolean default false,
 	id_file varchar(36),
@@ -366,16 +366,16 @@ create table t_event_course_payment(
 	"version" int,
 	is_active boolean default true
 );
-alter table t_event_course_payment add constraint event_payment_pk primary key(id);
+alter table t_event_course_payment add constraint event_course_payment_pk primary key(id);
 --alter table t_event_course_payment add constraint event_payment_event_course_fk foreign key(id_event) references t_event_course(id);
-alter table t_event_course_payment add constraint event_payment_fk foreign key(id_payment_method) references t_payment_method(id);
-alter table t_event_course_payment add constraint event_payment_file_fk foreign key(id_file) references t_file(id);
-alter table t_event_course_payment add constraint event_payment_price_fk foreign key(id_price_list) references t_price_list(id);
+alter table t_event_course_payment add constraint event_course_payment_fk foreign key(id_payment_method) references t_payment_method(id);
+alter table t_event_course_payment add constraint event_course_payment_file_fk foreign key(id_file) references t_file(id);
+alter table t_event_course_payment add constraint event_course_payment_price_fk foreign key(id_price_list) references t_price_list(id);
 
 create table t_event_course_payment_detail(
 	id varchar(36) DEFAULT uuid_generate_v4 (),
-	id_event varchar(36)NOT NULL,
-	id_event_payment varchar(36)NOT NULL,
+	id_event_course varchar(36)NOT NULL,
+	id_event_course_payment varchar(36)NOT NULL,
 	created_by varchar(36),
 	created_at timestamp without time zone,
 	updated_by varchar(36),
@@ -383,13 +383,13 @@ create table t_event_course_payment_detail(
 	"version" int,
 	is_active boolean default true
 );
-alter table t_event_course_payment_detail add constraint event_payment_detail_pk primary key(id);
-alter table t_event_course_payment_detail add constraint event_payment_detail_id_fk foreign key(id_event) references t_event_course(id);
-alter table t_event_course_payment_detail add constraint event_payment_fk foreign key(id_event_payment) references t_event_course_payment(id);
+alter table t_event_course_payment_detail add constraint event_course_payment_detail_pk primary key(id);
+alter table t_event_course_payment_detail add constraint event_course_payment_detail_id_fk foreign key(id_event_course) references t_event_course(id);
+alter table t_event_course_payment_detail add constraint event_course_payment_fk foreign key(id_event_course_payment) references t_event_course_payment(id);
 
 create table t_order(
 	id varchar(36) DEFAULT uuid_generate_v4 (),
---	id_event varchar(36),
+--	id_event_course varchar(36),
 	id_user varchar(36)NOT NULL,
 	is_accept boolean default false,
 	id_file varchar(36),
@@ -410,7 +410,7 @@ alter table t_order add constraint t_order_payment foreign key(id_payment_method
 
 create table t_order_detail(
 	id varchar(36) DEFAULT uuid_generate_v4 (),
-	id_event varchar(36)NOT NULL,
+	id_event_course varchar(36)NOT NULL,
 	id_order varchar(36)NOT NULL,
 	id_user_member varchar(36)NOT NULL,
 	created_by varchar(36),
@@ -421,7 +421,7 @@ create table t_order_detail(
 	is_active boolean default true
 );
 alter table t_order_detail add constraint order_detail_pk primary key(id);
-alter table t_order_detail add constraint order_detail_event_fk foreign key(id_event) references t_event_course(id);
+alter table t_order_detail add constraint order_detail_event_course_fk foreign key(id_event_course) references t_event_course(id);
 alter table t_order_detail add constraint order_detail_order_fk foreign key(id_order) references t_order(id);
 alter table t_order_detail add constraint order_detail_user_member_fk foreign key(id_user_member) references t_user_member(id);
-alter table t_order_detail add constraint order_detail_ck unique(id, id_event);
+alter table t_order_detail add constraint order_detail_ck unique(id, id_event_course);
