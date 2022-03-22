@@ -7,15 +7,16 @@ import javax.persistence.Table;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(name = "t_role")
-public class Role extends BaseEntity {
+@Table(name = "t_event_course_type")
+public class EventCourseType extends BaseEntity {
+
 	private static final long serialVersionUID = -5196455701225322056L;
-	
-	@Column(name = "code", length = 10)
+
+	@Column(name = "code", length = 10, nullable = true)
 	private String code;
 
-	@Column(name = "role_name", length = 30)
-	private String name;
+	@Column(name = "event_type_name", length = 30, nullable = true)
+	private String eventTypeName;
 
 	public String getCode() {
 		return code;
@@ -25,11 +26,12 @@ public class Role extends BaseEntity {
 		this.code = code;
 	}
 
-	public String getName() {
-		return name;
+	public String getEventTypeName() {
+		return eventTypeName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setEventTypeName(String eventTypeName) {
+		this.eventTypeName = eventTypeName;
 	}
+
 }
