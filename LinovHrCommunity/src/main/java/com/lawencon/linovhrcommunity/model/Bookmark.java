@@ -14,7 +14,7 @@ public class Bookmark extends BaseEntity {
 	private static final long serialVersionUID = -5196455701225322056L;
 
 	@ManyToOne
-	@JoinColumn(name = "id_thread", nullable = true, unique = true)
+	@JoinColumn(name = "id_thread", nullable = false, unique = true)
 	private ThreadModel thread;
 
 	public ThreadModel getThread() {

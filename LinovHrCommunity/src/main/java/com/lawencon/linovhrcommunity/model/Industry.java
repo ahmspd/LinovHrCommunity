@@ -18,10 +18,10 @@ public class Industry extends BaseEntity {
 
 	private static final long serialVersionUID = -5196455701225322056L;
 
-	@Column(name = "code", nullable = true, unique = true)
+	@Column(name = "code", nullable = false, unique = true)
 	private String code;
 
-	@Column(name = "industry_name", nullable = true, length = 30)
+	@Column(name = "industry_name", nullable = false, length = 30)
 	private String industryName;
 
 	public String getCode() {

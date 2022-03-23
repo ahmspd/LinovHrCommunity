@@ -1,25 +1,22 @@
-package com.lawencon.linovhrcommunity.model;
+package com.lawencon.linovhrcommunity.dto.pricelist;
 
 import java.math.BigInteger;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-import com.lawencon.base.BaseEntity;
+public class InsertPriceListDtoReq {
 
-@Entity
-@Table(name = "t_price_list")
-public class PriceList extends BaseEntity {
-	private static final long serialVersionUID = -9034083546988015483L;
-
-	@Column(nullable = false)
+	@NotEmpty(message = "Code Is Empty")
+	@Size(max = 10, min = 5, message = "Code Out Of Range")
 	private String code;
 
-	@Column(name = "price_name", nullable = false)
+	@NotEmpty(message = "Price Name Is Empty")
+	@Size(max = 30, min = 5, message = "Price Name Out Of Range")
 	private String priceName;
 
-	@Column(nullable = false)
+	@NotNull(message = "Price Is Null")
 	private BigInteger price;
 
 	public String getCode() {

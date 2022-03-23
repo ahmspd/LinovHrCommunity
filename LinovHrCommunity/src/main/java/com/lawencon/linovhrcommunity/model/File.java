@@ -12,10 +12,10 @@ public class File extends BaseEntity {
 
 	private static final long serialVersionUID = -5196455701225322056L;
 
-	@Column(nullable = true, length = 10)
+	@Column(name = "extensions", nullable = false, length = 10)
 	private String extensions;
 
-	@Column(name = "contents", nullable = true)
+	@Column(name = "contents", nullable = false)
 	private byte[] contents;
 
 	public String getExtensions() {

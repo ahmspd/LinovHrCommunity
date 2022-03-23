@@ -2,9 +2,12 @@ package com.lawencon.linovhrcommunity.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.lawencon.base.BaseDaoImpl;
 import com.lawencon.linovhrcommunity.model.File;
 
+@Repository
 public class FileDao extends BaseDaoImpl<File> {
 
 	public File save(File data) throws Exception {

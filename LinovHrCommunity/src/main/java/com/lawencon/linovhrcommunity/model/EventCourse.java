@@ -1,5 +1,6 @@
 package com.lawencon.linovhrcommunity.model;
 
+import java.math.BigInteger;
 import java.sql.Time;
 import java.util.Date;
 
@@ -18,25 +19,25 @@ public class EventCourse extends BaseEntity {
 	private static final long serialVersionUID = -5196455701225322056L;
 
 	@ManyToOne
-	@JoinColumn(name = "id_event_course_type", nullable = true)
+	@JoinColumn(name = "id_event_course_type", nullable = false)
 	private EventCourseType eventCourseType;
 
 	@Column(name = "title", length = 35)
 	private String title;
 
-	@Column(name = "event_course_location", length = 50, nullable = true)
+	@Column(name = "event_course_location", length = 50, nullable = false)
 	private String eventCourseLocation;
 
-	@Column(name = "price", nullable = true)
-	private Integer price;
+	@Column(name = "price", nullable = false)
+	private BigInteger price;
 
-	@Column(name = "date_start", nullable = true)
+	@Column(name = "date_start", nullable = false)
 	private Date dateStart;
 
-	@Column(name = "date_end", nullable = true)
+	@Column(name = "date_end", nullable = false)
 	private Date dateEnd;
 
-	@Column(name = "time_start", nullable = true)
+	@Column(name = "time_start", nullable = false)
 	private Time timeStart;
 
 	@Column(name = "time_end", nullable = true)
@@ -70,11 +71,11 @@ public class EventCourse extends BaseEntity {
 		this.eventCourseLocation = eventCourseLocation;
 	}
 
-	public Integer getPrice() {
+	public BigInteger getPrice() {
 		return price;
 	}
 
-	public void setPrice(Integer price) {
+	public void setPrice(BigInteger price) {
 		this.price = price;
 	}
 

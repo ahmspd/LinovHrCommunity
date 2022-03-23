@@ -2,9 +2,12 @@ package com.lawencon.linovhrcommunity.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.lawencon.base.BaseDaoImpl;
 import com.lawencon.linovhrcommunity.model.Industry;
 
+@Repository
 public class IndustryDao extends BaseDaoImpl<Industry> {
 
 	public Industry save(Industry data) throws Exception {

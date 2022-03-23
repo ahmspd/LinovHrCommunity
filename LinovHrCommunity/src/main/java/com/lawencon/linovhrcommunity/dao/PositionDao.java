@@ -2,9 +2,12 @@ package com.lawencon.linovhrcommunity.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.lawencon.base.BaseDaoImpl;
 import com.lawencon.linovhrcommunity.model.Position;
 
+@Repository
 public class PositionDao extends BaseDaoImpl<Position> {
 
 	public Position save(Position data) throws Exception {

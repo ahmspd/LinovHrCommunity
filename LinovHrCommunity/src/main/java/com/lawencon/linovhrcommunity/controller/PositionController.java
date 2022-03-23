@@ -1,0 +1,67 @@
+package com.lawencon.linovhrcommunity.controller;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.lawencon.linovhrcommunity.dto.position.DeleteByIdPositionDtoRes;
+import com.lawencon.linovhrcommunity.dto.position.GetAllPositionDtoRes;
+import com.lawencon.linovhrcommunity.dto.position.GetByIdPositionDtoRes;
+import com.lawencon.linovhrcommunity.dto.position.InsertPositionDtoReq;
+import com.lawencon.linovhrcommunity.dto.position.InsertPositionDtoRes;
+import com.lawencon.linovhrcommunity.dto.position.UpdatePositionDtoReq;
+import com.lawencon.linovhrcommunity.dto.position.UpdatePositionDtoRes;
+import com.lawencon.linovhrcommunity.service.PositionService;
+
+@RestController
+@RequestMapping("positions")
+public class PositionController {
+	
+	private PositionService positionService;
+
+	@Autowired
+	public void setPositionService(PositionService positionService) {
+		this.positionService = positionService;
+	}
+	
+	@PostMapping
+	public ResponseEntity<InsertPositionDtoRes> insert(@RequestBody @Valid InsertPositionDtoReq dataReq) throws Exception {
+		InsertPositionDtoRes dataRes = positionService.insert(dataReq);
+		return new ResponseEntity<InsertPositionDtoRes>(dataRes, HttpStatus.CREATED);
+	}
+	
+	@GetMapping
+	public ResponseEntity<GetAllPositionDtoRes> getAll() throws Exception {
+		GetAllPositionDtoRes res = positionService.findAll();
+		
+		return new ResponseEntity<GetAllPositionDtoRes>(res, HttpStatus.OK);
+	}
+	
+	@GetMapping("{id}")
+	public ResponseEntity<GetByIdPositionDtoRes> getById(@PathVariable("id") String id) throws Exception {
+		GetByIdPositionDtoRes dataRes = positionService.findById(id);
+		return new ResponseEntity<GetByIdPositionDtoRes>(dataRes, HttpStatus.OK);
+	}
+	
+	@PutMapping
+	public ResponseEntity<UpdatePositionDtoRes> update(@RequestBody @Valid UpdatePositionDtoReq dataReq) throws Exception {
+		UpdatePositionDtoRes dataRes = positionService.update(dataReq);
+		return new ResponseEntity<UpdatePositionDtoRes>(dataRes, HttpStatus.OK);
+	}
+	
+	@DeleteMapping("{id}")
+	public ResponseEntity<DeleteByIdPositionDtoRes> deleteById(@PathVariable("id") String id) throws Exception {
+		DeleteByIdPositionDtoRes dataRes = positionService.deleteById(id);
+		return new ResponseEntity<DeleteByIdPositionDtoRes>(dataRes, HttpStatus.OK);
+	}
+}

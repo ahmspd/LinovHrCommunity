@@ -12,10 +12,10 @@ public class EventCourseType extends BaseEntity {
 
 	private static final long serialVersionUID = -5196455701225322056L;
 
-	@Column(name = "code", length = 10, nullable = true)
+	@Column(name = "code", length = 10, nullable = false)
 	private String code;
 
-	@Column(name = "event_type_name", length = 30, nullable = true)
+	@Column(name = "event_type_name", length = 30, nullable = false)
 	private String eventTypeName;
 
 	public String getCode() {

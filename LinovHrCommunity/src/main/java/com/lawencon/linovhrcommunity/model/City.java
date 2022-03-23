@@ -2,8 +2,6 @@ package com.lawencon.linovhrcommunity.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.lawencon.base.BaseEntity;
@@ -14,14 +12,14 @@ public class City extends BaseEntity {
 
 	private static final long serialVersionUID = -5196455701225322056L;
 
-	@Column(name = "code", length = 7, unique = true, nullable = true)
+	@Column(name = "code", length = 7, unique = true, nullable = false)
 	private String code;
 
-	@Column(name = "city_name", length = 100, nullable = true)
+	@Column(name = "city_name", length = 100, nullable = false)
 	private String cityName;
 
 //	@ManyToOne
-	@Column(name = "code_province", nullable = true)
+	@Column(name = "code_province", nullable = false)
 	private String codeProvince;
 
 	public String getCode() {

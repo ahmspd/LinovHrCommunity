@@ -26,7 +26,7 @@ public class EventCoursePayment extends BaseEntity {
 	private File file;
 
 	@ManyToOne
-	@JoinColumn(name = "id_price_list", nullable = true)
+	@JoinColumn(name = "id_price_list", nullable = false)
 	private PriceList priceList;
 
 	@Column(name = "invoice", length = 30)

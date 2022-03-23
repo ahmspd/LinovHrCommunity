@@ -14,10 +14,10 @@ public class EventCoursePaymentDetail extends BaseEntity {
 	private static final long serialVersionUID = -5196455701225322056L;
 
 	@ManyToOne
-	@JoinColumn(name = "id_event_course", nullable = true)
+	@JoinColumn(name = "id_event_course", nullable = false)
 	private EventCourse eventCourse;
 	
-	@JoinColumn(name = "id_event_course_payment", nullable = true)
+	@JoinColumn(name = "id_event_course_payment", nullable = false)
 	private EventCoursePayment eventCoursePayment;
 
 	public EventCourse getEventCourse() {
