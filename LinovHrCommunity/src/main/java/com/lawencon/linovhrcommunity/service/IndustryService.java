@@ -76,7 +76,7 @@ public class IndustryService extends BaseServiceLinovCommunityImpl {
 
 			UpdateIndustryDtoRes dataRes = new UpdateIndustryDtoRes();
 			dataRes.setData(data);
-			dataRes.setMessage("Update Success");
+			dataRes.setMessage(stringBuilder("Update ", industryUpdated.getCode(), " Success !"));
 			return dataRes;
 		} catch (Exception e) {
 			e.printStackTrace();

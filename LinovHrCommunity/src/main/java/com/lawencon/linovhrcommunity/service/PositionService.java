@@ -48,7 +48,7 @@ public class PositionService extends BaseServiceLinovCommunityImpl {
 
 			InsertPositionDtoRes dataRes = new InsertPositionDtoRes();
 			dataRes.setData(data);
-			dataRes.setMessage("Insert Success");
+			dataRes.setMessage(stringBuilder("Insert ", positionAdded.getCode(), " Success !"));
 			return dataRes;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -75,7 +75,7 @@ public class PositionService extends BaseServiceLinovCommunityImpl {
 
 			UpdatePositionDtoRes dataRes = new UpdatePositionDtoRes();
 			dataRes.setData(data);
-			dataRes.setMessage("Update Success");
+			dataRes.setMessage(stringBuilder("Update ", positionUpdated.getCode(), " Success !"));
 			return dataRes;
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -49,7 +49,7 @@ public class PriceListService extends BaseServiceLinovCommunityImpl {
 
 			InsertPriceListDtoRes dataRes = new InsertPriceListDtoRes();
 			dataRes.setData(data);
-			dataRes.setMessage("Insert Success");
+			dataRes.setMessage(stringBuilder("Insert ", priceListAdded.getCode(), " Success !"));
 			return dataRes;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -81,7 +81,7 @@ public class PriceListService extends BaseServiceLinovCommunityImpl {
 
 		UpdatePriceListDtoRes dataRes = new UpdatePriceListDtoRes();
 		dataRes.setData(data);
-		dataRes.setMessage("Update Success");
+		dataRes.setMessage(stringBuilder("Update ", priceListUpdated.getCode(), " Success !"));
 		return dataRes;
 	}
 
