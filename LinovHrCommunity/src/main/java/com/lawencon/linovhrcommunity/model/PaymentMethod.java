@@ -11,10 +11,10 @@ import com.lawencon.base.BaseEntity;
 public class PaymentMethod extends BaseEntity {
 	private static final long serialVersionUID = -5196455701225322056L;
 
-	@Column(nullable = false)
+	@Column(length = 10, nullable = false)
 	private String code;
 
-	@Column(name = "payment_name", nullable = false)
+	@Column(name = "payment_name", length = 30, nullable = false)
 	private String paymentName;
 
 	public String getCode() {

@@ -17,7 +17,7 @@ public class PollingDetail extends BaseEntity {
 	@JoinColumn(name = "id_polling", nullable = false)
 	private Polling polling;
 
-	@Column(name = "polling_name")
+	@Column(name = "polling_name", length = 50)
 	private String pollingName;
 
 	public Polling getPolling() {

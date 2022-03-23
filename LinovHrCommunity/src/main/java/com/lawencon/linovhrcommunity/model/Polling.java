@@ -17,7 +17,7 @@ public class Polling extends BaseEntity {
 	@JoinColumn(name = "id_thread", nullable = false)
 	private ThreadModel threadModel;
 
-	@Column(name = "polling_name", nullable = false)
+	@Column(name = "polling_name", length = 50, nullable = false)
 	private String pollingName;
 
 	public ThreadModel getThreadModel() {

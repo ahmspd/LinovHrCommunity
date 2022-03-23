@@ -17,10 +17,10 @@ import com.lawencon.base.BaseEntity;
 public class Position extends BaseEntity {
 	private static final long serialVersionUID = -9034083546988015483L;
 
-	@Column(nullable = false)
+	@Column(length = 10, nullable = false)
 	private String code;
 
-	@Column(name = "position_name", nullable = false)
+	@Column(name = "position_name", length = 30, nullable = false)
 	private String positionName;
 
 	public String getCode() {

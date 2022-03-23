@@ -2,9 +2,12 @@ package com.lawencon.linovhrcommunity.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.lawencon.base.BaseDaoImpl;
 import com.lawencon.linovhrcommunity.model.Role;
 
+@Repository
 public class RoleDao extends BaseDaoImpl<Role> {
 
 	public Role save(Role data) throws Exception {

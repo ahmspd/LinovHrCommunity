@@ -5,20 +5,20 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.lawencon.base.BaseDaoImpl;
-import com.lawencon.linovhrcommunity.model.ThreadType;
+import com.lawencon.linovhrcommunity.model.EventCourseType;
 
 @Repository
-public class ThreadTypeDao extends BaseDaoImpl<ThreadType> {
+public class EventCourseTypeDao extends BaseDaoImpl<EventCourseType> {
 
-	public ThreadType save(ThreadType data) throws Exception {
+	public EventCourseType save(EventCourseType data) throws Exception {
 		return super.save(data);
 	}
 
-	public ThreadType findById(String id) throws Exception {
+	public EventCourseType findById(String id) throws Exception {
 		return getById(id);
 	}
 
-	public List<ThreadType> findAll() throws Exception {
+	public List<EventCourseType> findAll() throws Exception {
 		return getAll();
 	}
 

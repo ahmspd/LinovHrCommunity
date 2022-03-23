@@ -28,6 +28,7 @@ public class Order extends BaseEntity {
 	@JoinColumn(name = "id_payment_method")
 	private PaymentMethod idPaymentMethod;
 
+	@Column(length = 30)
 	private String invoice;
 
 	public User getIdUser() {

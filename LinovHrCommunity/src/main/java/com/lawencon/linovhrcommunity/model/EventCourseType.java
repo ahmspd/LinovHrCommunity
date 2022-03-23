@@ -15,7 +15,7 @@ public class EventCourseType extends BaseEntity {
 	@Column(name = "code", length = 10, nullable = false)
 	private String code;
 
-	@Column(name = "event_type_name", length = 30, nullable = false)
+	@Column(name = "event_course_type_name", length = 30, nullable = false)
 	private String eventTypeName;
 
 	public String getCode() {
