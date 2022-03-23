@@ -2,14 +2,28 @@ package com.lawencon.linovhrcommunity.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
+import com.lawencon.base.BaseDaoImpl;
 import com.lawencon.linovhrcommunity.model.Bookmark;
 
-public interface BookmarkDao {
-	Bookmark save(Bookmark data) throws Exception;
+@Repository
+public class BookmarkDao extends BaseDaoImpl<Bookmark>{
 
-	Bookmark findById(String id) throws Exception;
+	public Bookmark save(Bookmark data) throws Exception {
+		return super.save(data);
+	}
 
-	List<Bookmark> findAll() throws Exception;
+	public Bookmark findById(String id) throws Exception {
+		return getById(id);
+	}
 
-	boolean deleteById(String id) throws Exception;
+	public List<Bookmark> findAll() throws Exception {
+		return getAll();
+	}
+
+	public boolean deleteById(String id) throws Exception {
+		return super.deleteById(id);
+	}
 }
+

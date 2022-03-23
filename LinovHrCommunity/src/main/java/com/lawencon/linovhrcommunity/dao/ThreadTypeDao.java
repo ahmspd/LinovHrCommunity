@@ -2,14 +2,25 @@ package com.lawencon.linovhrcommunity.dao;
 
 import java.util.List;
 
+import com.lawencon.base.BaseDaoImpl;
 import com.lawencon.linovhrcommunity.model.ThreadType;
 
-public interface ThreadTypeDao {
-	ThreadType save(ThreadType data) throws Exception;
+public class ThreadTypeDao extends BaseDaoImpl<ThreadType> {
 
-	ThreadType findById(String id) throws Exception;
+	public ThreadType save(ThreadType data) throws Exception {
+		return super.save(data);
+	}
 
-	List<ThreadType> findAll() throws Exception;
+	public ThreadType findById(String id) throws Exception {
+		return getById(id);
+	}
 
-	boolean deleteById(String id) throws Exception;
+	public List<ThreadType> findAll() throws Exception {
+		return getAll();
+	}
+
+	public boolean deleteById(String id) throws Exception {
+		return super.deleteById(id);
+	}
+
 }

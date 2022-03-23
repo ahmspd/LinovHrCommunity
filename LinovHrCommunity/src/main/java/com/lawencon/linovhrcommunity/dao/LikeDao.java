@@ -2,14 +2,25 @@ package com.lawencon.linovhrcommunity.dao;
 
 import java.util.List;
 
+import com.lawencon.base.BaseDaoImpl;
 import com.lawencon.linovhrcommunity.model.Like;
 
-public interface LikeDao {
-	Like save(Like data) throws Exception;
+public class LikeDao extends BaseDaoImpl<Like> {
 
-	Like findById(String id) throws Exception;
+	public Like save(Like data) throws Exception {
+		return super.save(data);
+	}
 
-	List<Like> findAll() throws Exception;
+	public Like findById(String id) throws Exception {
+		return getById(id);
+	}
 
-	boolean deleteById(String id) throws Exception;
+	public List<Like> findAll() throws Exception {
+		return getAll();
+	}
+
+	public boolean deleteById(String id) throws Exception {
+		return super.deleteById(id);
+	}
+
 }

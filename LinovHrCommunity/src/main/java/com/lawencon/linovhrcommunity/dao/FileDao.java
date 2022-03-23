@@ -2,14 +2,25 @@ package com.lawencon.linovhrcommunity.dao;
 
 import java.util.List;
 
+import com.lawencon.base.BaseDaoImpl;
 import com.lawencon.linovhrcommunity.model.File;
 
-public interface FileDao {
-	File save(File data) throws Exception;
+public class FileDao extends BaseDaoImpl<File> {
 
-	File findById(String id) throws Exception;
+	public File save(File data) throws Exception {
+		return super.save(data);
+	}
 
-	List<File> findAll() throws Exception;
+	public File findById(String id) throws Exception {
+		return getById(id);
+	}
 
-	boolean deleteById(String id) throws Exception;
+	public List<File> findAll() throws Exception {
+		return getAll();
+	}
+
+	public boolean deleteById(String id) throws Exception {
+		return super.deleteById(id);
+	}
+
 }

@@ -2,14 +2,25 @@ package com.lawencon.linovhrcommunity.dao;
 
 import java.util.List;
 
+import com.lawencon.base.BaseDaoImpl;
 import com.lawencon.linovhrcommunity.model.PollingDetailVote;
 
-public interface PollingDetailVoteDao {
-	PollingDetailVote save(PollingDetailVote data) throws Exception;
+public class PollingDetailVoteDao extends BaseDaoImpl<PollingDetailVote> {
 
-	PollingDetailVote findById(String id) throws Exception;
+	public PollingDetailVote save(PollingDetailVote data) throws Exception {
+		return super.save(data);
+	}
 
-	List<PollingDetailVote> findAll() throws Exception;
+	public PollingDetailVote findById(String id) throws Exception {
+		return getById(id);
+	}
 
-	boolean deleteById(String id) throws Exception;
+	public List<PollingDetailVote> findAll() throws Exception {
+		return getAll();
+	}
+
+	public boolean deleteById(String id) throws Exception {
+		return super.deleteById(id);
+	}
+
 }

@@ -2,14 +2,25 @@ package com.lawencon.linovhrcommunity.dao;
 
 import java.util.List;
 
+import com.lawencon.base.BaseDaoImpl;
 import com.lawencon.linovhrcommunity.model.EventCourse;
 
-public interface EventCourseDao {
-	EventCourse save(EventCourse data) throws Exception;
+public class EventCourseDao extends BaseDaoImpl<EventCourse> {
 
-	EventCourse findById(String id) throws Exception;
+	public EventCourse save(EventCourse data) throws Exception {
+		return super.save(data);
+	}
 
-	List<EventCourse> findAll() throws Exception;
+	public EventCourse findById(String id) throws Exception {
+		return getById(id);
+	}
 
-	boolean deleteById(String id) throws Exception;
+	public List<EventCourse> findAll() throws Exception {
+		return getAll();
+	}
+
+	public boolean deleteById(String id) throws Exception {
+		return super.deleteById(id);
+	}
+
 }

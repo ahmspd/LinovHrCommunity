@@ -2,14 +2,25 @@ package com.lawencon.linovhrcommunity.dao;
 
 import java.util.List;
 
+import com.lawencon.base.BaseDaoImpl;
 import com.lawencon.linovhrcommunity.model.Order;
 
-public interface OrderDao {
-	Order save(Order data) throws Exception;
+public class OrderDao extends BaseDaoImpl<Order> {
 
-	Order findById(String id) throws Exception;
+	public Order save(Order data) throws Exception {
+		return super.save(data);
+	}
 
-	List<Order> findAll() throws Exception;
+	public Order findById(String id) throws Exception {
+		return getById(id);
+	}
 
-	boolean deleteById(String id) throws Exception;
+	public List<Order> findAll() throws Exception {
+		return getAll();
+	}
+
+	public boolean deleteById(String id) throws Exception {
+		return super.deleteById(id);
+	}
+
 }

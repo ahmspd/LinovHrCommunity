@@ -2,14 +2,25 @@ package com.lawencon.linovhrcommunity.dao;
 
 import java.util.List;
 
+import com.lawencon.base.BaseDaoImpl;
 import com.lawencon.linovhrcommunity.model.Province;
 
-public interface ProvinceDao {
-	Province save(Province data) throws Exception;
+public class ProvinceDao extends BaseDaoImpl<Province> {
 
-	Province findById(String id) throws Exception;
+	public Province save(Province data) throws Exception {
+		return super.save(data);
+	}
 
-	List<Province> findAll() throws Exception;
+	public Province findById(String id) throws Exception {
+		return getById(id);
+	}
 
-	boolean deleteById(String id) throws Exception;
+	public List<Province> findAll() throws Exception {
+		return getAll();
+	}
+
+	public boolean deleteById(String id) throws Exception {
+		return super.deleteById(id);
+	}
+
 }

@@ -2,14 +2,25 @@ package com.lawencon.linovhrcommunity.dao;
 
 import java.util.List;
 
+import com.lawencon.base.BaseDaoImpl;
 import com.lawencon.linovhrcommunity.model.Industry;
 
-public interface IndustryDao {
-	Industry save(Industry data) throws Exception;
+public class IndustryDao extends BaseDaoImpl<Industry> {
 
-	Industry findById(String id) throws Exception;
+	public Industry save(Industry data) throws Exception {
+		return super.save(data);
+	}
 
-	List<Industry> findAll() throws Exception;
+	public Industry findById(String id) throws Exception {
+		return getById(id);
+	}
 
-	boolean deleteById(String id) throws Exception;
+	public List<Industry> findAll() throws Exception {
+		return getAll();
+	}
+
+	public boolean deleteById(String id) throws Exception {
+		return super.deleteById(id);
+	}
+
 }
