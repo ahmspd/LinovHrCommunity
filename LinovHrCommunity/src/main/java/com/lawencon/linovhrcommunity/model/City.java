@@ -20,8 +20,8 @@ public class City extends BaseEntity {
 	@Column(name = "city_name", length = 100, nullable = true)
 	private String cityName;
 
-	@ManyToOne
-	@JoinColumn(name = "code_province", nullable = true)
+//	@ManyToOne
+	@Column(name = "code_province", nullable = true)
 	private String codeProvince;
 
 	public String getCode() {
