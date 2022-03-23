@@ -9,7 +9,7 @@ import com.lawencon.linovhrcommunity.dto.role.InsertRoleDtoReq;
 import com.lawencon.linovhrcommunity.model.Role;
 
 @Service
-public class RoleServiceImpl extends BaseServiceImpl implements RoleService {
+public class RoleServiceImpl extends BaseServiceLinovCommunityImpl implements RoleService {
 	
 	@Autowired
 	private RoleDao roleDao;

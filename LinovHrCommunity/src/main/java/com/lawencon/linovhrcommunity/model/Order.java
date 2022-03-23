@@ -22,7 +22,7 @@ public class Order extends BaseEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "id_file")
-	private File idFile;
+	private File file;
 
 	@ManyToOne
 	@JoinColumn(name = "id_payment_method")
@@ -46,12 +46,12 @@ public class Order extends BaseEntity {
 		this.isAccept = isAccept;
 	}
 
-	public File getIdFile() {
-		return idFile;
+	public File getFile() {
+		return file;
 	}
 
-	public void setIdFile(File idFile) {
-		this.idFile = idFile;
+	public void setFile(File file) {
+		this.file = file;
 	}
 
 	public PaymentMethod getIdPaymentMethod() {
