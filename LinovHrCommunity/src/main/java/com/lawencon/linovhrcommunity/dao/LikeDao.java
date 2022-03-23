@@ -2,9 +2,12 @@ package com.lawencon.linovhrcommunity.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.lawencon.base.BaseDaoImpl;
 import com.lawencon.linovhrcommunity.model.Like;
 
+@Repository
 public class LikeDao extends BaseDaoImpl<Like> {
 
 	public Like save(Like data) throws Exception {

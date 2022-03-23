@@ -7,6 +7,7 @@ public class GetAllPriceListDtoDataRes {
 	private String id;
 	private String code;
 	private String priceName;
+	private String priveTypeName;
 	private BigInteger price;
 	private Integer version;
 	private Boolean isActive;
@@ -35,6 +36,14 @@ public class GetAllPriceListDtoDataRes {
 		this.priceName = priceName;
 	}
 
+	public String getPriveTypeName() {
+		return priveTypeName;
+	}
+
+	public void setPriveTypeName(String priveTypeName) {
+		this.priveTypeName = priveTypeName;
+	}
+
 	public BigInteger getPrice() {
 		return price;
 	}
@@ -58,5 +67,4 @@ public class GetAllPriceListDtoDataRes {
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
 	}
-
 }

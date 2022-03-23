@@ -2,9 +2,12 @@ package com.lawencon.linovhrcommunity.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.lawencon.base.BaseDaoImpl;
 import com.lawencon.linovhrcommunity.model.PollingDetail;
 
+@Repository
 public class PollingDetailDao extends BaseDaoImpl<PollingDetail> {
 
 	public PollingDetail save(PollingDetail data) throws Exception {

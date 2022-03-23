@@ -24,15 +24,15 @@ public class BaseDaoImpl<T extends BaseEntity> {
 		this.clazz = (Class<T>) GenericTypeResolver.resolveTypeArgument(getClass(), BaseDaoImpl.class);
 	}
 
-	protected T getById(final String id) {
+	public T getById(final String id) {
 		return em().find(clazz, id);
 	}
 
-	protected List<T> getAll() {
+	public List<T> getAll() {
 		return em().createQuery("FROM " + clazz.getName(), clazz).getResultList();
 	}
 
-	protected T save(T entity) throws Exception {
+	public T save(T entity) throws Exception {
 		if (entity.getId() != null) {
 			entity = em().merge(entity);
 		} else {
@@ -42,11 +42,11 @@ public class BaseDaoImpl<T extends BaseEntity> {
 		return entity;
 	}
 
-	protected void delete(final T entity) throws Exception {
+	public void delete(final T entity) throws Exception {
 		em().remove(entity);
 	}
 
-	protected boolean deleteById(final Object entityId) throws Exception {
+	public boolean deleteById(final Object entityId) throws Exception {
 		T entity = null;
 		if (entityId != null && entityId instanceof String) {
 			entity = getById((String) entityId);
@@ -59,6 +59,17 @@ public class BaseDaoImpl<T extends BaseEntity> {
 
 		return false;
 	}
+	
+	public Long countAll() {
+        return (Long) em().createQuery("SELECT COUNT(id) FROM " + clazz.getName()).getSingleResult();
+    }
+
+	public List<T> getAll(int startPage, int maxPage) {
+        return em().createQuery("FROM " + clazz.getName(), clazz)
+                .setFirstResult(startPage)
+                .setMaxResults(maxPage)
+                .getResultList();
+    }
 
 	private EntityManager em() {
 		return ConnHandler.getManager();

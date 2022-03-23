@@ -19,6 +19,7 @@ import com.lawencon.linovhrcommunity.dto.pricelist.UpdatePriceListDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.pricelist.UpdatePriceListDtoReq;
 import com.lawencon.linovhrcommunity.dto.pricelist.UpdatePriceListDtoRes;
 import com.lawencon.linovhrcommunity.model.PriceList;
+import com.lawencon.linovhrcommunity.model.PriceType;
 
 @Service
 public class PriceListService extends BaseServiceLinovCommunityImpl {
@@ -32,10 +33,15 @@ public class PriceListService extends BaseServiceLinovCommunityImpl {
 	}
 
 	public InsertPriceListDtoRes insert(InsertPriceListDtoReq dataReq) throws Exception {
+		PriceType priceTypeData = new PriceType();
+		priceTypeData.setId(dataReq.getIdPriceType());
+		priceTypeData.setVersion(0);
+		
 		PriceList addPriceList = new PriceList();
 		addPriceList.setCode(dataReq.getCode());
 		addPriceList.setPriceName(dataReq.getPriceName());
 		addPriceList.setPrice(dataReq.getPrice());
+		addPriceList.setPriceType(priceTypeData);
 		addPriceList.setCreatedBy(createdById);
 
 		PriceList priceListAdded;
@@ -93,6 +99,7 @@ public class PriceListService extends BaseServiceLinovCommunityImpl {
 			GetAllPriceListDtoDataRes data = new GetAllPriceListDtoDataRes();
 			data.setId(priceList.getId());
 			data.setPriceName(priceList.getPriceName());
+			data.setPriveTypeName(priceList.getPriceType().getPriceTypeName());
 			data.setPrice(priceList.getPrice());
 			data.setIsActive(priceList.getIsActive());
 			data.setVersion(priceList.getVersion());
@@ -110,6 +117,7 @@ public class PriceListService extends BaseServiceLinovCommunityImpl {
 		GetByIdPriceListDtoDataRes data = new GetByIdPriceListDtoDataRes();
 		data.setId(getPriceList.getId());
 		data.setPriceName(getPriceList.getPriceName());
+		data.setPriceTypeName(getPriceList.getPriceType().getPriceTypeName());
 		data.setPrice(getPriceList.getPrice());
 		data.setIsActive(getPriceList.getIsActive());
 		data.setVersion(getPriceList.getVersion());

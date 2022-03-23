@@ -1,18 +1,18 @@
 package com.lawencon.linovhrcommunity.dto.user;
 
-public class InsertUserDtoRes {
+public class LoginUserDtoRes {
 	private String message;
-	private InsertUserDtoDataRes data;
+	private LoginUserDtoDataRes data;
 	public String getMessage() {
 		return message;
 	}
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public InsertUserDtoDataRes getData() {
+	public LoginUserDtoDataRes getData() {
 		return data;
 	}
-	public void setData(InsertUserDtoDataRes data) {
+	public void setData(LoginUserDtoDataRes data) {
 		this.data = data;
 	}
 }

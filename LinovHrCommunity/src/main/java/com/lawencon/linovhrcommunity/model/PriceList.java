@@ -4,6 +4,8 @@ import java.math.BigInteger;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.lawencon.base.BaseEntity;
@@ -21,6 +23,10 @@ public class PriceList extends BaseEntity {
 
 	@Column(nullable = false)
 	private BigInteger price;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_price_type")
+	private PriceType priceType;
 
 	public String getCode() {
 		return code;
@@ -44,6 +50,14 @@ public class PriceList extends BaseEntity {
 
 	public void setPrice(BigInteger price) {
 		this.price = price;
+	}
+
+	public PriceType getPriceType() {
+		return priceType;
+	}
+
+	public void setPriceType(PriceType priceType) {
+		this.priceType = priceType;
 	}
 
 }

@@ -19,6 +19,9 @@ public class InsertPriceListDtoReq {
 	@NotNull(message = "Price Is Null")
 	private BigInteger price;
 
+	@NotNull(message = "ID Price Type Is Null")
+	private String idPriceType;
+
 	public String getCode() {
 		return code;
 	}
@@ -43,4 +46,11 @@ public class InsertPriceListDtoReq {
 		this.price = price;
 	}
 
+	public String getIdPriceType() {
+		return idPriceType;
+	}
+
+	public void setIdPriceType(String idPriceType) {
+		this.idPriceType = idPriceType;
+	}
 }

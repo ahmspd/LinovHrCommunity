@@ -2,9 +2,12 @@ package com.lawencon.linovhrcommunity.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.lawencon.base.BaseDaoImpl;
 import com.lawencon.linovhrcommunity.model.EventCoursePaymentDetail;
 
+@Repository
 public class EventCoursePaymentDetailDao extends BaseDaoImpl<EventCoursePaymentDetail> {
 
 	public EventCoursePaymentDetail save(EventCoursePaymentDetail data) throws Exception {

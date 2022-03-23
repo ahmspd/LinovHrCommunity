@@ -1,5 +1,9 @@
 package com.lawencon.linovhrcommunity.controller;
 
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +26,16 @@ import com.lawencon.linovhrcommunity.dto.position.InsertPositionDtoRes;
 import com.lawencon.linovhrcommunity.dto.position.UpdatePositionDtoReq;
 import com.lawencon.linovhrcommunity.dto.position.UpdatePositionDtoRes;
 import com.lawencon.linovhrcommunity.service.PositionService;
+
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 
 @RestController
 @RequestMapping("positions")
@@ -63,5 +77,20 @@ public class PositionController {
 	public ResponseEntity<DeleteByIdPositionDtoRes> deleteById(@PathVariable("id") String id) throws Exception {
 		DeleteByIdPositionDtoRes dataRes = positionService.deleteById(id);
 		return new ResponseEntity<DeleteByIdPositionDtoRes>(dataRes, HttpStatus.OK);
+	}
+	
+	@GetMapping("/report")
+	public ResponseEntity<?> getReport() throws Exception {
+		GetAllPositionDtoRes res = positionService.findAll();
+		InputStream stream = this.getClass().getResourceAsStream("/coba.jrxml");
+		JasperReport report = JasperCompileManager.compileReport(stream);
+		JRBeanCollectionDataSource source = new JRBeanCollectionDataSource(res.getData());
+		Map<String, Object> parameters = new HashMap<>();
+        parameters.put("tableName", "Position");
+        JasperPrint print = JasperFillManager.fillReport(report, parameters, source);
+        String filePath = "C:\\Users\\ahmsp\\Documents\\bootcamp\\";
+        // Export the report to a PDF file.
+        JasperExportManager.exportReportToPdfFile(print, filePath + "sopandi_report.pdf");
+        return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 }

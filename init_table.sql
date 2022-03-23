@@ -109,6 +109,20 @@ create table t_payment_method(
 alter table t_payment_method add constraint payment_method_pk primary key(id);
 alter table t_payment_method add constraint payment_method_bk unique(code);
 
+create table t_price_type(
+	id varchar(36) DEFAULT uuid_generate_v4 (),
+	code varchar(10) NOT NULL,
+	price_type_name varchar(30) NOT NULL,
+	created_by varchar(36),
+	created_at timestamp without time zone,
+	updated_by varchar(36),
+	updated_at timestamp without time zone,
+	"version" int,
+	is_active boolean default true
+);
+alter table t_price_type add constraint price_type_pk primary key(id);
+alter table t_price_type add constraint price_type_code_bk unique(code);
+
 --berisi price list yang dibuat oleh super admin
 --ex. code : evt01, name : Event, price: 200000
 create table t_price_list(
@@ -116,6 +130,7 @@ create table t_price_list(
 	code varchar(10) NOT NULL,
 	price_name varchar(30) NOT NULL,
 	price bigint NOT NULL,
+	id_price_type varchar(36) NOT NULL,
 	created_by varchar(36),
 	created_at timestamp without time zone,
 	updated_by varchar(36),
@@ -125,6 +140,7 @@ create table t_price_list(
 );
 alter table t_price_list add constraint price_list_pk primary key(id);
 alter table t_price_list add constraint price_list_code_bk unique(code);
+alter table t_price_list add constraint price_list_type_fk foreign key(id_price_type) references t_price_type(id);
 -- end master data
 
 create table t_user(
