@@ -20,4 +20,20 @@ public class EventCoursePaymentDetail extends BaseEntity {
 	@JoinColumn(name = "id_event_course_payment", nullable = true)
 	private EventCoursePayment eventCoursePayment;
 
+	public EventCourse getEventCourse() {
+		return eventCourse;
+	}
+
+	public void setEventCourse(EventCourse eventCourse) {
+		this.eventCourse = eventCourse;
+	}
+
+	public EventCoursePayment getEventCoursePayment() {
+		return eventCoursePayment;
+	}
+
+	public void setEventCoursePayment(EventCoursePayment eventCoursePayment) {
+		this.eventCoursePayment = eventCoursePayment;
+	}
+
 }

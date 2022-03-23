@@ -12,11 +12,11 @@ public class File extends BaseEntity {
 
 	private static final long serialVersionUID = -5196455701225322056L;
 
-	@Column(name = "t_file", nullable = true, length = 10)
+	@Column(nullable = true, length = 10)
 	private String extensions;
 
-	@Column(name = "content", nullable = true)
-	private byte[] content;
+	@Column(name = "contents", nullable = true)
+	private byte[] contents;
 
 	public String getExtensions() {
 		return extensions;
@@ -26,12 +26,12 @@ public class File extends BaseEntity {
 		this.extensions = extensions;
 	}
 
-	public byte[] getContent() {
-		return content;
+	public byte[] getContents() {
+		return contents;
 	}
 
-	public void setContent(byte[] content) {
-		this.content = content;
+	public void setContents(byte[] contents) {
+		this.contents = contents;
 	}
 
 }

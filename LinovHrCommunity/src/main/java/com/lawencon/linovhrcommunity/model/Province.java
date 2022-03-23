@@ -7,15 +7,15 @@ import javax.persistence.Table;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(name = "t_payment_method")
-public class PaymentMethod extends BaseEntity {
+@Table(name = "t_province")
+public class Province extends BaseEntity {
 	private static final long serialVersionUID = -5196455701225322056L;
-
-	@Column(nullable = false)
+	
+	@Column(length = 7, nullable = false)
 	private String code;
-
-	@Column(name = "payment_name", nullable = false)
-	private String paymentName;
+	
+	@Column(length = 50, nullable = false)
+	private String provinceName;
 
 	public String getCode() {
 		return code;
@@ -25,12 +25,11 @@ public class PaymentMethod extends BaseEntity {
 		this.code = code;
 	}
 
-	public String getPaymentName() {
-		return paymentName;
+	public String getProvinceName() {
+		return provinceName;
 	}
 
-	public void setPaymentName(String paymentName) {
-		this.paymentName = paymentName;
+	public void setProvinceName(String provinceName) {
+		this.provinceName = provinceName;
 	}
-
 }

@@ -15,17 +15,17 @@ public class PollingDetail extends BaseEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "id_polling", nullable = false)
-	private Polling idPolling;
+	private Polling polling;
 
 	@Column(name = "polling_name")
 	private String pollingName;
 
-	public Polling getIdPolling() {
-		return idPolling;
+	public Polling getPolling() {
+		return polling;
 	}
 
-	public void setIdPolling(Polling idPolling) {
-		this.idPolling = idPolling;
+	public void setPolling(Polling polling) {
+		this.polling = polling;
 	}
 
 	public String getPollingName() {

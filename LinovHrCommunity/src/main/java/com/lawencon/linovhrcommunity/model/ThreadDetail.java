@@ -9,16 +9,16 @@ import javax.persistence.Table;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(name = "t_polling")
-public class Polling extends BaseEntity {
-	private static final long serialVersionUID = -9034083546988015483L;
+@Table(name = "t_thread_detail")
+public class ThreadDetail extends BaseEntity {
+	private static final long serialVersionUID = -5196455701225322056L;
 
 	@ManyToOne
 	@JoinColumn(name = "id_thread", nullable = false)
 	private ThreadModel threadModel;
-
-	@Column(name = "polling_name", nullable = false)
-	private String pollingName;
+	
+	@Column(nullable = false, columnDefinition="text")
+	private String contents;
 
 	public ThreadModel getThreadModel() {
 		return threadModel;
@@ -28,12 +28,11 @@ public class Polling extends BaseEntity {
 		this.threadModel = threadModel;
 	}
 
-	public String getPollingName() {
-		return pollingName;
+	public String getContents() {
+		return contents;
 	}
 
-	public void setPollingName(String pollingName) {
-		this.pollingName = pollingName;
+	public void setContents(String contents) {
+		this.contents = contents;
 	}
-
 }

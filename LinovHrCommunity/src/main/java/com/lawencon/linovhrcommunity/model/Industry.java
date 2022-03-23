@@ -21,7 +21,7 @@ public class Industry extends BaseEntity {
 	@Column(name = "code", nullable = true, unique = true)
 	private String code;
 
-	@Column(name = "insudtry_name", nullable = true, length = 30)
+	@Column(name = "industry_name", nullable = true, length = 30)
 	private String industryName;
 
 	public String getCode() {

@@ -11,10 +11,10 @@ import com.lawencon.base.BaseEntity;
 public class Role extends BaseEntity {
 	private static final long serialVersionUID = -5196455701225322056L;
 	
-	@Column(name = "code", length = 10)
+	@Column(name = "code", length = 10, nullable = false)
 	private String code;
 
-	@Column(name = "role_name", length = 30)
+	@Column(name = "role_name", length = 30, nullable = false)
 	private String name;
 
 	public String getCode() {

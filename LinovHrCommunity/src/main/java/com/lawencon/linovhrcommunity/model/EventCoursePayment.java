@@ -6,9 +6,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.lawencon.base.BaseEntity;
+
 @Entity
 @Table(name = "t_event_course_payment")
-public class EventCoursePayment {
+public class EventCoursePayment extends BaseEntity {
 
 	private static final long serialVersionUID = -5196455701225322056L;
 

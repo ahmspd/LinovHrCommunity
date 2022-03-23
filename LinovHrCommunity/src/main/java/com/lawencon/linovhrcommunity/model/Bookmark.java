@@ -1,7 +1,7 @@
 package com.lawencon.linovhrcommunity.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -14,7 +14,7 @@ public class Bookmark extends BaseEntity {
 	private static final long serialVersionUID = -5196455701225322056L;
 
 	@ManyToOne
-	@Column(name = "id_thread", nullable = true, unique = true)
+	@JoinColumn(name = "id_thread", nullable = true, unique = true)
 	private ThreadModel thread;
 
 	public ThreadModel getThread() {

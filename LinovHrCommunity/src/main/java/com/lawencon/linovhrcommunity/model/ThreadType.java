@@ -7,15 +7,15 @@ import javax.persistence.Table;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(name = "t_payment_method")
-public class PaymentMethod extends BaseEntity {
+@Table(name = "t_thread_type")
+public class ThreadType extends BaseEntity {
 	private static final long serialVersionUID = -5196455701225322056L;
-
-	@Column(nullable = false)
+	
+	@Column(length = 10, nullable = false)
 	private String code;
-
-	@Column(name = "payment_name", nullable = false)
-	private String paymentName;
+	
+	@Column(name = "thread_type_name", length = 30, nullable = false)
+	private String threadTypeName;
 
 	public String getCode() {
 		return code;
@@ -25,12 +25,11 @@ public class PaymentMethod extends BaseEntity {
 		this.code = code;
 	}
 
-	public String getPaymentName() {
-		return paymentName;
+	public String getThreadTypeName() {
+		return threadTypeName;
 	}
 
-	public void setPaymentName(String paymentName) {
-		this.paymentName = paymentName;
+	public void setThreadTypeName(String threadTypeName) {
+		this.threadTypeName = threadTypeName;
 	}
-
 }

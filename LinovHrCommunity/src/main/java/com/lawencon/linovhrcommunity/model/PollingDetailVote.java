@@ -14,14 +14,14 @@ public class PollingDetailVote extends BaseEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "id_polling_detail", nullable = false)
-	private PollingDetail idPollingDetail;
+	private PollingDetail pollingDetail;
 
-	public PollingDetail getIdPollingDetail() {
-		return idPollingDetail;
+	public PollingDetail getPollingDetail() {
+		return pollingDetail;
 	}
 
-	public void setIdPollingDetail(PollingDetail idPollingDetail) {
-		this.idPollingDetail = idPollingDetail;
+	public void setPollingDetail(PollingDetail pollingDetail) {
+		this.pollingDetail = pollingDetail;
 	}
-
+	
 }

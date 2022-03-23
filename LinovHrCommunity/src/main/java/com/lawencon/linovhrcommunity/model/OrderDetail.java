@@ -9,48 +9,44 @@ import javax.persistence.UniqueConstraint;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(uniqueConstraints = {
-		@UniqueConstraint(
-				name = "order_detail_ck",
-				columnNames = {"id", "id_event_course"}
-		)
-}, name="t_order_detail")
-public class OrderDetail extends BaseEntity{
+@Table(uniqueConstraints = { @UniqueConstraint(name = "order_detail_ck", columnNames = { "id",
+		"id_event_course" }) }, name = "t_order_detail")
+public class OrderDetail extends BaseEntity {
 	private static final long serialVersionUID = -5196455701225322056L;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "id_event_course", nullable = false)
-	private EventCourse idEventCourse;
-	
+	private EventCourse eventCourse;
+
 	@ManyToOne
 	@JoinColumn(name = "id_order", nullable = false)
-	private Order idOrder;
-	
+	private Order order;
+
 	@ManyToOne
 	@JoinColumn(name = "id_user_member", nullable = false)
-	private UserMember idUserMember;
+	private UserMember userMember;
 
-	public EventCourse getIdEventCourse() {
-		return idEventCourse;
+	public EventCourse getEventCourse() {
+		return eventCourse;
 	}
 
-	public void setIdEventCourse(EventCourse idEventCourse) {
-		this.idEventCourse = idEventCourse;
+	public void setEventCourse(EventCourse eventCourse) {
+		this.eventCourse = eventCourse;
 	}
 
-	public Order getIdOrder() {
-		return idOrder;
+	public Order getOrder() {
+		return order;
 	}
 
-	public void setIdOrder(Order idOrder) {
-		this.idOrder = idOrder;
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 
-	public UserMember getIdUserMember() {
-		return idUserMember;
+	public UserMember getUserMember() {
+		return userMember;
 	}
 
-	public void setIdUserMember(UserMember idUserMember) {
-		this.idUserMember = idUserMember;
+	public void setUserMember(UserMember userMember) {
+		this.userMember = userMember;
 	}
 }
