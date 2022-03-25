@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.linovhrcommunity.dto.industry.DeleteByIdIndustryDtoRes;
 import com.lawencon.linovhrcommunity.dto.industry.GetAllIndustryDtoRes;
+import com.lawencon.linovhrcommunity.dto.industry.GetAllIndustryPageDtoRes;
 import com.lawencon.linovhrcommunity.dto.industry.GetByIdIndustryDtoRes;
 import com.lawencon.linovhrcommunity.dto.industry.InsertIndustryDtoReq;
 import com.lawencon.linovhrcommunity.dto.industry.InsertIndustryDtoRes;
 import com.lawencon.linovhrcommunity.dto.industry.UpdateIndustryDtoReq;
 import com.lawencon.linovhrcommunity.dto.industry.UpdateIndustryDtoRes;
+import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadTypePageDtoRes;
 import com.lawencon.linovhrcommunity.service.IndustryService;
 
 @RestController
@@ -63,5 +65,12 @@ public class IndustryController {
 	public ResponseEntity<DeleteByIdIndustryDtoRes> deleteById(@PathVariable("id") String id) throws Exception {
 		DeleteByIdIndustryDtoRes dataRes = industryService.deleteById(id);
 		return new ResponseEntity<DeleteByIdIndustryDtoRes>(dataRes, HttpStatus.OK);
+	}
+	
+	@GetMapping("/{start}/{max}")
+	public ResponseEntity<GetAllIndustryPageDtoRes> getAllWithPage(@PathVariable int start, @PathVariable int max)
+			throws Exception {
+		GetAllIndustryPageDtoRes data = industryService.getAllWithPage(start, max);
+		return new ResponseEntity<GetAllIndustryPageDtoRes>(data, HttpStatus.OK);
 	}
 }

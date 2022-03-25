@@ -10,6 +10,8 @@ import com.lawencon.linovhrcommunity.dao.ThreadTypeDao;
 import com.lawencon.linovhrcommunity.dto.threadtype.DeleteByIdThreadTypeRes;
 import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadTypeDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadTypeDtoRes;
+import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadTypePageDtoDataRes;
+import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadTypePageDtoRes;
 import com.lawencon.linovhrcommunity.dto.threadtype.GetByIdThreadTypeDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.threadtype.GetByIdThreadTypeDtoRes;
 import com.lawencon.linovhrcommunity.dto.threadtype.InsertThreadTypeDtoDataRes;
@@ -145,6 +147,32 @@ public class ThreadTypeService extends BaseServiceLinovCommunityImpl {
 			rollback();
 			throw new Exception(e);
 		}
+	}
+	
+	public GetAllThreadTypePageDtoRes getAllWithPage(int startPage, int maxPage) throws Exception {
+		Long total = threadTypeDao.countAll();
+		
+		List<ThreadType> listThreadTypes = new ArrayList<>();
+		listThreadTypes = threadTypeDao.getAll(startPage, maxPage);
+		
+		List<GetAllThreadTypePageDtoDataRes> dataAll = new ArrayList<>();
+
+		listThreadTypes.forEach(threadType -> {
+			GetAllThreadTypePageDtoDataRes data = new GetAllThreadTypePageDtoDataRes();
+			data.setId(threadType.getId());
+			data.setCode(threadType.getCode());
+			data.setThreadTypeName(threadType.getThreadTypeName());
+			data.setIsActive(threadType.getIsActive());
+			data.setVersion(threadType.getVersion());
+			
+			dataAll.add(data);
+		});
+		
+		GetAllThreadTypePageDtoRes result = new GetAllThreadTypePageDtoRes();
+		result.setData(dataAll);
+		result.setTotal(total);
+		
+		return result;
 	}
 
 }

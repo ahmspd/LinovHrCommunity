@@ -7,7 +7,9 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,11 +22,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.linovhrcommunity.dto.position.DeleteByIdPositionDtoRes;
 import com.lawencon.linovhrcommunity.dto.position.GetAllPositionDtoRes;
+import com.lawencon.linovhrcommunity.dto.position.GetAllPositionPageDtoRes;
 import com.lawencon.linovhrcommunity.dto.position.GetByIdPositionDtoRes;
 import com.lawencon.linovhrcommunity.dto.position.InsertPositionDtoReq;
 import com.lawencon.linovhrcommunity.dto.position.InsertPositionDtoRes;
 import com.lawencon.linovhrcommunity.dto.position.UpdatePositionDtoReq;
 import com.lawencon.linovhrcommunity.dto.position.UpdatePositionDtoRes;
+import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadTypePageDtoRes;
 import com.lawencon.linovhrcommunity.service.PositionService;
 
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -80,7 +84,7 @@ public class PositionController {
 	}
 	
 	@GetMapping("/report")
-	public ResponseEntity<?> getReport() throws Exception {
+	public ResponseEntity<byte[]> getReport() throws Exception {
 		GetAllPositionDtoRes res = positionService.findAll();
 		InputStream stream = this.getClass().getResourceAsStream("/coba.jrxml");
 		JasperReport report = JasperCompileManager.compileReport(stream);
@@ -88,9 +92,17 @@ public class PositionController {
 		Map<String, Object> parameters = new HashMap<>();
         parameters.put("tableName", "Position");
         JasperPrint print = JasperFillManager.fillReport(report, parameters, source);
-        String filePath = "C:\\Users\\ahmsp\\Documents\\bootcamp\\";
-        // Export the report to a PDF file.
-        JasperExportManager.exportReportToPdfFile(print, filePath + "sopandi_report.pdf");
-        return new ResponseEntity<>("success", HttpStatus.OK);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_PDF);
+		headers.setContentDispositionFormData("filename", "report.pdf");
+		return new ResponseEntity<byte[]>(JasperExportManager.exportReportToPdf(print), headers, HttpStatus.OK);
+	}
+	
+	@GetMapping("/{start}/{max}")
+	public ResponseEntity<GetAllPositionPageDtoRes> getAllWithPage(@PathVariable int start, @PathVariable int max)
+			throws Exception {
+		GetAllPositionPageDtoRes data = positionService.getAllWithPage(start, max);
+		return new ResponseEntity<GetAllPositionPageDtoRes>(data, HttpStatus.OK);
 	}
 }

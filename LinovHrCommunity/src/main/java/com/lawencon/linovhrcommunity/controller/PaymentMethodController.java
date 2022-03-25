@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.linovhrcommunity.dto.paymentmethod.DeleteByIdPaymentMethodRes;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.GetAllPaymentMethodDtoRes;
+import com.lawencon.linovhrcommunity.dto.paymentmethod.GetAllPaymentMethodPageDtoRes;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.GetByIdPaymentMethodDtoRes;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.InsertPaymentMethodDtoReq;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.InsertPaymentMethodDtoRes;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.UpdatePaymentMethodDtoReq;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.UpdatePaymentMethodDtoRes;
+import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadTypePageDtoRes;
 import com.lawencon.linovhrcommunity.service.PaymentMethodService;
 
 @RestController
@@ -61,6 +63,13 @@ public class PaymentMethodController {
 	public ResponseEntity<DeleteByIdPaymentMethodRes> deleteById(@PathVariable String id) throws Exception {
 		DeleteByIdPaymentMethodRes result = paymentMethodService.deleteById(id);
 		return new ResponseEntity<DeleteByIdPaymentMethodRes>(result, HttpStatus.OK);
+	}
+	
+	@GetMapping("/{start}/{max}")
+	public ResponseEntity<GetAllPaymentMethodPageDtoRes> getAllWithPage(@PathVariable int start, @PathVariable int max)
+			throws Exception {
+		GetAllPaymentMethodPageDtoRes data = paymentMethodService.getAllWithPage(start, max);
+		return new ResponseEntity<GetAllPaymentMethodPageDtoRes>(data, HttpStatus.OK);
 	}
 
 }

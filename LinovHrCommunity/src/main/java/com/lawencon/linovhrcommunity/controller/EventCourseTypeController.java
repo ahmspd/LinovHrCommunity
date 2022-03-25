@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.linovhrcommunity.dto.eventcoursetype.DeleteByIdEventCourseTypeRes;
 import com.lawencon.linovhrcommunity.dto.eventcoursetype.GetAllEventCourseTypeDtoRes;
+import com.lawencon.linovhrcommunity.dto.eventcoursetype.GetAllEventCourseTypePageDtoRes;
 import com.lawencon.linovhrcommunity.dto.eventcoursetype.GetByIdEventCourseTypeDtoRes;
 import com.lawencon.linovhrcommunity.dto.eventcoursetype.InsertEventCourseTypeDtoReq;
 import com.lawencon.linovhrcommunity.dto.eventcoursetype.InsertEventCourseTypeDtoRes;
 import com.lawencon.linovhrcommunity.dto.eventcoursetype.UpdateEventCourseTypeDtoReq;
 import com.lawencon.linovhrcommunity.dto.eventcoursetype.UpdateEventCourseTypeDtoRes;
+import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadTypePageDtoRes;
 import com.lawencon.linovhrcommunity.service.EventCourseTypeService;
 
 @RestController
@@ -63,4 +65,10 @@ public class EventCourseTypeController {
 		return new ResponseEntity<DeleteByIdEventCourseTypeRes>(result, HttpStatus.OK);
 	}
 
+	@GetMapping("/{start}/{max}")
+	public ResponseEntity<GetAllEventCourseTypePageDtoRes> getAllWithPage(@PathVariable int start, @PathVariable int max)
+			throws Exception {
+		GetAllEventCourseTypePageDtoRes data = eventCourseTypeService.getAllWithPage(start, max);
+		return new ResponseEntity<GetAllEventCourseTypePageDtoRes>(data, HttpStatus.OK);
+	}
 }

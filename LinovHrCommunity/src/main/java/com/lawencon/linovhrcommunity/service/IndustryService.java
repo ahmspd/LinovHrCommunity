@@ -10,6 +10,8 @@ import com.lawencon.linovhrcommunity.dao.IndustryDao;
 import com.lawencon.linovhrcommunity.dto.industry.DeleteByIdIndustryDtoRes;
 import com.lawencon.linovhrcommunity.dto.industry.GetAllIndustryDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.industry.GetAllIndustryDtoRes;
+import com.lawencon.linovhrcommunity.dto.industry.GetAllIndustryPageDtoDataRes;
+import com.lawencon.linovhrcommunity.dto.industry.GetAllIndustryPageDtoRes;
 import com.lawencon.linovhrcommunity.dto.industry.GetByIdIndustryDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.industry.GetByIdIndustryDtoRes;
 import com.lawencon.linovhrcommunity.dto.industry.InsertIndustryDtoDataRes;
@@ -101,6 +103,28 @@ public class IndustryService extends BaseServiceLinovCommunityImpl {
 
 		GetAllIndustryDtoRes dataRes = new GetAllIndustryDtoRes();
 		dataRes.setData(datas);
+		return dataRes;
+	}
+	
+	public GetAllIndustryPageDtoRes getAllWithPage(int startPage, int maxPage) throws Exception {
+		Long total = industryDao.countAll();
+		List<GetAllIndustryPageDtoDataRes> datas = new ArrayList<GetAllIndustryPageDtoDataRes>();
+		List<Industry> industrys = industryDao.findAll();
+
+		industrys.forEach(industry -> {
+			GetAllIndustryPageDtoDataRes data = new GetAllIndustryPageDtoDataRes();
+			data.setId(industry.getId());
+			data.setIndustryName(industry.getIndustryName());
+			data.setCode(industry.getCode());
+			data.setIsActive(industry.getIsActive());
+			data.setVersion(industry.getVersion());
+			datas.add(data);
+		});
+
+		GetAllIndustryPageDtoRes dataRes = new GetAllIndustryPageDtoRes();
+		dataRes.setData(datas);
+		dataRes.setTotal(total);
+		
 		return dataRes;
 	}
 

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.linovhrcommunity.dto.threadtype.DeleteByIdThreadTypeRes;
 import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadTypeDtoRes;
+import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadTypePageDtoRes;
 import com.lawencon.linovhrcommunity.dto.threadtype.GetByIdThreadTypeDtoRes;
 import com.lawencon.linovhrcommunity.dto.threadtype.InsertThreadTypeDtoReq;
 import com.lawencon.linovhrcommunity.dto.threadtype.InsertThreadTypeDtoRes;
@@ -34,13 +35,15 @@ public class ThreadTypeController {
 	}
 
 	@PostMapping
-	public ResponseEntity<InsertThreadTypeDtoRes> insertData(@RequestBody @Valid InsertThreadTypeDtoReq request) throws Exception {
+	public ResponseEntity<InsertThreadTypeDtoRes> insertData(@RequestBody @Valid InsertThreadTypeDtoReq request)
+			throws Exception {
 		InsertThreadTypeDtoRes response = threadTypeService.insert(request);
 		return new ResponseEntity<InsertThreadTypeDtoRes>(response, HttpStatus.CREATED);
 	}
 
 	@PutMapping
-	public ResponseEntity<UpdateThreadTypeDtoRes> updateData(@RequestBody @Valid UpdateThreadTypeDtoReq request) throws Exception {
+	public ResponseEntity<UpdateThreadTypeDtoRes> updateData(@RequestBody @Valid UpdateThreadTypeDtoReq request)
+			throws Exception {
 		UpdateThreadTypeDtoRes response = threadTypeService.update(request);
 		return new ResponseEntity<UpdateThreadTypeDtoRes>(response, HttpStatus.OK);
 	}
@@ -63,4 +66,10 @@ public class ThreadTypeController {
 		return new ResponseEntity<DeleteByIdThreadTypeRes>(result, HttpStatus.OK);
 	}
 
+	@GetMapping("/{start}/{max}")
+	public ResponseEntity<GetAllThreadTypePageDtoRes> getAllWithPage(@PathVariable int start, @PathVariable int max)
+			throws Exception {
+		GetAllThreadTypePageDtoRes data = threadTypeService.getAllWithPage(start, max);
+		return new ResponseEntity<GetAllThreadTypePageDtoRes>(data, HttpStatus.OK);
+	}
 }

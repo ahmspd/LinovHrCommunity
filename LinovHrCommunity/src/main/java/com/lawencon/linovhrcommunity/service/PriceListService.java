@@ -10,6 +10,8 @@ import com.lawencon.linovhrcommunity.dao.PriceListDao;
 import com.lawencon.linovhrcommunity.dto.pricelist.DeleteByIdPriceListDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricelist.GetAllPriceListDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.pricelist.GetAllPriceListDtoRes;
+import com.lawencon.linovhrcommunity.dto.pricelist.GetAllPriceListPageDtoDataRes;
+import com.lawencon.linovhrcommunity.dto.pricelist.GetAllPriceListPageDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricelist.GetByIdPriceListDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.pricelist.GetByIdPriceListDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricelist.InsertPriceListDtoDataRes;
@@ -18,6 +20,7 @@ import com.lawencon.linovhrcommunity.dto.pricelist.InsertPriceListDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricelist.UpdatePriceListDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.pricelist.UpdatePriceListDtoReq;
 import com.lawencon.linovhrcommunity.dto.pricelist.UpdatePriceListDtoRes;
+import com.lawencon.linovhrcommunity.dto.pricetype.GetAllPriceTypePageDtoRes;
 import com.lawencon.linovhrcommunity.model.PriceList;
 import com.lawencon.linovhrcommunity.model.PriceType;
 
@@ -108,6 +111,29 @@ public class PriceListService extends BaseServiceLinovCommunityImpl {
 
 		GetAllPriceListDtoRes dataRes = new GetAllPriceListDtoRes();
 		dataRes.setData(datas);
+		return dataRes;
+	}
+	
+	public GetAllPriceListPageDtoRes getAllWithPage(int startPage, int maxPage) throws Exception {
+		Long total = priceListDao.countAll();
+		List<PriceList> priceLists = priceListDao.getAll(startPage, maxPage);
+		List<GetAllPriceListPageDtoDataRes> datas = new ArrayList<GetAllPriceListPageDtoDataRes>();
+
+		priceLists.forEach(priceList -> {
+			GetAllPriceListPageDtoDataRes data = new GetAllPriceListPageDtoDataRes();
+			data.setId(priceList.getId());
+			data.setPriceName(priceList.getPriceName());
+			data.setPriveTypeName(priceList.getPriceType().getPriceTypeName());
+			data.setPrice(priceList.getPrice());
+			data.setIsActive(priceList.getIsActive());
+			data.setVersion(priceList.getVersion());
+			datas.add(data);
+		});
+
+		GetAllPriceListPageDtoRes dataRes = new GetAllPriceListPageDtoRes();
+		dataRes.setData(datas);
+		dataRes.setTotal(total);
+		
 		return dataRes;
 	}
 

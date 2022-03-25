@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.linovhrcommunity.dto.pricelist.DeleteByIdPriceListDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricelist.GetAllPriceListDtoRes;
+import com.lawencon.linovhrcommunity.dto.pricelist.GetAllPriceListPageDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricelist.GetByIdPriceListDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricelist.InsertPriceListDtoReq;
 import com.lawencon.linovhrcommunity.dto.pricelist.InsertPriceListDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricelist.UpdatePriceListDtoReq;
 import com.lawencon.linovhrcommunity.dto.pricelist.UpdatePriceListDtoRes;
+import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadTypePageDtoRes;
 import com.lawencon.linovhrcommunity.service.PriceListService;
 
 @RestController
@@ -63,5 +65,12 @@ public class PriceListController {
 	public ResponseEntity<DeleteByIdPriceListDtoRes> deleteById(@PathVariable("id") String id) throws Exception {
 		DeleteByIdPriceListDtoRes dataRes = priceListService.deleteById(id);
 		return new ResponseEntity<DeleteByIdPriceListDtoRes>(dataRes, HttpStatus.OK);
+	}
+	
+	@GetMapping("/{start}/{max}")
+	public ResponseEntity<GetAllPriceListPageDtoRes> getAllWithPage(@PathVariable int start, @PathVariable int max)
+			throws Exception {
+		GetAllPriceListPageDtoRes data = priceListService.getAllWithPage(start, max);
+		return new ResponseEntity<GetAllPriceListPageDtoRes>(data, HttpStatus.OK);
 	}
 }

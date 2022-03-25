@@ -10,6 +10,8 @@ import com.lawencon.linovhrcommunity.dao.PositionDao;
 import com.lawencon.linovhrcommunity.dto.position.DeleteByIdPositionDtoRes;
 import com.lawencon.linovhrcommunity.dto.position.GetAllPositionDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.position.GetAllPositionDtoRes;
+import com.lawencon.linovhrcommunity.dto.position.GetAllPositionPageDtoDataRes;
+import com.lawencon.linovhrcommunity.dto.position.GetAllPositionPageDtoRes;
 import com.lawencon.linovhrcommunity.dto.position.GetByIdPositionDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.position.GetByIdPositionDtoRes;
 import com.lawencon.linovhrcommunity.dto.position.InsertPositionDtoDataRes;
@@ -101,6 +103,30 @@ public class PositionService extends BaseServiceLinovCommunityImpl {
 		GetAllPositionDtoRes dataRes = new GetAllPositionDtoRes();
 		dataRes.setData(datas);
 		return dataRes;
+	}
+	
+	public GetAllPositionPageDtoRes getAllWithPage(int startPage, int maxPage) throws Exception {
+		Long Total = positionDao.countAll();
+		
+		List<GetAllPositionPageDtoDataRes> datas = new ArrayList<GetAllPositionPageDtoDataRes>();
+		List<Position> positions = positionDao.getAll(startPage, maxPage);
+
+		positions.forEach(position -> {
+			GetAllPositionPageDtoDataRes data = new GetAllPositionPageDtoDataRes();
+			data.setId(position.getId());
+			data.setPositionName(position.getPositionName());
+			data.setCode(position.getCode());
+			data.setIsActive(position.getIsActive());
+			data.setVersion(position.getVersion());
+			datas.add(data);
+		});
+
+		GetAllPositionPageDtoRes dataRes = new GetAllPositionPageDtoRes();
+		dataRes.setData(datas);
+		dataRes.setTotal(Total);
+		
+		return dataRes;
+		
 	}
 
 	public GetByIdPositionDtoRes findById(String id) throws Exception {

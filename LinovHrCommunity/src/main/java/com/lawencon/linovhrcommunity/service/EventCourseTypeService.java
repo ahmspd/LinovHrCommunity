@@ -10,6 +10,8 @@ import com.lawencon.linovhrcommunity.dao.EventCourseTypeDao;
 import com.lawencon.linovhrcommunity.dto.eventcoursetype.DeleteByIdEventCourseTypeRes;
 import com.lawencon.linovhrcommunity.dto.eventcoursetype.GetAllEventCourseTypeDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.eventcoursetype.GetAllEventCourseTypeDtoRes;
+import com.lawencon.linovhrcommunity.dto.eventcoursetype.GetAllEventCourseTypePageDtoDataRes;
+import com.lawencon.linovhrcommunity.dto.eventcoursetype.GetAllEventCourseTypePageDtoRes;
 import com.lawencon.linovhrcommunity.dto.eventcoursetype.GetByIdEventCourseTypeDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.eventcoursetype.GetByIdEventCourseTypeDtoRes;
 import com.lawencon.linovhrcommunity.dto.eventcoursetype.InsertEventCourseTypeDtoDataRes;
@@ -123,6 +125,32 @@ public class EventCourseTypeService extends BaseServiceLinovCommunityImpl {
 
 		GetAllEventCourseTypeDtoRes findAllRes = new GetAllEventCourseTypeDtoRes();
 		findAllRes.setData(dataAll);
+
+		return findAllRes;
+	}
+	
+	public GetAllEventCourseTypePageDtoRes getAllWithPage(int startPage, int maxPage) throws Exception {
+		Long total = eventCourseTypeDao.countAll();
+		
+		List<EventCourseType> listEventCourseTypes = new ArrayList<>();
+		listEventCourseTypes = eventCourseTypeDao.getAll(startPage, maxPage);
+
+		List<GetAllEventCourseTypePageDtoDataRes> dataAll = new ArrayList<>();
+
+		listEventCourseTypes.forEach(eventCourseType -> {
+			GetAllEventCourseTypePageDtoDataRes data = new GetAllEventCourseTypePageDtoDataRes();
+			data.setId(eventCourseType.getId());
+			data.setCode(eventCourseType.getCode());
+			data.setEventTypeName(eventCourseType.getEventTypeName());
+			data.setIsActive(eventCourseType.getIsActive());
+			data.setVersion(eventCourseType.getVersion());
+
+			dataAll.add(data);
+		});
+
+		GetAllEventCourseTypePageDtoRes findAllRes = new GetAllEventCourseTypePageDtoRes();
+		findAllRes.setData(dataAll);
+		findAllRes.setTotal(total);
 
 		return findAllRes;
 	}

@@ -10,6 +10,8 @@ import com.lawencon.linovhrcommunity.dao.PaymentMethodDao;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.DeleteByIdPaymentMethodRes;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.GetAllPaymentMethodDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.GetAllPaymentMethodDtoRes;
+import com.lawencon.linovhrcommunity.dto.paymentmethod.GetAllPaymentMethodPageDtoDataRes;
+import com.lawencon.linovhrcommunity.dto.paymentmethod.GetAllPaymentMethodPageDtoRes;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.GetByIdPaymentMethodDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.GetByIdPaymentMethodDtoRes;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.InsertPaymentMethodDtoDataRes;
@@ -122,6 +124,31 @@ public class PaymentMethodService extends BaseServiceLinovCommunityImpl {
 		
 		GetAllPaymentMethodDtoRes findAllRes = new GetAllPaymentMethodDtoRes();
 		findAllRes.setData(dataAll);
+
+		return findAllRes;
+	}
+	
+	public GetAllPaymentMethodPageDtoRes getAllWithPage(int startPage, int maxPage) throws Exception {
+		Long total = paymentMethodDao.countAll();
+		List<PaymentMethod> listPaymentMethods = new ArrayList<>();
+		listPaymentMethods = paymentMethodDao.getAll(startPage, maxPage);
+		
+		List<GetAllPaymentMethodPageDtoDataRes> dataAll = new ArrayList<>();
+
+		listPaymentMethods.forEach(paymentMethod -> {
+			GetAllPaymentMethodPageDtoDataRes data = new GetAllPaymentMethodPageDtoDataRes();
+			data.setId(paymentMethod.getId());
+			data.setCode(paymentMethod.getCode());
+			data.setPaymentName(paymentMethod.getPaymentName());
+			data.setIsActive(paymentMethod.getIsActive());
+			data.setVersion(paymentMethod.getVersion());
+			
+			dataAll.add(data);
+		});
+		
+		GetAllPaymentMethodPageDtoRes findAllRes = new GetAllPaymentMethodPageDtoRes();
+		findAllRes.setData(dataAll);
+		findAllRes.setTotal(total);
 
 		return findAllRes;
 	}

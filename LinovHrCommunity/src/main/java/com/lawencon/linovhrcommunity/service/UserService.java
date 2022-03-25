@@ -16,6 +16,9 @@ import com.lawencon.linovhrcommunity.dto.user.InsertUserDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.user.InsertUserDtoReq;
 import com.lawencon.linovhrcommunity.dto.user.InsertUserDtoRes;
 import com.lawencon.linovhrcommunity.dto.user.LoginUserDtoDataRes;
+import com.lawencon.linovhrcommunity.dto.user.RegistrationCodeDtoDataRes;
+import com.lawencon.linovhrcommunity.dto.user.RegistrationCodeDtoReq;
+import com.lawencon.linovhrcommunity.dto.user.RegistrationCodeDtoRes;
 import com.lawencon.linovhrcommunity.model.Industry;
 import com.lawencon.linovhrcommunity.model.Position;
 import com.lawencon.linovhrcommunity.model.Profile;
@@ -124,5 +127,27 @@ public class UserService extends BaseServiceLinovCommunityImpl implements UserDe
 			e.printStackTrace();
 			throw new UsernameNotFoundException("Invalid Username Or Password");
 		}
+	}
+	
+	public RegistrationCodeDtoRes insertRegistraionCode(RegistrationCodeDtoReq data) throws Exception {
+		User userData = userDao.getById(data.getId());
+		RegistrationCodeDtoRes result = new RegistrationCodeDtoRes();
+		if(userData.getRegistrationCode().equals(data.getRegistrationCode())) {
+			userData.setIsActive(true);
+			
+			begin();
+			User userUpdate = userDao.save(userData);
+			commit();
+			
+			RegistrationCodeDtoDataRes dataRes = new RegistrationCodeDtoDataRes();
+			dataRes.setVersion(userUpdate.getVersion());
+			
+			result.setData(dataRes);
+			result.setMessage("Success");
+		}else {
+			result.setMessage("Registraion Code Wrong");
+		}
+
+		return result;
 	}
 }

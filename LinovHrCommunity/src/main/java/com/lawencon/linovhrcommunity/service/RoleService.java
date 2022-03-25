@@ -10,6 +10,8 @@ import com.lawencon.linovhrcommunity.dao.RoleDao;
 import com.lawencon.linovhrcommunity.dto.role.DeleteByIdRoleRes;
 import com.lawencon.linovhrcommunity.dto.role.GetAllRoleDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.role.GetAllRoleDtoRes;
+import com.lawencon.linovhrcommunity.dto.role.GetAllRolePageDtoDataRes;
+import com.lawencon.linovhrcommunity.dto.role.GetAllRolePageDtoRes;
 import com.lawencon.linovhrcommunity.dto.role.GetByIdRoleDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.role.GetByIdRoleDtoRes;
 import com.lawencon.linovhrcommunity.dto.role.InsertRoleDtoDataRes;
@@ -146,5 +148,28 @@ public class RoleService extends BaseServiceLinovCommunityImpl {
 			throw new Exception(e);
 		}
 	}
-
+	
+	public GetAllRolePageDtoRes getAllWithPage(int startPage, int maxPage) throws Exception {
+		Long total = roleDao.countAll();
+		
+		List<Role> listRoles = new ArrayList<>();
+		listRoles = roleDao.getAll(startPage, maxPage);
+		List<GetAllRolePageDtoDataRes> dataAll = new ArrayList<>();
+		listRoles.forEach(role -> {
+			GetAllRolePageDtoDataRes data = new GetAllRolePageDtoDataRes();
+			data.setId(role.getId());
+			data.setCode(role.getCode());
+			data.setName(role.getName());
+			data.setIsActive(role.getIsActive());
+			data.setVersion(role.getVersion());
+			
+			dataAll.add(data);
+		});
+		
+		GetAllRolePageDtoRes result = new GetAllRolePageDtoRes();
+		result.setTotal(total);
+		result.setData(dataAll);
+		
+		return result;
+	}
 }

@@ -10,6 +10,8 @@ import com.lawencon.linovhrcommunity.dao.PriceTypeDao;
 import com.lawencon.linovhrcommunity.dto.pricetype.DeleteByIdPriceTypeDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricetype.GetAllPriceTypeDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.pricetype.GetAllPriceTypeDtoRes;
+import com.lawencon.linovhrcommunity.dto.pricetype.GetAllPriceTypePageDtoDataRes;
+import com.lawencon.linovhrcommunity.dto.pricetype.GetAllPriceTypePageDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricetype.GetByIdPriceTypeDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.pricetype.GetByIdPriceTypeDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricetype.InsertPriceTypeDtoDataRes;
@@ -100,6 +102,28 @@ public class PriceTypeService extends BaseServiceLinovCommunityImpl {
 		GetAllPriceTypeDtoRes dataRes = new GetAllPriceTypeDtoRes();
 		dataRes.setData(datas);
 		return dataRes;
+	}
+	
+	public GetAllPriceTypePageDtoRes getAllWithPage(int startPage, int maxPage) throws Exception {
+		Long total = priceTypeDao.countAll();
+		List<PriceType> priceTypes = priceTypeDao.getAll(startPage, maxPage);
+		List<GetAllPriceTypePageDtoDataRes> datas = new ArrayList<GetAllPriceTypePageDtoDataRes>();
+
+		priceTypes.forEach(priceType -> {
+			GetAllPriceTypePageDtoDataRes data = new GetAllPriceTypePageDtoDataRes();
+			data.setId(priceType.getId());
+			data.setCode(priceType.getCode());
+			data.setPriceTypeName(priceType.getPriceTypeName());
+			data.setIsActive(priceType.getIsActive());
+			data.setVersion(priceType.getVersion());
+			datas.add(data);
+		});
+
+		GetAllPriceTypePageDtoRes result = new GetAllPriceTypePageDtoRes();
+		result.setData(datas);
+		result.setTotal(total);
+		
+		return result;
 	}
 
 	public GetByIdPriceTypeDtoRes findById(String id) throws Exception {
