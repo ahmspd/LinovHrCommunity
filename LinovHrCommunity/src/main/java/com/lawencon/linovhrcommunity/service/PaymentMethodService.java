@@ -7,7 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.linovhrcommunity.dao.PaymentMethodDao;
+import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoDataReq;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.DeleteByIdPaymentMethodRes;
+import com.lawencon.linovhrcommunity.dto.paymentmethod.DeleteMultiplePaymentMethodDtoDataReq;
+import com.lawencon.linovhrcommunity.dto.paymentmethod.DeleteMultiplePaymentMethodDtoReq;
+import com.lawencon.linovhrcommunity.dto.paymentmethod.DeleteMultiplePaymentMethodDtoRes;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.GetAllPaymentMethodDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.GetAllPaymentMethodDtoRes;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.GetAllPaymentMethodPageDtoDataRes;
@@ -174,4 +178,28 @@ public class PaymentMethodService extends BaseServiceLinovCommunityImpl {
 		}
 	}
 
+	public DeleteMultiplePaymentMethodDtoRes deleteMultiple(DeleteMultiplePaymentMethodDtoReq data) throws Exception{
+		DeleteMultiplePaymentMethodDtoRes dataRes = new DeleteMultiplePaymentMethodDtoRes();
+		boolean isDeleted = false;
+		try {
+			begin();
+			List<DeleteMultiplePaymentMethodDtoDataReq> dataReq = data.getData();
+			for(int i=0; i<dataReq.size();i++) {
+				isDeleted = paymentMethodDao.deleteById(dataReq.get(i).getId());
+			}
+
+			if (isDeleted) {
+				dataRes.setMessage("Delete Success");
+			} else {
+				throw new Exception("Delete Failed");
+			}
+			commit();
+
+			return dataRes;
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
+	}
 }

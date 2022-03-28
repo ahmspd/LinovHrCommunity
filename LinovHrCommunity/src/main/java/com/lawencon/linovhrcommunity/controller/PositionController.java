@@ -21,7 +21,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoReq;
+import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoRes;
 import com.lawencon.linovhrcommunity.dto.position.DeleteByIdPositionDtoRes;
+import com.lawencon.linovhrcommunity.dto.position.DeleteMultiplePositionDtoReq;
+import com.lawencon.linovhrcommunity.dto.position.DeleteMultiplePositionDtoRes;
 import com.lawencon.linovhrcommunity.dto.position.GetAllPositionDtoRes;
 import com.lawencon.linovhrcommunity.dto.position.GetAllPositionPageDtoRes;
 import com.lawencon.linovhrcommunity.dto.position.GetByIdPositionDtoRes;
@@ -105,5 +109,11 @@ public class PositionController {
 			throws Exception {
 		GetAllPositionPageDtoRes data = positionService.getAllWithPage(start, max);
 		return new ResponseEntity<GetAllPositionPageDtoRes>(data, HttpStatus.OK);
+	}
+	
+	@DeleteMapping("multiple")
+	public ResponseEntity<DeleteMultiplePositionDtoRes> deleteById(@RequestBody DeleteMultiplePositionDtoReq dataReq) throws Exception {
+		DeleteMultiplePositionDtoRes dataRes = positionService.deleteMultiple(dataReq);
+		return new ResponseEntity<DeleteMultiplePositionDtoRes>(dataRes, HttpStatus.OK);
 	}
 }

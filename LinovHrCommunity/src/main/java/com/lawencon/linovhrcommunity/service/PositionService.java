@@ -7,7 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.linovhrcommunity.dao.PositionDao;
+import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoDataReq;
+import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoReq;
+import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoRes;
 import com.lawencon.linovhrcommunity.dto.position.DeleteByIdPositionDtoRes;
+import com.lawencon.linovhrcommunity.dto.position.DeleteMultiplePositionDtoDataReq;
+import com.lawencon.linovhrcommunity.dto.position.DeleteMultiplePositionDtoReq;
+import com.lawencon.linovhrcommunity.dto.position.DeleteMultiplePositionDtoRes;
 import com.lawencon.linovhrcommunity.dto.position.GetAllPositionDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.position.GetAllPositionDtoRes;
 import com.lawencon.linovhrcommunity.dto.position.GetAllPositionPageDtoDataRes;
@@ -165,4 +171,28 @@ public class PositionService extends BaseServiceLinovCommunityImpl {
 		}
 	}
 
+	public DeleteMultiplePositionDtoRes deleteMultiple(DeleteMultiplePositionDtoReq data) throws Exception {
+		DeleteMultiplePositionDtoRes dataRes = new DeleteMultiplePositionDtoRes();
+		boolean isDeleted = false;
+		try {
+			begin();
+			List<DeleteMultiplePositionDtoDataReq> dataReq = data.getData();
+			for(int i=0; i<dataReq.size();i++) {
+				isDeleted = positionDao.deleteById(dataReq.get(i).getId());
+			}
+
+			if (isDeleted) {
+				dataRes.setMessage("Delete Success");
+			} else {
+				throw new Exception("Delete Failed");
+			}
+			commit();
+
+			return dataRes;
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
+	}
 }

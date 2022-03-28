@@ -7,7 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.linovhrcommunity.dao.PriceTypeDao;
+import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoDataReq;
+import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoReq;
+import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricetype.DeleteByIdPriceTypeDtoRes;
+import com.lawencon.linovhrcommunity.dto.pricetype.DeleteMultiplePriceTypeDtoDataReq;
+import com.lawencon.linovhrcommunity.dto.pricetype.DeleteMultiplePriceTypeDtoReq;
+import com.lawencon.linovhrcommunity.dto.pricetype.DeleteMultiplePriceTypeDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricetype.GetAllPriceTypeDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.pricetype.GetAllPriceTypeDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricetype.GetAllPriceTypePageDtoDataRes;
@@ -162,4 +168,28 @@ public class PriceTypeService extends BaseServiceLinovCommunityImpl {
 		}
 	}
 
+	public DeleteMultiplePriceTypeDtoRes deleteMultiple(DeleteMultiplePriceTypeDtoReq data) throws Exception {
+		DeleteMultiplePriceTypeDtoRes dataRes = new DeleteMultiplePriceTypeDtoRes();
+		boolean isDeleted = false;
+		try {
+			begin();
+			List<DeleteMultiplePriceTypeDtoDataReq> dataReq = data.getData();
+			for(int i=0; i<dataReq.size();i++) {
+				isDeleted = priceTypeDao.deleteById(dataReq.get(i).getId());
+			}
+
+			if (isDeleted) {
+				dataRes.setMessage("Delete Success");
+			} else {
+				throw new Exception("Delete Failed");
+			}
+			commit();
+
+			return dataRes;
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
+	}
 }

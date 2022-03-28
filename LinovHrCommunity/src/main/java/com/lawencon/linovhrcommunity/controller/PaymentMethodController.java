@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoReq;
+import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoRes;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.DeleteByIdPaymentMethodRes;
+import com.lawencon.linovhrcommunity.dto.paymentmethod.DeleteMultiplePaymentMethodDtoReq;
+import com.lawencon.linovhrcommunity.dto.paymentmethod.DeleteMultiplePaymentMethodDtoRes;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.GetAllPaymentMethodDtoRes;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.GetAllPaymentMethodPageDtoRes;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.GetByIdPaymentMethodDtoRes;
@@ -37,13 +41,15 @@ public class PaymentMethodController {
 	}
 
 	@PostMapping
-	public ResponseEntity<InsertPaymentMethodDtoRes> insertData(@RequestBody @Valid InsertPaymentMethodDtoReq request) throws Exception {
+	public ResponseEntity<InsertPaymentMethodDtoRes> insertData(@RequestBody @Valid InsertPaymentMethodDtoReq request)
+			throws Exception {
 		InsertPaymentMethodDtoRes response = paymentMethodService.insert(request);
 		return new ResponseEntity<InsertPaymentMethodDtoRes>(response, HttpStatus.CREATED);
 	}
 
 	@PutMapping
-	public ResponseEntity<UpdatePaymentMethodDtoRes> updateData(@RequestBody @Valid UpdatePaymentMethodDtoReq request) throws Exception {
+	public ResponseEntity<UpdatePaymentMethodDtoRes> updateData(@RequestBody @Valid UpdatePaymentMethodDtoReq request)
+			throws Exception {
 		UpdatePaymentMethodDtoRes response = paymentMethodService.update(request);
 		return new ResponseEntity<UpdatePaymentMethodDtoRes>(response, HttpStatus.OK);
 	}
@@ -65,7 +71,7 @@ public class PaymentMethodController {
 		DeleteByIdPaymentMethodRes result = paymentMethodService.deleteById(id);
 		return new ResponseEntity<DeleteByIdPaymentMethodRes>(result, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("page")
 	public ResponseEntity<GetAllPaymentMethodPageDtoRes> getAllWithPage(@RequestParam int start, @RequestParam int max)
 			throws Exception {
@@ -73,4 +79,10 @@ public class PaymentMethodController {
 		return new ResponseEntity<GetAllPaymentMethodPageDtoRes>(data, HttpStatus.OK);
 	}
 
+	@DeleteMapping("multiple")
+	public ResponseEntity<DeleteMultiplePaymentMethodDtoRes> deleteById(@RequestBody DeleteMultiplePaymentMethodDtoReq dataReq)
+			throws Exception {
+		DeleteMultiplePaymentMethodDtoRes dataRes = paymentMethodService.deleteMultiple(dataReq);
+		return new ResponseEntity<DeleteMultiplePaymentMethodDtoRes>(dataRes, HttpStatus.OK);
+	}
 }

@@ -3,13 +3,13 @@ package com.lawencon.linovhrcommunity.dto.industry;
 import java.util.List;
 
 public class DeleteMultipleIndustryDtoReq {
-	private List<String> id;
+	private List<DeleteMultipleIndustryDtoDataReq> data;
 
-	public List<String> getId() {
-		return id;
+	public List<DeleteMultipleIndustryDtoDataReq> getData() {
+		return data;
 	}
 
-	public void setId(List<String> id) {
-		this.id = id;
+	public void setData(List<DeleteMultipleIndustryDtoDataReq> data) {
+		this.data = data;
 	}
 }

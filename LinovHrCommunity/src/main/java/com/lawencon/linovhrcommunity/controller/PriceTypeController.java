@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoReq;
+import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricetype.DeleteByIdPriceTypeDtoRes;
+import com.lawencon.linovhrcommunity.dto.pricetype.DeleteMultiplePriceTypeDtoReq;
+import com.lawencon.linovhrcommunity.dto.pricetype.DeleteMultiplePriceTypeDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricetype.GetAllPriceTypeDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricetype.GetAllPriceTypePageDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricetype.GetByIdPriceTypeDtoRes;
@@ -74,5 +78,11 @@ public class PriceTypeController {
 			throws Exception {
 		GetAllPriceTypePageDtoRes data = priceTypeService.getAllWithPage(start, max);
 		return new ResponseEntity<GetAllPriceTypePageDtoRes>(data, HttpStatus.OK);
+	}
+	
+	@DeleteMapping("multiple")
+	public ResponseEntity<DeleteMultiplePriceTypeDtoRes> deleteById(@RequestBody DeleteMultiplePriceTypeDtoReq dataReq) throws Exception {
+		DeleteMultiplePriceTypeDtoRes dataRes = priceTypeService.deleteMultiple(dataReq);
+		return new ResponseEntity<DeleteMultiplePriceTypeDtoRes>(dataRes, HttpStatus.OK);
 	}
 }

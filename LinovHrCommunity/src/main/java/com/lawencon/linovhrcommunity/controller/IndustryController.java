@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.linovhrcommunity.dto.industry.DeleteByIdIndustryDtoRes;
+import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoReq;
+import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoRes;
 import com.lawencon.linovhrcommunity.dto.industry.GetAllIndustryDtoRes;
 import com.lawencon.linovhrcommunity.dto.industry.GetAllIndustryPageDtoRes;
 import com.lawencon.linovhrcommunity.dto.industry.GetByIdIndustryDtoRes;
@@ -73,5 +75,11 @@ public class IndustryController {
 			throws Exception {
 		GetAllIndustryPageDtoRes data = industryService.getAllWithPage(start, max);
 		return new ResponseEntity<GetAllIndustryPageDtoRes>(data, HttpStatus.OK);
+	}
+	
+	@DeleteMapping("multiple")
+	public ResponseEntity<DeleteMultipleIndustryDtoRes> deleteById(@RequestBody DeleteMultipleIndustryDtoReq dataReq) throws Exception {
+		DeleteMultipleIndustryDtoRes dataRes = industryService.deleteMultiple(dataReq);
+		return new ResponseEntity<DeleteMultipleIndustryDtoRes>(dataRes, HttpStatus.OK);
 	}
 }

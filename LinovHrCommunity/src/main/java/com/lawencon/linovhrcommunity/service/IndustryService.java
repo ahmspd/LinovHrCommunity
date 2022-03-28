@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.linovhrcommunity.dao.IndustryDao;
 import com.lawencon.linovhrcommunity.dto.industry.DeleteByIdIndustryDtoRes;
+import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoDataReq;
 import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoReq;
 import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoRes;
 import com.lawencon.linovhrcommunity.dto.industry.GetAllIndustryDtoDataRes;
@@ -157,6 +158,31 @@ public class IndustryService extends BaseServiceLinovCommunityImpl {
 			} else {
 				throw new Exception("Delete Failed");
 			}
+
+			return dataRes;
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
+	}
+	
+	public DeleteMultipleIndustryDtoRes deleteMultiple(DeleteMultipleIndustryDtoReq data) throws Exception {
+		DeleteMultipleIndustryDtoRes dataRes = new DeleteMultipleIndustryDtoRes();
+		boolean isDeleted = false;
+		try {
+			begin();
+			List<DeleteMultipleIndustryDtoDataReq> dataReq = data.getData();
+			for(int i=0; i<dataReq.size();i++) {
+				isDeleted = industryDao.deleteById(dataReq.get(i).getId());
+			}
+
+			if (isDeleted) {
+				dataRes.setMessage("Delete Success");
+			} else {
+				throw new Exception("Delete Failed");
+			}
+			commit();
 
 			return dataRes;
 		} catch (Exception e) {
