@@ -1,5 +1,6 @@
 package com.lawencon.linovhrcommunity.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -26,4 +27,16 @@ public class PollingDetailDao extends BaseDaoImpl<PollingDetail> {
 		return super.deleteById(id);
 	}
 
+	public List<PollingDetail> findByIdPolling(String id) throws Exception {
+		String sql = "select id from t_polling_detail tpd where tpd.id_polling = :id";
+		List<?> results = createNativeQuery(sql).setParameter("id", id).getResultList();
+		List<PollingDetail> dataRes = new ArrayList<PollingDetail>();
+		results.forEach(result -> {
+			Object[] obj = (Object[]) result;
+			PollingDetail reqData = new PollingDetail();
+			reqData.setId(obj[0].toString());
+			dataRes.add(reqData);
+		});
+		return dataRes;
+	}
 }

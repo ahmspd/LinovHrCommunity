@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.linovhrcommunity.dto.eventcoursetype.DeleteByIdEventCourseTypeRes;
@@ -65,8 +66,8 @@ public class EventCourseTypeController {
 		return new ResponseEntity<DeleteByIdEventCourseTypeRes>(result, HttpStatus.OK);
 	}
 
-	@GetMapping("/{start}/{max}")
-	public ResponseEntity<GetAllEventCourseTypePageDtoRes> getAllWithPage(@PathVariable int start, @PathVariable int max)
+	@GetMapping("page")
+	public ResponseEntity<GetAllEventCourseTypePageDtoRes> getAllWithPage(@RequestParam int start, @RequestParam int max)
 			throws Exception {
 		GetAllEventCourseTypePageDtoRes data = eventCourseTypeService.getAllWithPage(start, max);
 		return new ResponseEntity<GetAllEventCourseTypePageDtoRes>(data, HttpStatus.OK);

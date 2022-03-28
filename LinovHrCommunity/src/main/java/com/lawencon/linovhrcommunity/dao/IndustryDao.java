@@ -25,5 +25,4 @@ public class IndustryDao extends BaseDaoImpl<Industry> {
 	public boolean deleteById(String id) throws Exception {
 		return super.deleteById(id);
 	}
-
 }

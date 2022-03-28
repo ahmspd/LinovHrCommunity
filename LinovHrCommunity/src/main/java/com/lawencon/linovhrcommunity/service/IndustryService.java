@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.linovhrcommunity.dao.IndustryDao;
 import com.lawencon.linovhrcommunity.dto.industry.DeleteByIdIndustryDtoRes;
+import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoReq;
+import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoRes;
 import com.lawencon.linovhrcommunity.dto.industry.GetAllIndustryDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.industry.GetAllIndustryDtoRes;
 import com.lawencon.linovhrcommunity.dto.industry.GetAllIndustryPageDtoDataRes;
@@ -109,7 +111,7 @@ public class IndustryService extends BaseServiceLinovCommunityImpl {
 	public GetAllIndustryPageDtoRes getAllWithPage(int startPage, int maxPage) throws Exception {
 		Long total = industryDao.countAll();
 		List<GetAllIndustryPageDtoDataRes> datas = new ArrayList<GetAllIndustryPageDtoDataRes>();
-		List<Industry> industrys = industryDao.findAll();
+		List<Industry> industrys = industryDao.getAll(startPage, maxPage);
 
 		industrys.forEach(industry -> {
 			GetAllIndustryPageDtoDataRes data = new GetAllIndustryPageDtoDataRes();
@@ -163,5 +165,4 @@ public class IndustryService extends BaseServiceLinovCommunityImpl {
 			throw new Exception(e);
 		}
 	}
-
 }

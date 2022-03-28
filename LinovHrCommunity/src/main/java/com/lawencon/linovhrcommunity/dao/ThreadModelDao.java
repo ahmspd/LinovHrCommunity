@@ -34,7 +34,7 @@ public class ThreadModelDao extends BaseDaoImpl<ThreadModel> {
 
 	public List<GetThreadDataDtoRes> getAllThread() throws Exception {
 		StringBuilder sql = new StringBuilder();
-		sql.append("select tt.id , tt.title , tt.contents, tt.id_file , tf.extensions , tf.contents, ttt.thread_type_name, tt.is_premium, tt.created_at , tt.created_by , tp.full_name ");
+		sql.append("select tt.id , tt.title , tt.contents, tt.id_file as idFile , tf.extensions , tf.contents as fileContents, ttt.thread_type_name, tt.is_premium, tt.created_at , tt.created_by , tp.full_name ");
 		sql.append("from t_thread tt left join t_file tf on tt.id_file = tf.id  ");
 		sql.append("left join t_thread_type ttt on tt.id_thread_type = ttt.id ");
 		sql.append("left join t_user tu on tu.id = tt.created_by ");
@@ -48,7 +48,7 @@ public class ThreadModelDao extends BaseDaoImpl<ThreadModel> {
 			reqData.setId(obj[0].toString());
 			reqData.setTitle(obj[1].toString());
 			reqData.setContents(obj[2].toString());
-			reqData.setIdFile(obj[3].toString());
+			reqData.setIdFile((obj[3]!=null)? obj[3].toString():null);
 			reqData.setThreadTypeName(obj[6].toString());
 			reqData.setIsPremium(Boolean.valueOf(obj[7].toString()));
 			reqData.setCreatedAt(((Timestamp) obj[8]).toLocalDateTime());
@@ -61,7 +61,7 @@ public class ThreadModelDao extends BaseDaoImpl<ThreadModel> {
 	
 	public List<GetThreadDataDtoRes> getThreadByUser(String id) throws Exception {
 		StringBuilder sql = new StringBuilder();
-		sql.append("select tt.id , tt.title , tt.contents, tt.id_file , tf.extensions , tf.contents, ttt.thread_type_name, tt.is_premium, tt.created_at , tt.created_by , tp.full_name ");
+		sql.append("select tt.id , tt.title , tt.contents, tt.id_file as idFile , tf.extensions , tf.contents as fileContents, ttt.thread_type_name, tt.is_premium, tt.created_at , tt.created_by , tp.full_name ");
 		sql.append("from t_thread tt left join t_file tf on tt.id_file = tf.id  ");
 		sql.append("left join t_thread_type ttt on tt.id_thread_type = ttt.id ");
 		sql.append("left join t_user tu on tu.id = tt.created_by ");
@@ -75,7 +75,7 @@ public class ThreadModelDao extends BaseDaoImpl<ThreadModel> {
 			reqData.setId(obj[0].toString());
 			reqData.setTitle(obj[1].toString());
 			reqData.setContents(obj[2].toString());
-			reqData.setIdFile(obj[3].toString());
+			reqData.setIdFile((obj[3]!=null)? obj[3].toString():null);
 			reqData.setThreadTypeName(obj[6].toString());
 			reqData.setIsPremium(Boolean.valueOf(obj[7].toString()));
 			reqData.setCreatedAt(((Timestamp) obj[8]).toLocalDateTime());
@@ -88,7 +88,7 @@ public class ThreadModelDao extends BaseDaoImpl<ThreadModel> {
 	
 	public List<GetThreadDataDtoRes> getThreadPremium(Boolean isPremium) throws Exception {
 		StringBuilder sql = new StringBuilder();
-		sql.append("select tt.id , tt.title , tt.contents, tt.id_file , tf.extensions , tf.contents, ttt.thread_type_name, tt.is_premium, tt.created_at , tt.created_by , tp.full_name ");
+		sql.append("select tt.id , tt.title , tt.contents, tt.id_file as idFile , tf.extensions , tf.contents as fileContents, ttt.thread_type_name, tt.is_premium, tt.created_at , tt.created_by , tp.full_name ");
 		sql.append("from t_thread tt left join t_file tf on tt.id_file = tf.id  ");
 		sql.append("left join t_thread_type ttt on tt.id_thread_type = ttt.id ");
 		sql.append("left join t_user tu on tu.id = tt.created_by ");
@@ -102,7 +102,7 @@ public class ThreadModelDao extends BaseDaoImpl<ThreadModel> {
 			reqData.setId(obj[0].toString());
 			reqData.setTitle(obj[1].toString());
 			reqData.setContents(obj[2].toString());
-			reqData.setIdFile(obj[3].toString());
+			reqData.setIdFile((obj[3]!=null)? obj[3].toString():null);
 			reqData.setThreadTypeName(obj[6].toString());
 			reqData.setIsPremium(Boolean.valueOf(obj[7].toString()));
 			reqData.setCreatedAt(((Timestamp) obj[8]).toLocalDateTime());
@@ -115,7 +115,7 @@ public class ThreadModelDao extends BaseDaoImpl<ThreadModel> {
 	
 	public List<GetThreadDataDtoRes> getThreadByType(String idType) throws Exception {
 		StringBuilder sql = new StringBuilder();
-		sql.append("select tt.id , tt.title , tt.contents, tt.id_file , tf.extensions , tf.contents, ttt.thread_type_name, tt.is_premium, tt.created_at , tt.created_by , tp.full_name ");
+		sql.append("select tt.id , tt.title , tt.contents, tt.id_file as idFile , tf.extensions , tf.contents as fileContents, ttt.thread_type_name, tt.is_premium, tt.created_at , tt.created_by , tp.full_name ");
 		sql.append("from t_thread tt left join t_file tf on tt.id_file = tf.id  ");
 		sql.append("left join t_thread_type ttt on tt.id_thread_type = ttt.id ");
 		sql.append("left join t_user tu on tu.id = tt.created_by ");
@@ -129,7 +129,7 @@ public class ThreadModelDao extends BaseDaoImpl<ThreadModel> {
 			reqData.setId(obj[0].toString());
 			reqData.setTitle(obj[1].toString());
 			reqData.setContents(obj[2].toString());
-			reqData.setIdFile(obj[3].toString());
+			reqData.setIdFile((obj[3]!=null)? obj[3].toString():null);
 			reqData.setThreadTypeName(obj[6].toString());
 			reqData.setIsPremium(Boolean.valueOf(obj[7].toString()));
 			reqData.setCreatedAt(((Timestamp) obj[8]).toLocalDateTime());
@@ -142,11 +142,11 @@ public class ThreadModelDao extends BaseDaoImpl<ThreadModel> {
 	
 	public List<GetThreadPollingDtoDataRes> getAllThreadPolling() throws Exception {
 		StringBuilder sql = new StringBuilder();
-		sql.append("select tt.id , tt.title , tt.contents, tt.id_file , tf.extensions , tf.contents, ttt.thread_type_name, tt.is_premium, tt.created_at , tt.created_by , tp.full_name, tpl.polling_name, tpl.id ");
+		sql.append("select tt.id , tt.title , tt.contents as threadContent, tt.id_file , tf.extensions , tf.contents, ttt.thread_type_name, tt.is_premium, tt.created_at , tt.created_by , tp.full_name, tpl.polling_name, tpl.id as tplId ");
 		sql.append("from t_thread tt left join t_file tf on tt.id_file = tf.id  ");
 		sql.append("left join t_thread_type ttt on tt.id_thread_type = ttt.id  ");
 		sql.append("left join t_user tu on tu.id = tt.created_by ");
-		sql.append("left join t_profile tp on tp.id_user = tu.id");
+		sql.append("left join t_profile tp on tp.id_user = tu.id ");
 		sql.append("left join t_polling tpl on tpl.id_thread = tt.id ");
 		sql.append("where tt.id_thread_type = (select id from t_thread_type ttt where ttt.code='PL0001');");
 		
@@ -158,7 +158,7 @@ public class ThreadModelDao extends BaseDaoImpl<ThreadModel> {
 			reqData.setId(obj[0].toString());
 			reqData.setTitle(obj[1].toString());
 			reqData.setContents(obj[2].toString());
-			reqData.setIdFile(obj[3].toString());
+			reqData.setIdFile((obj[3]!=null)? obj[3].toString():null);
 			reqData.setThreadTypeName(obj[6].toString());
 			reqData.setIsPremium(Boolean.valueOf(obj[7].toString()));
 			reqData.setCreatedAt(obj[8].toString());
@@ -173,11 +173,11 @@ public class ThreadModelDao extends BaseDaoImpl<ThreadModel> {
 	
 	public List<GetThreadPollingDtoDataRes> getAllThreadPollingByUser(String idUser) throws Exception {
 		StringBuilder sql = new StringBuilder();
-		sql.append("select tt.id , tt.title , tt.contents, tt.id_file , tf.extensions , tf.contents, ttt.thread_type_name, tt.is_premium, tt.created_at , tt.created_by , tp.full_name, tpl.polling_name, tpl.id ");
+		sql.append("select tt.id , tt.title , tt.contents as threadContent, tt.id_file , tf.extensions , tf.contents, ttt.thread_type_name, tt.is_premium, tt.created_at , tt.created_by , tp.full_name, tpl.polling_name, tpl.id as tplId ");
 		sql.append("from t_thread tt left join t_file tf on tt.id_file = tf.id  ");
 		sql.append("left join t_thread_type ttt on tt.id_thread_type = ttt.id  ");
 		sql.append("left join t_user tu on tu.id = tt.created_by ");
-		sql.append("left join t_profile tp on tp.id_user = tu.id");
+		sql.append("left join t_profile tp on tp.id_user = tu.id ");
 		sql.append("left join t_polling tpl on tpl.id_thread = tt.id ");
 		sql.append("where tt.id_thread_type = (select id from t_thread_type ttt where ttt.code='PL0001') ");
 		sql.append("and tt.created_by = :idUser ");
@@ -190,7 +190,7 @@ public class ThreadModelDao extends BaseDaoImpl<ThreadModel> {
 			reqData.setId(obj[0].toString());
 			reqData.setTitle(obj[1].toString());
 			reqData.setContents(obj[2].toString());
-			reqData.setIdFile(obj[3].toString());
+			reqData.setIdFile((obj[3]!=null)? obj[3].toString():null);
 			reqData.setThreadTypeName(obj[6].toString());
 			reqData.setIsPremium(Boolean.valueOf(obj[7].toString()));
 			reqData.setCreatedAt(obj[8].toString());

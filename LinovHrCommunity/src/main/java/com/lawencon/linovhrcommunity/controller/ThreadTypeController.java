@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.linovhrcommunity.dto.threadtype.DeleteByIdThreadTypeRes;
@@ -66,8 +67,8 @@ public class ThreadTypeController {
 		return new ResponseEntity<DeleteByIdThreadTypeRes>(result, HttpStatus.OK);
 	}
 
-	@GetMapping("/{start}/{max}")
-	public ResponseEntity<GetAllThreadTypePageDtoRes> getAllWithPage(@PathVariable int start, @PathVariable int max)
+	@GetMapping("page")
+	public ResponseEntity<GetAllThreadTypePageDtoRes> getAllWithPage(@RequestParam int start, @RequestParam int max)
 			throws Exception {
 		GetAllThreadTypePageDtoRes data = threadTypeService.getAllWithPage(start, max);
 		return new ResponseEntity<GetAllThreadTypePageDtoRes>(data, HttpStatus.OK);

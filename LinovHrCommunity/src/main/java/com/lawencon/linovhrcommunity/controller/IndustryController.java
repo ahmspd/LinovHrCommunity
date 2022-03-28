@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.linovhrcommunity.dto.industry.DeleteByIdIndustryDtoRes;
@@ -67,8 +68,8 @@ public class IndustryController {
 		return new ResponseEntity<DeleteByIdIndustryDtoRes>(dataRes, HttpStatus.OK);
 	}
 	
-	@GetMapping("/{start}/{max}")
-	public ResponseEntity<GetAllIndustryPageDtoRes> getAllWithPage(@PathVariable int start, @PathVariable int max)
+	@GetMapping("page")
+	public ResponseEntity<GetAllIndustryPageDtoRes> getAllWithPage(@RequestParam int start, @RequestParam int max)
 			throws Exception {
 		GetAllIndustryPageDtoRes data = industryService.getAllWithPage(start, max);
 		return new ResponseEntity<GetAllIndustryPageDtoRes>(data, HttpStatus.OK);

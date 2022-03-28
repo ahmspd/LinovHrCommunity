@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.linovhrcommunity.dto.paymentmethod.DeleteByIdPaymentMethodRes;
@@ -65,8 +66,8 @@ public class PaymentMethodController {
 		return new ResponseEntity<DeleteByIdPaymentMethodRes>(result, HttpStatus.OK);
 	}
 	
-	@GetMapping("/{start}/{max}")
-	public ResponseEntity<GetAllPaymentMethodPageDtoRes> getAllWithPage(@PathVariable int start, @PathVariable int max)
+	@GetMapping("page")
+	public ResponseEntity<GetAllPaymentMethodPageDtoRes> getAllWithPage(@RequestParam int start, @RequestParam int max)
 			throws Exception {
 		GetAllPaymentMethodPageDtoRes data = paymentMethodService.getAllWithPage(start, max);
 		return new ResponseEntity<GetAllPaymentMethodPageDtoRes>(data, HttpStatus.OK);

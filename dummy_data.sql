@@ -5,7 +5,20 @@ insert into t_role(id,code, role_name, created_at, "version") values
 
 insert into t_industry (id, code, industry_name, created_at, created_by , "version") values 
 	('1','IDS01', 'Industry 1', now(),'1', 0),
-	('2','IDS02', 'Industry 2', now(),'1', 0);
+	('2','IDS02', 'Industry 2', now(),'1', 0),
+	('3','IDS03', 'Industry 2', now(),'2', 0),
+    ('4','IDS04', 'Industry 2', now(),'2', 0),
+    ('5','IDS05', 'Industry 2', now(),'2', 0),
+    ('6','IDS06', 'Industry 2', now(),'2', 0),
+    ('7','IDS07', 'Industry 2', now(),'2', 0),
+    ('8','IDS08', 'Industry 2', now(),'2', 0),
+    ('9','IDS09', 'Industry 2', now(),'2', 0),
+    ('10','IDS10', 'Industry 2', now(),'2', 0),
+    ('11','IDS11', 'Industry 2', now(),'2', 0),
+    ('12','IDS12', 'Industry 2', now(),'2', 0),
+    ('13','IDS13', 'Industry 2', now(),'2', 0),
+    ('14','IDS14', 'Industry 2', now(),'2', 0),
+    ('15','IDS15', 'Industry 2', now(),'2', 0);
 
 insert into t_position (id,code, position_name, created_at,created_by ,"version") values 
 	('1','PS001', 'Position 1', now(),'1', 0),
@@ -184,4 +197,20 @@ left join t_profile tp on tp.id_user = tu.id
 left join t_polling tpl on tpl.id_thread = tt.id 
 where tt.id_thread_type = (select id from t_thread_type ttt where ttt.code='PL0001');
 
-select count(id) from t_like where id_thread = '1';
+select * from t_thread tt ;
+select * from t_polling tp;
+select * from t_polling_detail;
+select * from t_polling_detail_vote tpdv ;
+
+select count(tpdv.id) from t_polling_detail_vote tpdv left join t_polling_detail tpd 
+on tpdv.id_polling_detail = tpd.id where tpd.id_polling = '1';
+
+select id from t_polling_detail tpd where tpd.id_polling = '1'
+
+select count(id) from t_polling_detail_vote tpdv where tpdv.id_polling_detail = '2';
+
+
+select * from t_polling_detail_vote;
+select * from t_industry ti ;
+
+select count(id) as totalId from t_polling_detail_vote tpdv where tpdv.id_polling_detail = '1';

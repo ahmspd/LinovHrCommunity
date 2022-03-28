@@ -63,6 +63,7 @@ public class UserService extends BaseServiceLinovCommunityImpl implements UserDe
 		String passwordEncode = passwordEncoder.encode(data.getPassword());
 		userData.setPassword(passwordEncode);
 		userData.setRegistrationCode("123456");
+		userData.setIsActive(false);
 		
 		User users = new User();
 		try {

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.linovhrcommunity.dto.position.DeleteByIdPositionDtoRes;
@@ -99,8 +100,8 @@ public class PositionController {
 		return new ResponseEntity<byte[]>(JasperExportManager.exportReportToPdf(print), headers, HttpStatus.OK);
 	}
 	
-	@GetMapping("/{start}/{max}")
-	public ResponseEntity<GetAllPositionPageDtoRes> getAllWithPage(@PathVariable int start, @PathVariable int max)
+	@GetMapping("page")
+	public ResponseEntity<GetAllPositionPageDtoRes> getAllWithPage(@RequestParam int start, @RequestParam int max)
 			throws Exception {
 		GetAllPositionPageDtoRes data = positionService.getAllWithPage(start, max);
 		return new ResponseEntity<GetAllPositionPageDtoRes>(data, HttpStatus.OK);

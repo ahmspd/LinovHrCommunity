@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.linovhrcommunity.dto.role.DeleteByIdRoleRes;
@@ -64,8 +65,8 @@ public class RoleController {
 		return new ResponseEntity<DeleteByIdRoleRes>(result, HttpStatus.OK);
 	}
 
-	@GetMapping("/{start}/{max}")
-	public ResponseEntity<GetAllRolePageDtoRes> getAllWithPage(@PathVariable int start, @PathVariable int max) throws Exception {
+	@GetMapping("page")
+	public ResponseEntity<GetAllRolePageDtoRes> getAllWithPage(@RequestParam int start, @RequestParam int max) throws Exception {
 		GetAllRolePageDtoRes data = roleService.getAllWithPage(start, max);
 		return new ResponseEntity<GetAllRolePageDtoRes>(data, HttpStatus.OK);
 	}

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.linovhrcommunity.dto.pricetype.DeleteByIdPriceTypeDtoRes;
@@ -68,8 +69,8 @@ public class PriceTypeController {
 		return new ResponseEntity<DeleteByIdPriceTypeDtoRes>(dataRes, HttpStatus.OK);
 	}
 
-	@GetMapping("/{start}/{max}")
-	public ResponseEntity<GetAllPriceTypePageDtoRes> getAllWithPage(@PathVariable int start, @PathVariable int max)
+	@GetMapping("page")
+	public ResponseEntity<GetAllPriceTypePageDtoRes> getAllWithPage(@RequestParam int start, @RequestParam int max)
 			throws Exception {
 		GetAllPriceTypePageDtoRes data = priceTypeService.getAllWithPage(start, max);
 		return new ResponseEntity<GetAllPriceTypePageDtoRes>(data, HttpStatus.OK);
