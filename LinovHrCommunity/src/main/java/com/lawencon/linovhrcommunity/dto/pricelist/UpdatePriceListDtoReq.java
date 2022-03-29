@@ -18,6 +18,8 @@ public class UpdatePriceListDtoReq {
 	private String priceName;
 
 	private BigInteger price;
+	
+	private String idPriceType;
 
 	@NotNull(message = "Version Is Null")
 	private Integer version;
@@ -54,6 +56,14 @@ public class UpdatePriceListDtoReq {
 		this.price = price;
 	}
 
+	public String getIdPriceType() {
+		return idPriceType;
+	}
+
+	public void setIdPriceType(String idPriceType) {
+		this.idPriceType = idPriceType;
+	}
+
 	public Integer getVersion() {
 		return version;
 	}
@@ -61,5 +71,4 @@ public class UpdatePriceListDtoReq {
 	public void setVersion(Integer version) {
 		this.version = version;
 	}
-
 }

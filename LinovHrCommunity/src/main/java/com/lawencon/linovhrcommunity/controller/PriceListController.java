@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.linovhrcommunity.dto.pricelist.DeleteByIdPriceListDtoRes;
+import com.lawencon.linovhrcommunity.dto.pricelist.DeleteMultiplePriceListDtoReq;
+import com.lawencon.linovhrcommunity.dto.pricelist.DeleteMultiplePriceListDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricelist.GetAllPriceListDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricelist.GetAllPriceListPageDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricelist.GetByIdPriceListDtoRes;
@@ -23,6 +25,8 @@ import com.lawencon.linovhrcommunity.dto.pricelist.InsertPriceListDtoReq;
 import com.lawencon.linovhrcommunity.dto.pricelist.InsertPriceListDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricelist.UpdatePriceListDtoReq;
 import com.lawencon.linovhrcommunity.dto.pricelist.UpdatePriceListDtoRes;
+import com.lawencon.linovhrcommunity.dto.pricetype.DeleteMultiplePriceTypeDtoReq;
+import com.lawencon.linovhrcommunity.dto.pricetype.DeleteMultiplePriceTypeDtoRes;
 import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadTypePageDtoRes;
 import com.lawencon.linovhrcommunity.service.PriceListService;
 
@@ -73,5 +77,11 @@ public class PriceListController {
 			throws Exception {
 		GetAllPriceListPageDtoRes data = priceListService.getAllWithPage(start, max);
 		return new ResponseEntity<GetAllPriceListPageDtoRes>(data, HttpStatus.OK);
+	}
+	
+	@PostMapping("multiple")
+	public ResponseEntity<DeleteMultiplePriceListDtoRes> deleteById(@RequestBody DeleteMultiplePriceListDtoReq dataReq) throws Exception {
+		DeleteMultiplePriceListDtoRes dataRes = priceListService.deleteMultiple(dataReq);
+		return new ResponseEntity<DeleteMultiplePriceListDtoRes>(dataRes, HttpStatus.OK);
 	}
 }

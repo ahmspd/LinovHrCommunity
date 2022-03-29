@@ -8,6 +8,7 @@ public class GetByIdPriceListDtoDataRes {
 	private String code;
 	private String priceName;
 	private String priceTypeName;
+	private String idPriceType;
 	private BigInteger price;
 	private Integer version;
 	private Boolean isActive;
@@ -34,6 +35,12 @@ public class GetByIdPriceListDtoDataRes {
 	}
 	public void setPriceTypeName(String priceTypeName) {
 		this.priceTypeName = priceTypeName;
+	}
+	public String getIdPriceType() {
+		return idPriceType;
+	}
+	public void setIdPriceType(String idPriceType) {
+		this.idPriceType = idPriceType;
 	}
 	public BigInteger getPrice() {
 		return price;

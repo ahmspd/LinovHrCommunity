@@ -7,7 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.linovhrcommunity.dao.PriceListDao;
+import com.lawencon.linovhrcommunity.dao.PriceTypeDao;
 import com.lawencon.linovhrcommunity.dto.pricelist.DeleteByIdPriceListDtoRes;
+import com.lawencon.linovhrcommunity.dto.pricelist.DeleteMultiplePriceListDtoDataReq;
+import com.lawencon.linovhrcommunity.dto.pricelist.DeleteMultiplePriceListDtoReq;
+import com.lawencon.linovhrcommunity.dto.pricelist.DeleteMultiplePriceListDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricelist.GetAllPriceListDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.pricelist.GetAllPriceListDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricelist.GetAllPriceListPageDtoDataRes;
@@ -20,6 +24,9 @@ import com.lawencon.linovhrcommunity.dto.pricelist.InsertPriceListDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricelist.UpdatePriceListDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.pricelist.UpdatePriceListDtoReq;
 import com.lawencon.linovhrcommunity.dto.pricelist.UpdatePriceListDtoRes;
+import com.lawencon.linovhrcommunity.dto.pricetype.DeleteMultiplePriceTypeDtoDataReq;
+import com.lawencon.linovhrcommunity.dto.pricetype.DeleteMultiplePriceTypeDtoReq;
+import com.lawencon.linovhrcommunity.dto.pricetype.DeleteMultiplePriceTypeDtoRes;
 import com.lawencon.linovhrcommunity.model.PriceList;
 import com.lawencon.linovhrcommunity.model.PriceType;
 
@@ -27,13 +34,16 @@ import com.lawencon.linovhrcommunity.model.PriceType;
 public class PriceListService extends BaseServiceLinovCommunityImpl {
 
 	private PriceListDao priceListDao;
+	private PriceTypeDao priceTypeDao;
 
 	@Autowired
-	public PriceListService(PriceListDao priceListDao) {
+	public PriceListService(PriceListDao priceListDao,PriceTypeDao priceTypeDao) {
 		this.priceListDao = priceListDao;
+		this.priceTypeDao = priceTypeDao;
 	}
 
 	public InsertPriceListDtoRes insert(InsertPriceListDtoReq dataReq) throws Exception {
+		
 		PriceType priceTypeData = new PriceType();
 		priceTypeData.setId(dataReq.getIdPriceType());
 		priceTypeData.setVersion(0);
@@ -66,7 +76,10 @@ public class PriceListService extends BaseServiceLinovCommunityImpl {
 	}
 
 	public UpdatePriceListDtoRes update(UpdatePriceListDtoReq dataReq) throws Exception {
+		PriceType priceTypeData = priceTypeDao.getById(dataReq.getIdPriceType());
+		
 		PriceList updatePriceList = priceListDao.findById(dataReq.getId());
+		updatePriceList.setPriceType(priceTypeData);
 		updatePriceList.setPriceName(dataReq.getPriceName());
 		updatePriceList.setPrice(dataReq.getPrice());
 		updatePriceList.setUpdatedBy(getIdFromPrincipal());
@@ -120,6 +133,7 @@ public class PriceListService extends BaseServiceLinovCommunityImpl {
 		priceLists.forEach(priceList -> {
 			GetAllPriceListPageDtoDataRes data = new GetAllPriceListPageDtoDataRes();
 			data.setId(priceList.getId());
+			data.setCode(priceList.getCode());
 			data.setPriceName(priceList.getPriceName());
 			data.setPriveTypeName(priceList.getPriceType().getPriceTypeName());
 			data.setPrice(priceList.getPrice());
@@ -140,6 +154,8 @@ public class PriceListService extends BaseServiceLinovCommunityImpl {
 
 		GetByIdPriceListDtoDataRes data = new GetByIdPriceListDtoDataRes();
 		data.setId(getPriceList.getId());
+		data.setIdPriceType(getPriceList.getPriceType().getId());
+		data.setCode(getPriceList.getCode());
 		data.setPriceName(getPriceList.getPriceName());
 		data.setPriceTypeName(getPriceList.getPriceType().getPriceTypeName());
 		data.setPrice(getPriceList.getPrice());
@@ -172,4 +188,28 @@ public class PriceListService extends BaseServiceLinovCommunityImpl {
 		}
 	}
 
+	public DeleteMultiplePriceListDtoRes deleteMultiple(DeleteMultiplePriceListDtoReq data) throws Exception {
+		DeleteMultiplePriceListDtoRes dataRes = new DeleteMultiplePriceListDtoRes();
+		boolean isDeleted = false;
+		try {
+			begin();
+			List<DeleteMultiplePriceListDtoDataReq> dataReq = data.getData();
+			for(int i=0; i<dataReq.size();i++) {
+				isDeleted = priceListDao.deleteById(dataReq.get(i).getId());
+			}
+
+			if (isDeleted) {
+				dataRes.setMessage("Delete Success");
+			} else {
+				throw new Exception("Delete Failed");
+			}
+			commit();
+
+			return dataRes;
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
+	}
 }

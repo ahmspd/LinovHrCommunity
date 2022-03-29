@@ -7,7 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.linovhrcommunity.dao.ThreadTypeDao;
+import com.lawencon.linovhrcommunity.dto.pricelist.DeleteMultiplePriceListDtoDataReq;
+import com.lawencon.linovhrcommunity.dto.pricelist.DeleteMultiplePriceListDtoReq;
+import com.lawencon.linovhrcommunity.dto.pricelist.DeleteMultiplePriceListDtoRes;
 import com.lawencon.linovhrcommunity.dto.threadtype.DeleteByIdThreadTypeRes;
+import com.lawencon.linovhrcommunity.dto.threadtype.DeleteMultipleThreadTypeDtoDataReq;
+import com.lawencon.linovhrcommunity.dto.threadtype.DeleteMultipleThreadTypeDtoReq;
+import com.lawencon.linovhrcommunity.dto.threadtype.DeleteMultipleThreadTypeDtoRes;
 import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadTypeDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadTypeDtoRes;
 import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadTypePageDtoDataRes;
@@ -173,6 +179,31 @@ public class ThreadTypeService extends BaseServiceLinovCommunityImpl {
 		result.setTotal(total);
 		
 		return result;
+	}
+	
+	public DeleteMultipleThreadTypeDtoRes deleteMultiple(DeleteMultipleThreadTypeDtoReq data) throws Exception {
+		DeleteMultipleThreadTypeDtoRes dataRes = new DeleteMultipleThreadTypeDtoRes();
+		boolean isDeleted = false;
+		try {
+			begin();
+			List<DeleteMultipleThreadTypeDtoDataReq> dataReq = data.getData();
+			for(int i=0; i<dataReq.size();i++) {
+				isDeleted = threadTypeDao.deleteById(dataReq.get(i).getId());
+			}
+
+			if (isDeleted) {
+				dataRes.setMessage("Delete Success");
+			} else {
+				throw new Exception("Delete Failed");
+			}
+			commit();
+
+			return dataRes;
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
 	}
 
 }

@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lawencon.linovhrcommunity.dto.pricelist.DeleteMultiplePriceListDtoReq;
+import com.lawencon.linovhrcommunity.dto.pricelist.DeleteMultiplePriceListDtoRes;
 import com.lawencon.linovhrcommunity.dto.threadtype.DeleteByIdThreadTypeRes;
+import com.lawencon.linovhrcommunity.dto.threadtype.DeleteMultipleThreadTypeDtoReq;
+import com.lawencon.linovhrcommunity.dto.threadtype.DeleteMultipleThreadTypeDtoRes;
 import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadTypeDtoRes;
 import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadTypePageDtoRes;
 import com.lawencon.linovhrcommunity.dto.threadtype.GetByIdThreadTypeDtoRes;
@@ -72,5 +76,11 @@ public class ThreadTypeController {
 			throws Exception {
 		GetAllThreadTypePageDtoRes data = threadTypeService.getAllWithPage(start, max);
 		return new ResponseEntity<GetAllThreadTypePageDtoRes>(data, HttpStatus.OK);
+	}
+	
+	@PostMapping("multiple")
+	public ResponseEntity<DeleteMultipleThreadTypeDtoRes> deleteById(@RequestBody DeleteMultipleThreadTypeDtoReq dataReq) throws Exception {
+		DeleteMultipleThreadTypeDtoRes dataRes = threadTypeService.deleteMultiple(dataReq);
+		return new ResponseEntity<DeleteMultipleThreadTypeDtoRes>(dataRes, HttpStatus.OK);
 	}
 }
