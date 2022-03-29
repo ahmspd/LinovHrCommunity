@@ -39,7 +39,7 @@ public class EventCourseTypeService extends BaseServiceLinovCommunityImpl {
 			String name = dataReq.getEventTypeName();
 			newEventCourseType.setCode(code);
 			newEventCourseType.setEventTypeName(name);
-			newEventCourseType.setCreatedBy("1");
+			newEventCourseType.setCreatedBy(getIdFromPrincipal());
 
 			begin();
 			newEventCourseType = eventCourseTypeDao.save(newEventCourseType);
@@ -68,7 +68,7 @@ public class EventCourseTypeService extends BaseServiceLinovCommunityImpl {
 			String eventCourseTypeName = dataReq.getEventTypeName();
 			editEventCourseType.setCode(eventCourseTypeCode);
 			editEventCourseType.setEventTypeName(eventCourseTypeName);
-			editEventCourseType.setUpdatedBy("1");
+			editEventCourseType.setUpdatedBy(getIdFromPrincipal());
 			editEventCourseType.setVersion(dataReq.getVersion());
 
 			begin();

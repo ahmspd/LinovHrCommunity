@@ -79,7 +79,7 @@ public class PaymentMethodController {
 		return new ResponseEntity<GetAllPaymentMethodPageDtoRes>(data, HttpStatus.OK);
 	}
 
-	@DeleteMapping("multiple")
+	@PostMapping("multiple")
 	public ResponseEntity<DeleteMultiplePaymentMethodDtoRes> deleteById(@RequestBody DeleteMultiplePaymentMethodDtoReq dataReq)
 			throws Exception {
 		DeleteMultiplePaymentMethodDtoRes dataRes = paymentMethodService.deleteMultiple(dataReq);

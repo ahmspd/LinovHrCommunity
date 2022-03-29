@@ -39,7 +39,7 @@ public class RoleService extends BaseServiceLinovCommunityImpl {
 			String roleName = dataReq.getName();
 			newRole.setCode(roleCode);
 			newRole.setName(roleName);
-			newRole.setCreatedBy("1");
+			newRole.setCreatedBy(getIdFromPrincipal());
 			
 			begin();
 			newRole = roleDao.save(newRole);			
@@ -67,7 +67,7 @@ public class RoleService extends BaseServiceLinovCommunityImpl {
 			String roleName = dataReq.getName();
 			editRole.setCode(roleCode);
 			editRole.setName(roleName);
-			editRole.setUpdatedBy("1");
+			editRole.setUpdatedBy(getIdFromPrincipal());
 			editRole.setVersion(dataReq.getVersion());
 			
 			begin();

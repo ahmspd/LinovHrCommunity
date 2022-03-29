@@ -8,10 +8,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lawencon.linovhrcommunity.dao.BookmarkDao;
+import com.lawencon.linovhrcommunity.dao.FileDao;
 import com.lawencon.linovhrcommunity.dao.ProfileDao;
 import com.lawencon.linovhrcommunity.dao.UserDao;
+import com.lawencon.linovhrcommunity.dto.thread.InsertThreadDtoReq;
 import com.lawencon.linovhrcommunity.dto.user.InsertUserDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.user.InsertUserDtoReq;
 import com.lawencon.linovhrcommunity.dto.user.InsertUserDtoRes;
@@ -19,9 +23,15 @@ import com.lawencon.linovhrcommunity.dto.user.LoginUserDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.user.RegistrationCodeDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.user.RegistrationCodeDtoReq;
 import com.lawencon.linovhrcommunity.dto.user.RegistrationCodeDtoRes;
+import com.lawencon.linovhrcommunity.dto.user.UpdateUserDtoDataRes;
+import com.lawencon.linovhrcommunity.dto.user.UpdateUserDtoReq;
+import com.lawencon.linovhrcommunity.dto.user.UpdateUserDtoRes;
+import com.lawencon.linovhrcommunity.model.City;
+import com.lawencon.linovhrcommunity.model.File;
 import com.lawencon.linovhrcommunity.model.Industry;
 import com.lawencon.linovhrcommunity.model.Position;
 import com.lawencon.linovhrcommunity.model.Profile;
+import com.lawencon.linovhrcommunity.model.Province;
 import com.lawencon.linovhrcommunity.model.Role;
 import com.lawencon.linovhrcommunity.model.User;
 
@@ -31,6 +41,7 @@ public class UserService extends BaseServiceLinovCommunityImpl implements UserDe
 	private UserDao userDao;
 	private ProfileDao profileDao;
 	private BookmarkDao bookmarkDao;
+	private FileDao fileDao;
 	
 	private PasswordEncoder passwordEncoder;
 
@@ -40,9 +51,11 @@ public class UserService extends BaseServiceLinovCommunityImpl implements UserDe
 	}
 	
 	@Autowired
-	public UserService(UserDao userDao, ProfileDao profileDao) {
+	public UserService(UserDao userDao, ProfileDao profileDao, BookmarkDao bookmarkDao, FileDao fileDao) {
 		this.userDao = userDao;
 		this.profileDao = profileDao;
+		this.bookmarkDao = bookmarkDao;
+		this.fileDao = fileDao;
 	}
 //	email
 //	password
@@ -149,6 +162,65 @@ public class UserService extends BaseServiceLinovCommunityImpl implements UserDe
 			result.setMessage("Registraion Code Wrong");
 		}
 
+		return result;
+	}
+	
+	public UpdateUserDtoRes updateUser(String content, MultipartFile file) throws Exception {
+		UpdateUserDtoReq data = new ObjectMapper().readValue(content, UpdateUserDtoReq.class);
+		
+		Profile profileData = profileDao.findById(data.getId());
+		profileData.setFullName(data.getFullName());
+		profileData.setPhoneNumber(data.getPhoneNumber());
+		profileData.setPostalCode(data.getPostalCode());
+		
+		Industry industryData = new Industry();
+		industryData.setId(data.getIdIndustry());
+		industryData.setVersion(0);
+		
+		Position positionData = new Position();
+		positionData.setId(data.getIdPosition());
+		positionData.setVersion(0);
+		
+		Province provinceData = new Province();
+		provinceData.setId(data.getId());
+		provinceData.setVersion(0);
+		
+		City cityData = new City();
+		cityData.setId(data.getId());
+		cityData.setVersion(0);
+		
+		profileData.setIndustry(industryData);
+		profileData.setPosition(positionData);
+		profileData.setProvince(provinceData);
+		profileData.setCity(cityData);
+		
+		try {
+			begin();
+				File fileSave = new File();
+				if(file != null) {
+					File dataFile = new File();
+					String extName = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1,
+							file.getOriginalFilename().length());
+
+					dataFile.setExtensions(extName);
+					dataFile.setContents(file.getBytes());
+					dataFile.setCreatedBy(getIdFromPrincipal());
+					fileSave = fileDao.save(dataFile);
+				}
+				profileData.setFile(fileSave);
+				profileData = profileDao.save(profileData);
+			commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
+		UpdateUserDtoDataRes dataRes = new UpdateUserDtoDataRes();
+		dataRes.setVersion(profileData.getVersion());
+		UpdateUserDtoRes result = new UpdateUserDtoRes();
+		result.setMessage("success");
+		result.setData(dataRes);
+		
 		return result;
 	}
 }

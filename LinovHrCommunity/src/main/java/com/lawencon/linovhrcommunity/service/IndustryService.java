@@ -29,7 +29,6 @@ import com.lawencon.linovhrcommunity.model.Industry;
 public class IndustryService extends BaseServiceLinovCommunityImpl {
 
 	private IndustryDao industryDao;
-	private String createdById = "1";
 
 	@Autowired
 	public IndustryService(IndustryDao industryDao) {
@@ -40,7 +39,7 @@ public class IndustryService extends BaseServiceLinovCommunityImpl {
 		Industry addIndustry = new Industry();
 		addIndustry.setIndustryName(dataReq.getIndustryName());
 		addIndustry.setCode(dataReq.getCode());
-		addIndustry.setCreatedBy(createdById);
+		addIndustry.setCreatedBy(getIdFromPrincipal());
 
 		Industry industryAdded;
 		try {
@@ -67,7 +66,7 @@ public class IndustryService extends BaseServiceLinovCommunityImpl {
 		Industry updateIndustry = industryDao.findById(dataReq.getId());
 		updateIndustry.setIndustryName(dataReq.getIndustryName());
 		updateIndustry.setCode(dataReq.getCode());
-		updateIndustry.setUpdatedBy(createdById);
+		updateIndustry.setUpdatedBy(getIdFromPrincipal());
 		updateIndustry.setVersion(dataReq.getVersion());
 
 		Industry industryUpdated;

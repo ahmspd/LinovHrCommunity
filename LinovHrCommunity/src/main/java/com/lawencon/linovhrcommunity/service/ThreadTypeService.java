@@ -39,7 +39,7 @@ public class ThreadTypeService extends BaseServiceLinovCommunityImpl {
 			String threadTypeName = dataReq.getThreadTypeName();
 			newThreadType.setCode(threadTypeCode);
 			newThreadType.setThreadTypeName(threadTypeName);
-			newThreadType.setCreatedBy("1");
+			newThreadType.setCreatedBy(getIdFromPrincipal());
 			
 			begin();
 			newThreadType = threadTypeDao.save(newThreadType);			
@@ -67,7 +67,7 @@ public class ThreadTypeService extends BaseServiceLinovCommunityImpl {
 			String threadTypeName = dataReq.getThreadTypeName();
 			editThreadType.setCode(threadTypeCode);
 			editThreadType.setThreadTypeName(threadTypeName);
-			editThreadType.setUpdatedBy("1");
+			editThreadType.setUpdatedBy(getIdFromPrincipal());
 			editThreadType.setVersion(dataReq.getVersion());
 			
 			begin();

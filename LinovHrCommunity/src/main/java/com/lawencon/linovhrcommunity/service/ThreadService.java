@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lawencon.linovhrcommunity.constant.ThreadTypeCode;
 import com.lawencon.linovhrcommunity.dao.FileDao;
 import com.lawencon.linovhrcommunity.dao.PollingDao;
 import com.lawencon.linovhrcommunity.dao.PollingDetailDao;
@@ -91,7 +92,7 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 			}
 			dataThread.setFile(fileSave);
 			threadSave = threadDao.save(dataThread);
-			if (dataType.getCode().equals("PL0001")) {
+			if (dataType.getCode().equals(ThreadTypeCode.POLLING.getDetail())) {
 				Polling dataPolling = new Polling();
 				dataPolling.setThreadModel(threadSave);
 				dataPolling.setPollingName(data.getPollingName());
@@ -158,7 +159,7 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 	}
 	
 	public GetThreadPollingDtoRes getAllThreadPolling() throws Exception {
-		List<GetThreadPollingDtoDataRes> data = threadDao.getAllThreadPolling();
+		List<GetThreadPollingDtoDataRes> data = threadDao.getAllThreadPolling(ThreadTypeCode.POLLING.getDetail());
 		GetThreadPollingDtoRes result = new GetThreadPollingDtoRes();
 		result.setData(data);
 		
@@ -166,7 +167,7 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 	}
 	
 	public GetThreadPollingDtoRes getThreadPollingByUser(String idUser) throws Exception {
-		List<GetThreadPollingDtoDataRes> data = threadDao.getAllThreadPollingByUser(idUser);
+		List<GetThreadPollingDtoDataRes> data = threadDao.getAllThreadPollingByUser(ThreadTypeCode.POLLING.getDetail(), idUser);
 		GetThreadPollingDtoRes result = new GetThreadPollingDtoRes();
 		result.setData(data);
 		

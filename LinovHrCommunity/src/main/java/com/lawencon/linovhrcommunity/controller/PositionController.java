@@ -111,7 +111,7 @@ public class PositionController {
 		return new ResponseEntity<GetAllPositionPageDtoRes>(data, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("multiple")
+	@PostMapping("multiple")
 	public ResponseEntity<DeleteMultiplePositionDtoRes> deleteById(@RequestBody DeleteMultiplePositionDtoReq dataReq) throws Exception {
 		DeleteMultiplePositionDtoRes dataRes = positionService.deleteMultiple(dataReq);
 		return new ResponseEntity<DeleteMultiplePositionDtoRes>(dataRes, HttpStatus.OK);

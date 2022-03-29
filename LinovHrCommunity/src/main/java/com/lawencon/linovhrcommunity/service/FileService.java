@@ -25,7 +25,6 @@ import com.lawencon.linovhrcommunity.model.File;
 public class FileService extends BaseServiceLinovCommunityImpl {
 
 	private FileDao fileDao;
-	private String createdById = "1";
 
 	@Autowired
 	public FileService(FileDao fileDao) {
@@ -36,7 +35,7 @@ public class FileService extends BaseServiceLinovCommunityImpl {
 		File addFile = new File();
 		addFile.setExtensions(getExtension(file));
 		addFile.setContents(file.getBytes());
-		addFile.setCreatedBy(createdById);
+		addFile.setCreatedBy(getIdFromPrincipal());
 
 		File fileAdded;
 		try {
@@ -64,7 +63,7 @@ public class FileService extends BaseServiceLinovCommunityImpl {
 		File updateFile = fileDao.findById(dataReq.getId());
 		updateFile.setExtensions(getExtension(file));
 		updateFile.setContents(file.getBytes());
-		updateFile.setUpdatedBy(createdById);
+		updateFile.setUpdatedBy(getIdFromPrincipal());
 		updateFile.setVersion(dataReq.getVersion());
 
 		File fileUpdated;

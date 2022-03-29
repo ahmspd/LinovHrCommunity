@@ -7,9 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.linovhrcommunity.dao.PriceTypeDao;
-import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoDataReq;
-import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoReq;
-import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricetype.DeleteByIdPriceTypeDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricetype.DeleteMultiplePriceTypeDtoDataReq;
 import com.lawencon.linovhrcommunity.dto.pricetype.DeleteMultiplePriceTypeDtoReq;
@@ -32,7 +29,6 @@ import com.lawencon.linovhrcommunity.model.PriceType;
 public class PriceTypeService extends BaseServiceLinovCommunityImpl {
 
 	private PriceTypeDao priceTypeDao;
-	private String createdById = "1";
 
 	@Autowired
 	public PriceTypeService(PriceTypeDao priceTypeDao) {
@@ -68,7 +64,7 @@ public class PriceTypeService extends BaseServiceLinovCommunityImpl {
 	public UpdatePriceTypeDtoRes update(UpdatePriceTypeDtoReq dataReq) throws Exception {
 		PriceType updatePriceType = priceTypeDao.getById(dataReq.getId());
 		updatePriceType.setPriceTypeName(dataReq.getPriceTypeName());
-		updatePriceType.setUpdatedBy(createdById);
+		updatePriceType.setUpdatedBy(getIdFromPrincipal());
 		updatePriceType.setVersion(dataReq.getVersion());
 
 		PriceType priceTypeUpdated;

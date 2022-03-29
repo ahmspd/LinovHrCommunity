@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.linovhrcommunity.dao.PaymentMethodDao;
-import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoDataReq;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.DeleteByIdPaymentMethodRes;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.DeleteMultiplePaymentMethodDtoDataReq;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.DeleteMultiplePaymentMethodDtoReq;
@@ -43,7 +42,7 @@ public class PaymentMethodService extends BaseServiceLinovCommunityImpl {
 			String paymentMethodName = dataReq.getPaymentName();
 			newPaymentMethod.setCode(paymentMethodCode);
 			newPaymentMethod.setPaymentName(paymentMethodName);
-			newPaymentMethod.setCreatedBy("1");
+			newPaymentMethod.setCreatedBy(getIdFromPrincipal());
 			
 			begin();
 			newPaymentMethod = paymentMethodDao.save(newPaymentMethod);			
@@ -71,7 +70,7 @@ public class PaymentMethodService extends BaseServiceLinovCommunityImpl {
 			String paymentMethodName = dataReq.getPaymentName();
 			editPaymentMethod.setCode(paymentMethodCode);
 			editPaymentMethod.setPaymentName(paymentMethodName);
-			editPaymentMethod.setUpdatedBy("1");
+			editPaymentMethod.setUpdatedBy(getIdFromPrincipal());
 			editPaymentMethod.setVersion(dataReq.getVersion());
 			
 			begin();

@@ -77,7 +77,7 @@ public class IndustryController {
 		return new ResponseEntity<GetAllIndustryPageDtoRes>(data, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("multiple")
+	@PostMapping("multiple")
 	public ResponseEntity<DeleteMultipleIndustryDtoRes> deleteById(@RequestBody DeleteMultipleIndustryDtoReq dataReq) throws Exception {
 		DeleteMultipleIndustryDtoRes dataRes = industryService.deleteMultiple(dataReq);
 		return new ResponseEntity<DeleteMultipleIndustryDtoRes>(dataRes, HttpStatus.OK);

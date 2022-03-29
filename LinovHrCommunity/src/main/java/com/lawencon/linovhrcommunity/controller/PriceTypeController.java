@@ -80,7 +80,7 @@ public class PriceTypeController {
 		return new ResponseEntity<GetAllPriceTypePageDtoRes>(data, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("multiple")
+	@PostMapping("multiple")
 	public ResponseEntity<DeleteMultiplePriceTypeDtoRes> deleteById(@RequestBody DeleteMultiplePriceTypeDtoReq dataReq) throws Exception {
 		DeleteMultiplePriceTypeDtoRes dataRes = priceTypeService.deleteMultiple(dataReq);
 		return new ResponseEntity<DeleteMultiplePriceTypeDtoRes>(dataRes, HttpStatus.OK);

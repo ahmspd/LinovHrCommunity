@@ -7,9 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.linovhrcommunity.dao.PositionDao;
-import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoDataReq;
-import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoReq;
-import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoRes;
 import com.lawencon.linovhrcommunity.dto.position.DeleteByIdPositionDtoRes;
 import com.lawencon.linovhrcommunity.dto.position.DeleteMultiplePositionDtoDataReq;
 import com.lawencon.linovhrcommunity.dto.position.DeleteMultiplePositionDtoReq;
@@ -32,7 +29,6 @@ import com.lawencon.linovhrcommunity.model.Position;
 public class PositionService extends BaseServiceLinovCommunityImpl {
 
 	private PositionDao positionDao;
-	private String createdById = "1";
 
 	@Autowired
 	public PositionService(PositionDao positionDao) {
@@ -43,7 +39,7 @@ public class PositionService extends BaseServiceLinovCommunityImpl {
 		Position addPosition = new Position();
 		addPosition.setPositionName(dataReq.getPositionName());
 		addPosition.setCode(dataReq.getCode());
-		addPosition.setCreatedBy(createdById);
+		addPosition.setCreatedBy(getIdFromPrincipal());
 
 		Position positionAdded;
 		try {
@@ -69,7 +65,7 @@ public class PositionService extends BaseServiceLinovCommunityImpl {
 		Position updatePosition = positionDao.findById(dataReq.getId());
 		updatePosition.setPositionName(dataReq.getPositionName());
 		updatePosition.setCode(dataReq.getCode());
-		updatePosition.setUpdatedBy(createdById);
+		updatePosition.setUpdatedBy(getIdFromPrincipal());
 		updatePosition.setVersion(dataReq.getVersion());
 
 		Position positionUpdated;

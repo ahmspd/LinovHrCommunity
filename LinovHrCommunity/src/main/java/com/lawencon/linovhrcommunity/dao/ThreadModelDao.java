@@ -140,7 +140,7 @@ public class ThreadModelDao extends BaseDaoImpl<ThreadModel> {
 		return dataRes;
 	}
 	
-	public List<GetThreadPollingDtoDataRes> getAllThreadPolling() throws Exception {
+	public List<GetThreadPollingDtoDataRes> getAllThreadPolling(String codeThread) throws Exception {
 		StringBuilder sql = new StringBuilder();
 		sql.append("select tt.id , tt.title , tt.contents as threadContent, tt.id_file , tf.extensions , tf.contents, ttt.thread_type_name, tt.is_premium, tt.created_at , tt.created_by , tp.full_name, tpl.polling_name, tpl.id as tplId ");
 		sql.append("from t_thread tt left join t_file tf on tt.id_file = tf.id  ");
@@ -148,9 +148,11 @@ public class ThreadModelDao extends BaseDaoImpl<ThreadModel> {
 		sql.append("left join t_user tu on tu.id = tt.created_by ");
 		sql.append("left join t_profile tp on tp.id_user = tu.id ");
 		sql.append("left join t_polling tpl on tpl.id_thread = tt.id ");
-		sql.append("where tt.id_thread_type = (select id from t_thread_type ttt where ttt.code='PL0001');");
+		sql.append("where tt.id_thread_type = (select id from t_thread_type ttt where ttt.code= :codeThread);");
 		
-		List<?> results = createNativeQuery(sql.toString()).getResultList();
+		List<?> results = createNativeQuery(sql.toString())
+				.setParameter("codeThread", codeThread)
+				.getResultList();
 		List<GetThreadPollingDtoDataRes> dataRes = new ArrayList<GetThreadPollingDtoDataRes>();
 		results.forEach(result -> {
 			Object[] obj = (Object[]) result;
@@ -171,7 +173,7 @@ public class ThreadModelDao extends BaseDaoImpl<ThreadModel> {
 		return dataRes;
 	}
 	
-	public List<GetThreadPollingDtoDataRes> getAllThreadPollingByUser(String idUser) throws Exception {
+	public List<GetThreadPollingDtoDataRes> getAllThreadPollingByUser(String codeThread, String idUser) throws Exception {
 		StringBuilder sql = new StringBuilder();
 		sql.append("select tt.id , tt.title , tt.contents as threadContent, tt.id_file , tf.extensions , tf.contents, ttt.thread_type_name, tt.is_premium, tt.created_at , tt.created_by , tp.full_name, tpl.polling_name, tpl.id as tplId ");
 		sql.append("from t_thread tt left join t_file tf on tt.id_file = tf.id  ");
@@ -179,10 +181,13 @@ public class ThreadModelDao extends BaseDaoImpl<ThreadModel> {
 		sql.append("left join t_user tu on tu.id = tt.created_by ");
 		sql.append("left join t_profile tp on tp.id_user = tu.id ");
 		sql.append("left join t_polling tpl on tpl.id_thread = tt.id ");
-		sql.append("where tt.id_thread_type = (select id from t_thread_type ttt where ttt.code='PL0001') ");
+		sql.append("where tt.id_thread_type = (select id from t_thread_type ttt where ttt.code= :codeThread) ");
 		sql.append("and tt.created_by = :idUser ");
 		
-		List<?> results = createNativeQuery(sql.toString()).setParameter("idUser", idUser).getResultList();
+		List<?> results = createNativeQuery(sql.toString())
+				.setParameter("idUser", idUser)
+				.setParameter("codeThread", codeThread)
+				.getResultList();
 		List<GetThreadPollingDtoDataRes> dataRes = new ArrayList<GetThreadPollingDtoDataRes>();
 		results.forEach(result -> {
 			Object[] obj = (Object[]) result;

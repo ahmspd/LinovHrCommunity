@@ -201,6 +201,7 @@ select * from t_thread tt ;
 select * from t_polling tp;
 select * from t_polling_detail;
 select * from t_polling_detail_vote tpdv ;
+select * from t_industry ti 
 
 select count(tpdv.id) from t_polling_detail_vote tpdv left join t_polling_detail tpd 
 on tpdv.id_polling_detail = tpd.id where tpd.id_polling = '1';
@@ -211,6 +212,6 @@ select count(id) from t_polling_detail_vote tpdv where tpdv.id_polling_detail = 
 
 
 select * from t_polling_detail_vote;
-select * from t_industry ti ;
+select * from t_thread_type;
 
 select count(id) as totalId from t_polling_detail_vote tpdv where tpdv.id_polling_detail = '1';

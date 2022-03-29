@@ -20,7 +20,6 @@ import com.lawencon.linovhrcommunity.dto.pricelist.InsertPriceListDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricelist.UpdatePriceListDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.pricelist.UpdatePriceListDtoReq;
 import com.lawencon.linovhrcommunity.dto.pricelist.UpdatePriceListDtoRes;
-import com.lawencon.linovhrcommunity.dto.pricetype.GetAllPriceTypePageDtoRes;
 import com.lawencon.linovhrcommunity.model.PriceList;
 import com.lawencon.linovhrcommunity.model.PriceType;
 
@@ -28,7 +27,6 @@ import com.lawencon.linovhrcommunity.model.PriceType;
 public class PriceListService extends BaseServiceLinovCommunityImpl {
 
 	private PriceListDao priceListDao;
-	private String createdById = "1";
 
 	@Autowired
 	public PriceListService(PriceListDao priceListDao) {
@@ -45,7 +43,7 @@ public class PriceListService extends BaseServiceLinovCommunityImpl {
 		addPriceList.setPriceName(dataReq.getPriceName());
 		addPriceList.setPrice(dataReq.getPrice());
 		addPriceList.setPriceType(priceTypeData);
-		addPriceList.setCreatedBy(createdById);
+		addPriceList.setCreatedBy(getIdFromPrincipal());
 
 		PriceList priceListAdded;
 		try {
@@ -71,7 +69,7 @@ public class PriceListService extends BaseServiceLinovCommunityImpl {
 		PriceList updatePriceList = priceListDao.findById(dataReq.getId());
 		updatePriceList.setPriceName(dataReq.getPriceName());
 		updatePriceList.setPrice(dataReq.getPrice());
-		updatePriceList.setUpdatedBy(createdById);
+		updatePriceList.setUpdatedBy(getIdFromPrincipal());
 		updatePriceList.setVersion(dataReq.getVersion());
 
 		PriceList priceListUpdated;
