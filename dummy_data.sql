@@ -101,6 +101,11 @@ insert into t_like (id, id_thread, created_by, created_at, "version") values
 insert into t_thread_detail (id, id_thread, contents,created_by, created_at, "version") values
 	('1','1','content','1',now(),0);
 
+insert into t_category (id, category_name, code, created_by, created_at, "version") values 
+	('1', 'Sport', 'SPORT01', '1', now(), 0),
+	('2', 'Music', 'MUSIC01', '1', now(), 0),
+	('3', 'Bootcamp', 'BTCMP01', '1', now(), 0)
+
 select * from t_thread;
 select * from t_bookmark;
 --get all thread
@@ -215,3 +220,16 @@ select * from t_polling_detail_vote;
 select * from t_thread_type;
 
 select count(id) as totalId from t_polling_detail_vote tpdv where tpdv.id_polling_detail = '1';
+
+SELECT * FROM t_event_course_payment_detail
+WHERE created_by = '1' AND id_event_course_payment ISNULL;
+
+
+
+
+
+
+
+
+
+

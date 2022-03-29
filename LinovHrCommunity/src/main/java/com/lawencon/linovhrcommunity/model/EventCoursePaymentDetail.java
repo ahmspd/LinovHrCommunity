@@ -17,7 +17,8 @@ public class EventCoursePaymentDetail extends BaseEntity {
 	@JoinColumn(name = "id_event_course", nullable = false)
 	private EventCourse eventCourse;
 	
-	@JoinColumn(name = "id_event_course_payment", nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "id_event_course_payment")
 	private EventCoursePayment eventCoursePayment;
 
 	public EventCourse getEventCourse() {

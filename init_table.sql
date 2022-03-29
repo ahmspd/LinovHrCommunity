@@ -141,6 +141,21 @@ create table t_price_list(
 alter table t_price_list add constraint price_list_pk primary key(id);
 alter table t_price_list add constraint price_list_code_bk unique(code);
 alter table t_price_list add constraint price_list_type_fk foreign key(id_price_type) references t_price_type(id);
+
+create table t_category(
+	id varchar(36) DEFAULT uuid_generate_v4 (),
+	category_name varchar(30) NOT NULL,
+	code varchar(7) NOT NULL,
+	created_by varchar(36),
+	created_at timestamp without time zone,
+	updated_by varchar(36),
+	updated_at timestamp without time zone,
+	"version" int,
+	is_active boolean default true
+);
+alter table t_category add constraint t_category_pk primary key(id);
+alter table t_category add constraint category_bk unique(code);
+
 -- end master data
 
 create table t_user(
@@ -334,7 +349,7 @@ alter table t_bookmark add constraint t_bookmark_thread_fk foreign key(id_thread
 
 create table t_like(
 	id varchar(36) DEFAULT uuid_generate_v4 (),
-	id_thread varchar(36)NOT NULL,
+	id_thread varchar(36) NOT NULL,
 	created_by varchar(36),
 	created_at timestamp without time zone,
 	updated_by varchar(36),
@@ -348,6 +363,7 @@ alter table t_like add constraint t_like_thread_fk foreign key(id_thread) refere
 create table t_event_course(
 	id varchar(36) DEFAULT uuid_generate_v4 (),
 	id_event_course_type varchar(36)NOT NULL,
+	contents text NOT NULL,
 	title varchar(35) NOT NULL,
 	event_course_location varchar(50) NOT NULL,
 	price bigint NOT NULL,
@@ -356,6 +372,7 @@ create table t_event_course(
 	time_start time NOT NULL,
 	time_end time,
 	id_file varchar(36),
+	id_price_list varchar(36) NOT NULL,
 	created_by varchar(36),
 	created_at timestamp without time zone,
 	updated_by varchar(36),
@@ -365,15 +382,33 @@ create table t_event_course(
 );
 alter table t_event_course add constraint event_course_pk primary key(id);
 alter table t_event_course add constraint event_course_type_fk foreign key(id_event_course_type) references t_event_course_type(id);
-alter table t_event_course add constraint id_file_fk foreign key(id_file)  references t_file(id) ;
+alter table t_event_course add constraint id_file_fk foreign key(id_file)  references t_file(id);
+alter table t_event_course add constraint t_event_course_price_fk foreign key(id_price_list) references t_price_list(id);
+
+create table t_category_detail(
+	id varchar(36) DEFAULT uuid_generate_v4 (),
+	id_category varchar(36),
+	id_thread varchar(36),
+	id_event_course varchar(36),
+	created_by varchar(36),
+	created_at timestamp without time zone,
+	updated_by varchar(36),
+	updated_at timestamp without time zone,
+	"version" int,
+	is_active boolean default true
+);
+alter table t_category_detail add constraint t_category_detail_pk primary key(id);
+alter table t_category_detail add constraint t_category_detail_category_fk foreign key(id_category) references t_category(id);
+alter table t_category_detail add constraint t_category_detail_thread_fk foreign key(id_thread) references t_thread(id);
+alter table t_category_detail add constraint t_category_detail_event_course_fk foreign key(id_event_course) references t_event_course (id);
 
 create table t_event_course_payment(
 	id varchar(36) DEFAULT uuid_generate_v4 (),
 --	id_event_course varchar(36),
 	id_payment_method varchar(36),
 	is_accept boolean default false,
+	total_price bigint NOT NULL,
 	id_file varchar(36),
-	id_price_list varchar(36)NOT NULL,
 	invoice varchar(30),
 	created_by varchar(36),
 	created_at timestamp without time zone,
@@ -386,12 +421,11 @@ alter table t_event_course_payment add constraint event_course_payment_pk primar
 --alter table t_event_course_payment add constraint event_payment_event_course_fk foreign key(id_event) references t_event_course(id);
 alter table t_event_course_payment add constraint event_course_payment_fk foreign key(id_payment_method) references t_payment_method(id);
 alter table t_event_course_payment add constraint event_course_payment_file_fk foreign key(id_file) references t_file(id);
-alter table t_event_course_payment add constraint event_course_payment_price_fk foreign key(id_price_list) references t_price_list(id);
 
 create table t_event_course_payment_detail(
 	id varchar(36) DEFAULT uuid_generate_v4 (),
 	id_event_course varchar(36)NOT NULL,
-	id_event_course_payment varchar(36)NOT NULL,
+	id_event_course_payment varchar(36),
 	created_by varchar(36),
 	created_at timestamp without time zone,
 	updated_by varchar(36),
@@ -402,6 +436,7 @@ create table t_event_course_payment_detail(
 alter table t_event_course_payment_detail add constraint event_course_payment_detail_pk primary key(id);
 alter table t_event_course_payment_detail add constraint event_course_payment_detail_id_fk foreign key(id_event_course) references t_event_course(id);
 alter table t_event_course_payment_detail add constraint event_course_payment_fk foreign key(id_event_course_payment) references t_event_course_payment(id);
+
 
 create table t_order(
 	id varchar(36) DEFAULT uuid_generate_v4 (),

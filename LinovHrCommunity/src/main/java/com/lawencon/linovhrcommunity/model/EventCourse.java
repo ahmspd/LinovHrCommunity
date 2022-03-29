@@ -24,6 +24,9 @@ public class EventCourse extends BaseEntity {
 
 	@Column(name = "title", length = 35)
 	private String title;
+	
+	@Column(name = "contents", nullable = false, columnDefinition = "text")
+	private String contents;
 
 	@Column(name = "event_course_location", length = 50, nullable = false)
 	private String eventCourseLocation;
@@ -44,6 +47,10 @@ public class EventCourse extends BaseEntity {
 	private Time timeEnd;
 
 	@ManyToOne
+	@JoinColumn(name = "id_price_list", nullable = false)
+	private PriceList priceList;
+	
+	@ManyToOne
 	@JoinColumn(name = "id_file", unique = true)
 	private File file;
 
@@ -61,6 +68,14 @@ public class EventCourse extends BaseEntity {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getContents() {
+		return contents;
+	}
+
+	public void setContents(String contents) {
+		this.contents = contents;
 	}
 
 	public String getEventCourseLocation() {
@@ -109,6 +124,14 @@ public class EventCourse extends BaseEntity {
 
 	public void setTimeEnd(Time timeEnd) {
 		this.timeEnd = timeEnd;
+	}
+
+	public PriceList getPriceList() {
+		return priceList;
+	}
+
+	public void setPriceList(PriceList priceList) {
+		this.priceList = priceList;
 	}
 
 	public File getFile() {
