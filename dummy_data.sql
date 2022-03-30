@@ -104,8 +104,13 @@ insert into t_thread_detail (id, id_thread, contents,created_by, created_at, "ve
 insert into t_category (id, category_name, code, created_by, created_at, "version") values 
 	('1', 'Sport', 'SPORT01', '1', now(), 0),
 	('2', 'Music', 'MUSIC01', '1', now(), 0),
-	('3', 'Bootcamp', 'BTCMP01', '1', now(), 0)
+	('3', 'Bootcamp', 'BTCMP01', '1', now(), 0);
 
+insert into t_payment_method (id, code, payment_name, created_by, created_at, "version") values 
+	('1', 'CASH1', 'Cash', '1', now(), 0),
+	('2', 'CASH2', 'Cashless', '1', now(), 0);
+	
+	
 select * from t_thread;
 select * from t_bookmark;
 --get all thread
@@ -224,9 +229,13 @@ select count(id) as totalId from t_polling_detail_vote tpdv where tpdv.id_pollin
 SELECT * FROM t_event_course_payment_detail
 WHERE created_by = '1' AND id_event_course_payment ISNULL;
 
+SELECT id, id_event_course, id_event_course_payment, version, is_active
+FROM t_event_course_payment_detail
+WHERE id_event_course_payment = :id;
 
+SELECT id, id_event_course, id_event_course_payment, version, is_active FROM t_event_course_payment_detail WHERE id_event_course_payment = '72c3e975-b2da-4bd4-be34-290dbf538e7d';
 
-
+SELECT ec.id, ec.contents, ec.title, ec.event_course_location, ec.price, ec.date_start, ec.date_end, ec.time_start, ec.time_end, ec.id_file, f.extensions, f.contents, ec.created_by, p.full_name, ec.created_at, ec.version, ec.is_active FROM t_event_course ec INNER JOIN t_event_course_type ect ON ec.id_event_course_type = ect.id INNER JOIN t_file f ON ec.id_file = f.id INNER JOIN t_user u ON ec.created_by = u.id INNER JOIN t_profile p ON u.id = p.id_user WHERE ect.event_course_type_name = 'Event' AND ec.is_active = true;
 
 
 

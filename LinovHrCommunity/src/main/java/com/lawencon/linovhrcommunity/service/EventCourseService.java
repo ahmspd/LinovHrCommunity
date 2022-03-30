@@ -12,6 +12,7 @@ import com.lawencon.linovhrcommunity.dao.EventCoursePaymentDetailDao;
 import com.lawencon.linovhrcommunity.dao.EventCourseTypeDao;
 import com.lawencon.linovhrcommunity.dao.FileDao;
 import com.lawencon.linovhrcommunity.dao.PriceListDao;
+import com.lawencon.linovhrcommunity.dto.eventcourse.GetAllEventCourseDtoRes;
 import com.lawencon.linovhrcommunity.dto.eventcourse.InsertEventCourseDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.eventcourse.InsertEventCourseDtoReq;
 import com.lawencon.linovhrcommunity.dto.eventcourse.InsertEventCourseDtoRes;
@@ -69,7 +70,7 @@ public class EventCourseService extends BaseServiceLinovCommunityImpl {
 		this.eventCoursePaymentDetailDao = eventCoursePaymentDetailDao;
 	}
 
-	public InsertEventCourseDtoRes insert(String content, MultipartFile file) throws Exception {
+	public InsertEventCourseDtoRes pay(String content, MultipartFile file) throws Exception {
 		InsertEventCourseDtoReq data = new ObjectMapper().readValue(content, InsertEventCourseDtoReq.class);
 		
 		EventCourse eventCourseSave = new EventCourse();
@@ -118,6 +119,14 @@ public class EventCourseService extends BaseServiceLinovCommunityImpl {
 			eventCoursePaymentDetailSave.setEventCourse(eventCourseSave);
 			eventCoursePaymentDetailSave.setCreatedBy(getIdFromPrincipal());
 			eventCoursePaymentDetailSave = eventCoursePaymentDetailDao.save(eventCoursePaymentDetailSave);
+			InsertEventCourseDtoDataRes resultData = new InsertEventCourseDtoDataRes();
+			resultData.setId(eventCourseSave.getId());
+			
+			InsertEventCourseDtoRes result = new InsertEventCourseDtoRes();
+			result.setData(resultData);
+			result.setMessage("Success");
+			commit();
+			return result;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -125,19 +134,13 @@ public class EventCourseService extends BaseServiceLinovCommunityImpl {
 			throw new Exception(e);
 		}
 		
-		InsertEventCourseDtoDataRes resultData = new InsertEventCourseDtoDataRes();
-		resultData.setId(eventCourseSave.getId());
-		
-		InsertEventCourseDtoRes result = new InsertEventCourseDtoRes();
-		result.setData(resultData);
-		result.setMessage("Success");
-
-		return result;
 	}
 	
-	
-	
-	
-	
+	public GetAllEventCourseDtoRes getAllActive(String type) throws Exception {
+		GetAllEventCourseDtoRes dataRes = new GetAllEventCourseDtoRes();
+		dataRes.setData(eventCourseDao.getAllActive(type));
+		
+		return dataRes;
+	}
 
 }
