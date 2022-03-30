@@ -21,8 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoReq;
-import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoRes;
 import com.lawencon.linovhrcommunity.dto.position.DeleteByIdPositionDtoRes;
 import com.lawencon.linovhrcommunity.dto.position.DeleteMultiplePositionDtoReq;
 import com.lawencon.linovhrcommunity.dto.position.DeleteMultiplePositionDtoRes;
@@ -33,7 +31,6 @@ import com.lawencon.linovhrcommunity.dto.position.InsertPositionDtoReq;
 import com.lawencon.linovhrcommunity.dto.position.InsertPositionDtoRes;
 import com.lawencon.linovhrcommunity.dto.position.UpdatePositionDtoReq;
 import com.lawencon.linovhrcommunity.dto.position.UpdatePositionDtoRes;
-import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadTypePageDtoRes;
 import com.lawencon.linovhrcommunity.service.PositionService;
 
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -42,9 +39,6 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 
 @RestController
 @RequestMapping("positions")

@@ -15,7 +15,6 @@ import com.lawencon.linovhrcommunity.dao.BookmarkDao;
 import com.lawencon.linovhrcommunity.dao.FileDao;
 import com.lawencon.linovhrcommunity.dao.ProfileDao;
 import com.lawencon.linovhrcommunity.dao.UserDao;
-import com.lawencon.linovhrcommunity.dto.thread.InsertThreadDtoReq;
 import com.lawencon.linovhrcommunity.dto.user.InsertUserDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.user.InsertUserDtoReq;
 import com.lawencon.linovhrcommunity.dto.user.InsertUserDtoRes;

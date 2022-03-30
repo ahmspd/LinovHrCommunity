@@ -25,9 +25,6 @@ import com.lawencon.linovhrcommunity.dto.pricelist.InsertPriceListDtoReq;
 import com.lawencon.linovhrcommunity.dto.pricelist.InsertPriceListDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricelist.UpdatePriceListDtoReq;
 import com.lawencon.linovhrcommunity.dto.pricelist.UpdatePriceListDtoRes;
-import com.lawencon.linovhrcommunity.dto.pricetype.DeleteMultiplePriceTypeDtoReq;
-import com.lawencon.linovhrcommunity.dto.pricetype.DeleteMultiplePriceTypeDtoRes;
-import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadTypePageDtoRes;
 import com.lawencon.linovhrcommunity.service.PriceListService;
 
 @RestController

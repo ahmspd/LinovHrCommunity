@@ -7,9 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.linovhrcommunity.dao.ThreadTypeDao;
-import com.lawencon.linovhrcommunity.dto.pricelist.DeleteMultiplePriceListDtoDataReq;
-import com.lawencon.linovhrcommunity.dto.pricelist.DeleteMultiplePriceListDtoReq;
-import com.lawencon.linovhrcommunity.dto.pricelist.DeleteMultiplePriceListDtoRes;
 import com.lawencon.linovhrcommunity.dto.threadtype.DeleteByIdThreadTypeRes;
 import com.lawencon.linovhrcommunity.dto.threadtype.DeleteMultipleThreadTypeDtoDataReq;
 import com.lawencon.linovhrcommunity.dto.threadtype.DeleteMultipleThreadTypeDtoReq;

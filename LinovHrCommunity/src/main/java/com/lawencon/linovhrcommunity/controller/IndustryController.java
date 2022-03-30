@@ -25,7 +25,6 @@ import com.lawencon.linovhrcommunity.dto.industry.InsertIndustryDtoReq;
 import com.lawencon.linovhrcommunity.dto.industry.InsertIndustryDtoRes;
 import com.lawencon.linovhrcommunity.dto.industry.UpdateIndustryDtoReq;
 import com.lawencon.linovhrcommunity.dto.industry.UpdateIndustryDtoRes;
-import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadTypePageDtoRes;
 import com.lawencon.linovhrcommunity.service.IndustryService;
 
 @RestController

@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoReq;
-import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoRes;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.DeleteByIdPaymentMethodRes;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.DeleteMultiplePaymentMethodDtoReq;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.DeleteMultiplePaymentMethodDtoRes;
@@ -27,7 +25,6 @@ import com.lawencon.linovhrcommunity.dto.paymentmethod.InsertPaymentMethodDtoReq
 import com.lawencon.linovhrcommunity.dto.paymentmethod.InsertPaymentMethodDtoRes;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.UpdatePaymentMethodDtoReq;
 import com.lawencon.linovhrcommunity.dto.paymentmethod.UpdatePaymentMethodDtoRes;
-import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadTypePageDtoRes;
 import com.lawencon.linovhrcommunity.service.PaymentMethodService;
 
 @RestController

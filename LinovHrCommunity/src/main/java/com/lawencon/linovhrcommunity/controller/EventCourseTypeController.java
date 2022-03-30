@@ -23,7 +23,6 @@ import com.lawencon.linovhrcommunity.dto.eventcoursetype.InsertEventCourseTypeDt
 import com.lawencon.linovhrcommunity.dto.eventcoursetype.InsertEventCourseTypeDtoRes;
 import com.lawencon.linovhrcommunity.dto.eventcoursetype.UpdateEventCourseTypeDtoReq;
 import com.lawencon.linovhrcommunity.dto.eventcoursetype.UpdateEventCourseTypeDtoRes;
-import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadTypePageDtoRes;
 import com.lawencon.linovhrcommunity.service.EventCourseTypeService;
 
 @RestController

@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoReq;
-import com.lawencon.linovhrcommunity.dto.industry.DeleteMultipleIndustryDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricetype.DeleteByIdPriceTypeDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricetype.DeleteMultiplePriceTypeDtoReq;
 import com.lawencon.linovhrcommunity.dto.pricetype.DeleteMultiplePriceTypeDtoRes;
@@ -27,7 +25,6 @@ import com.lawencon.linovhrcommunity.dto.pricetype.InsertPriceTypeDtoReq;
 import com.lawencon.linovhrcommunity.dto.pricetype.InsertPriceTypeDtoRes;
 import com.lawencon.linovhrcommunity.dto.pricetype.UpdatePriceTypeDtoReq;
 import com.lawencon.linovhrcommunity.dto.pricetype.UpdatePriceTypeDtoRes;
-import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadTypePageDtoRes;
 import com.lawencon.linovhrcommunity.service.PriceTypeService;
 
 @RestController
