@@ -3,8 +3,9 @@ package com.lawencon.linovhrcommunity.dto.thread;
 import java.util.List;
 
 import com.lawencon.linovhrcommunity.dto.categorydetail.GetCategoryDetailByThreadDtoRes;
+import com.lawencon.linovhrcommunity.dto.pollingdetail.GetPollingDetailByPollingIdDto;
 
-public class GetThreadPollingDtoDataRes {
+public class GetThreadPollingDetailDtoDataRes {
 	private String id;
 	private String title;
 	private String contents;
@@ -19,6 +20,7 @@ public class GetThreadPollingDtoDataRes {
 	private String pollingName;
 	private String idPolling;
 	private List<GetCategoryDetailByThreadDtoRes> dataCategoryDetail;
+	private List<GetPollingDetailByPollingIdDto> dataPollingDetail;
 	public String getId() {
 		return id;
 	}
@@ -102,5 +104,11 @@ public class GetThreadPollingDtoDataRes {
 	}
 	public void setDataCategoryDetail(List<GetCategoryDetailByThreadDtoRes> dataCategoryDetail) {
 		this.dataCategoryDetail = dataCategoryDetail;
+	}
+	public List<GetPollingDetailByPollingIdDto> getDataPollingDetail() {
+		return dataPollingDetail;
+	}
+	public void setDataPollingDetail(List<GetPollingDetailByPollingIdDto> dataPollingDetail) {
+		this.dataPollingDetail = dataPollingDetail;
 	}
 }

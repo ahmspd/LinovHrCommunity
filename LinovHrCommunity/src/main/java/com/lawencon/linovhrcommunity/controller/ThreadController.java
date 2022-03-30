@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.lawencon.linovhrcommunity.dto.thread.GetThreadDetailDtoRes;
 import com.lawencon.linovhrcommunity.dto.thread.GetThreadDtoRes;
+import com.lawencon.linovhrcommunity.dto.thread.GetThreadPollingDetailDtoRes;
 import com.lawencon.linovhrcommunity.dto.thread.GetThreadPollingDtoRes;
 import com.lawencon.linovhrcommunity.dto.thread.InsertThreadDtoRes;
 import com.lawencon.linovhrcommunity.service.ThreadService;
@@ -49,6 +51,12 @@ public class ThreadController {
 		return new ResponseEntity<GetThreadDtoRes>(response, HttpStatus.OK);
 	}
 	
+	@GetMapping("detail/{id}")
+	public ResponseEntity<GetThreadDetailDtoRes> getThreadDetail(@PathVariable("id") String id) throws Exception {
+		GetThreadDetailDtoRes response = threadService.getThreadDetail(id);
+		return new ResponseEntity<GetThreadDetailDtoRes>(response, HttpStatus.OK);
+	}
+	
 	@GetMapping("premium/{isPremium}")
 	public ResponseEntity<GetThreadDtoRes> getThreadPremium(@PathVariable("isPremium") Boolean isPremium) throws Exception {
 		GetThreadDtoRes response = threadService.getThreadPremium(isPremium);
@@ -69,5 +77,10 @@ public class ThreadController {
 	public ResponseEntity<GetThreadPollingDtoRes> getThreadPollingByUser(@PathVariable("id") String id) throws Exception {
 		GetThreadPollingDtoRes response = threadService.getThreadPollingByUser(id);
 		return new ResponseEntity<GetThreadPollingDtoRes>(response, HttpStatus.OK);
+	}
+	@GetMapping("polling/detail/{id}")
+	public ResponseEntity<GetThreadPollingDetailDtoRes> getThreadPollingById(@PathVariable("id") String id) throws Exception {
+		GetThreadPollingDetailDtoRes response = threadService.getThreadPollingById(id);
+		return new ResponseEntity<GetThreadPollingDetailDtoRes>(response, HttpStatus.OK);
 	}
 }

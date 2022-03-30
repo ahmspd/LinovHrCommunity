@@ -2,6 +2,7 @@ package com.lawencon.linovhrcommunity.dto.thread;
 
 import java.util.List;
 
+import com.lawencon.linovhrcommunity.dto.category.InsertCategoryDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.pollingdetail.InsertPollingDetailDtoReq;
 
 public class InsertThreadDtoReq {
@@ -10,7 +11,8 @@ public class InsertThreadDtoReq {
 	private String idThreadType;
 	private Boolean isPremium;
 	private String pollingName;
-	private List<InsertPollingDetailDtoReq> data;
+	private List<InsertPollingDetailDtoReq> dataPolling;
+	private List<InsertCategoryDtoDataRes> dataCategory;
 
 	public String getTitle() {
 		return title;
@@ -52,11 +54,19 @@ public class InsertThreadDtoReq {
 		this.pollingName = pollingName;
 	}
 
-	public List<InsertPollingDetailDtoReq> getData() {
-		return data;
+	public List<InsertPollingDetailDtoReq> getDataPolling() {
+		return dataPolling;
 	}
 
-	public void setData(List<InsertPollingDetailDtoReq> data) {
-		this.data = data;
+	public void setDataPolling(List<InsertPollingDetailDtoReq> dataPolling) {
+		this.dataPolling = dataPolling;
+	}
+
+	public List<InsertCategoryDtoDataRes> getDataCategory() {
+		return dataCategory;
+	}
+
+	public void setDataCategory(List<InsertCategoryDtoDataRes> dataCategory) {
+		this.dataCategory = dataCategory;
 	}
 }

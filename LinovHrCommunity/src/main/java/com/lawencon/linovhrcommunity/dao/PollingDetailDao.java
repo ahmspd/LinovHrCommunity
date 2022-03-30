@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.lawencon.base.BaseDaoImpl;
+import com.lawencon.linovhrcommunity.dto.pollingdetail.GetPollingDetailByPollingIdDto;
 import com.lawencon.linovhrcommunity.model.PollingDetail;
 
 @Repository
@@ -36,6 +37,23 @@ public class PollingDetailDao extends BaseDaoImpl<PollingDetail> {
 			PollingDetail reqData = new PollingDetail();
 			reqData.setId(obj[0].toString());
 			dataRes.add(reqData);
+		});
+		return dataRes;
+	}
+	
+	public List<GetPollingDetailByPollingIdDto> getPollingDetailByIdPolling(String idPolling) throws Exception {
+		String sql = "select tpd.id , tpd.polling_name from t_polling_detail tpd where tpd.id_polling = :idPolling";
+		
+		List<?> results = createNativeQuery(sql)
+				.setParameter("idPolling", idPolling)
+				.getResultList();
+		List<GetPollingDetailByPollingIdDto> dataRes = new ArrayList<GetPollingDetailByPollingIdDto>();
+		results.forEach(result -> {
+			Object[] obj = (Object[]) result;
+			GetPollingDetailByPollingIdDto resData = new GetPollingDetailByPollingIdDto();
+			resData.setId(obj[0].toString());
+			resData.setPollingName(obj[1].toString());
+			dataRes.add(resData);
 		});
 		return dataRes;
 	}

@@ -1,19 +1,23 @@
 package com.lawencon.linovhrcommunity.dto.thread;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
+import com.lawencon.linovhrcommunity.dto.categorydetail.GetCategoryDetailByThreadDtoRes;
 
 public class GetThreadDataDtoRes {
 	private String id;
 	private String title;
 	private String contents;
 	private String idFile;
-	private String extendions;
+	private String extensions;
 	private byte[] contentsFile;
 	private String threadTypeName;
 	private Boolean isPremium;
 	private LocalDateTime createdAt;
 	private String createdBy;
 	private String fullName;
+	private List<GetCategoryDetailByThreadDtoRes> dataCategoryDetail;
 
 	public String getId() {
 		return id;
@@ -47,12 +51,12 @@ public class GetThreadDataDtoRes {
 		this.idFile = idFile;
 	}
 
-	public String getExtendions() {
-		return extendions;
+	public String getExtensions() {
+		return extensions;
 	}
 
-	public void setExtendions(String extendions) {
-		this.extendions = extendions;
+	public void setExtensions(String extensions) {
+		this.extensions = extensions;
 	}
 
 	public byte[] getContentsFile() {
@@ -101,5 +105,13 @@ public class GetThreadDataDtoRes {
 
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
+	}
+
+	public List<GetCategoryDetailByThreadDtoRes> getDataCategoryDetail() {
+		return dataCategoryDetail;
+	}
+
+	public void setDataCategoryDetail(List<GetCategoryDetailByThreadDtoRes> dataCategoryDetail) {
+		this.dataCategoryDetail = dataCategoryDetail;
 	}
 }

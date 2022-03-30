@@ -1,6 +1,6 @@
 package com.lawencon.linovhrcommunity.dto.user;
 
-public class LoginUserDtoRes {
+public class GetUserDtoRes {
 	private String message;
 	private GetUserDtoDataRes data;
 
