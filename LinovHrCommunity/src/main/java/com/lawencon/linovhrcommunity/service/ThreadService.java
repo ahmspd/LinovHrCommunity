@@ -13,6 +13,7 @@ import com.lawencon.linovhrcommunity.dao.CategoryDetailDao;
 import com.lawencon.linovhrcommunity.dao.FileDao;
 import com.lawencon.linovhrcommunity.dao.PollingDao;
 import com.lawencon.linovhrcommunity.dao.PollingDetailDao;
+import com.lawencon.linovhrcommunity.dao.ThreadDetailDao;
 import com.lawencon.linovhrcommunity.dao.ThreadModelDao;
 import com.lawencon.linovhrcommunity.dao.ThreadTypeDao;
 import com.lawencon.linovhrcommunity.dto.category.InsertCategoryDtoDataRes;
@@ -29,6 +30,7 @@ import com.lawencon.linovhrcommunity.dto.thread.GetThreadPollingDtoRes;
 import com.lawencon.linovhrcommunity.dto.thread.InsertThreadDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.thread.InsertThreadDtoReq;
 import com.lawencon.linovhrcommunity.dto.thread.InsertThreadDtoRes;
+import com.lawencon.linovhrcommunity.dto.threaddetail.GetThreadDetailDataDtoRes;
 import com.lawencon.linovhrcommunity.model.Category;
 import com.lawencon.linovhrcommunity.model.CategoryDetail;
 import com.lawencon.linovhrcommunity.model.File;
@@ -47,6 +49,12 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 	private FileDao fileDao;
 	private CategoryDetailDao categoryDetailDao;
 	private CategoryDao categoryDao;
+	private ThreadDetailDao threadDetailDao;
+
+	@Autowired
+	public void setThreadDetailDao(ThreadDetailDao threadDetailDao) {
+		this.threadDetailDao = threadDetailDao;
+	}
 
 	@Autowired
 	public void setCategoryDao(CategoryDao categoryDao) {
@@ -237,8 +245,10 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 	
 	public GetThreadDetailDtoRes getThreadDetail(String idThread) throws Exception {
 		GetThreadDataDtoRes data = threadDao.getThreadDetail(idThread);
+		List<GetThreadDetailDataDtoRes> threadComment = threadDetailDao.getThreadDetailData(idThread);
 		List<GetCategoryDetailByThreadDtoRes> categoryDetail = categoryDetailDao.getCategoryDetailByThread(data.getId());
 		data.setDataCategoryDetail(categoryDetail);
+		data.setDataThreadComment(threadComment);
 		GetThreadDetailDtoRes result = new GetThreadDetailDtoRes();
 		result.setData(data);
 		return result;

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.lawencon.linovhrcommunity.dto.categorydetail.GetCategoryDetailByThreadDtoRes;
+import com.lawencon.linovhrcommunity.dto.threaddetail.GetThreadDetailDataDtoRes;
 
 public class GetThreadDataDtoRes {
 	private String id;
@@ -18,6 +19,7 @@ public class GetThreadDataDtoRes {
 	private String createdBy;
 	private String fullName;
 	private List<GetCategoryDetailByThreadDtoRes> dataCategoryDetail;
+	private List<GetThreadDetailDataDtoRes> dataThreadComment;
 
 	public String getId() {
 		return id;
@@ -113,5 +115,13 @@ public class GetThreadDataDtoRes {
 
 	public void setDataCategoryDetail(List<GetCategoryDetailByThreadDtoRes> dataCategoryDetail) {
 		this.dataCategoryDetail = dataCategoryDetail;
+	}
+
+	public List<GetThreadDetailDataDtoRes> getDataThreadComment() {
+		return dataThreadComment;
+	}
+
+	public void setDataThreadComment(List<GetThreadDetailDataDtoRes> dataThreadComment) {
+		this.dataThreadComment = dataThreadComment;
 	}
 }

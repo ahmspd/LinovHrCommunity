@@ -1,26 +1,26 @@
-package com.lawencon.linovhrcommunity.dto.thread;
+package com.lawencon.linovhrcommunity.dto.bookmark;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.lawencon.linovhrcommunity.dto.categorydetail.GetCategoryDetailByThreadDtoRes;
-import com.lawencon.linovhrcommunity.dto.pollingdetail.GetPollingDetailByPollingIdDto;
+import com.lawencon.linovhrcommunity.dto.threaddetail.GetThreadDetailDataDtoRes;
 
-public class GetThreadPollingDetailDtoDataRes {
+public class GetBookmarkDtoDataRes {
 	private String id;
+	private String idThread;
 	private String title;
 	private String contents;
 	private String idFile;
-	private String extendions;
+	private String extensions;
 	private byte[] contentsFile;
 	private String threadTypeName;
 	private Boolean isPremium;
-	private String createdAt;
+	private LocalDateTime createdAt;
 	private String createdBy;
 	private String fullName;
-	private String pollingName;
-	private String idPolling;
 	private List<GetCategoryDetailByThreadDtoRes> dataCategoryDetail;
-	private List<GetPollingDetailByPollingIdDto> dataPollingDetail;
+	private List<GetThreadDetailDataDtoRes> dataThreadComment;
 
 	public String getId() {
 		return id;
@@ -28,6 +28,14 @@ public class GetThreadPollingDetailDtoDataRes {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getIdThread() {
+		return idThread;
+	}
+
+	public void setIdThread(String idThread) {
+		this.idThread = idThread;
 	}
 
 	public String getTitle() {
@@ -54,12 +62,12 @@ public class GetThreadPollingDetailDtoDataRes {
 		this.idFile = idFile;
 	}
 
-	public String getExtendions() {
-		return extendions;
+	public String getExtensions() {
+		return extensions;
 	}
 
-	public void setExtendions(String extendions) {
-		this.extendions = extendions;
+	public void setExtensions(String extensions) {
+		this.extensions = extensions;
 	}
 
 	public byte[] getContentsFile() {
@@ -86,11 +94,11 @@ public class GetThreadPollingDetailDtoDataRes {
 		this.isPremium = isPremium;
 	}
 
-	public String getCreatedAt() {
+	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(String createdAt) {
+	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
 
@@ -110,22 +118,6 @@ public class GetThreadPollingDetailDtoDataRes {
 		this.fullName = fullName;
 	}
 
-	public String getPollingName() {
-		return pollingName;
-	}
-
-	public void setPollingName(String pollingName) {
-		this.pollingName = pollingName;
-	}
-
-	public String getIdPolling() {
-		return idPolling;
-	}
-
-	public void setIdPolling(String idPolling) {
-		this.idPolling = idPolling;
-	}
-
 	public List<GetCategoryDetailByThreadDtoRes> getDataCategoryDetail() {
 		return dataCategoryDetail;
 	}
@@ -134,11 +126,11 @@ public class GetThreadPollingDetailDtoDataRes {
 		this.dataCategoryDetail = dataCategoryDetail;
 	}
 
-	public List<GetPollingDetailByPollingIdDto> getDataPollingDetail() {
-		return dataPollingDetail;
+	public List<GetThreadDetailDataDtoRes> getDataThreadComment() {
+		return dataThreadComment;
 	}
 
-	public void setDataPollingDetail(List<GetPollingDetailByPollingIdDto> dataPollingDetail) {
-		this.dataPollingDetail = dataPollingDetail;
+	public void setDataThreadComment(List<GetThreadDetailDataDtoRes> dataThreadComment) {
+		this.dataThreadComment = dataThreadComment;
 	}
 }
