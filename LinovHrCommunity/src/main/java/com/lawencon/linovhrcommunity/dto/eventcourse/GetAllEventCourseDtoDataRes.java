@@ -4,6 +4,9 @@ import java.math.BigInteger;
 import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
+
+import com.lawencon.linovhrcommunity.dto.categorydetail.GetCategoryDetailByEventCourseDtoRes;
 
 public class GetAllEventCourseDtoDataRes {
 	private String id;
@@ -18,6 +21,7 @@ public class GetAllEventCourseDtoDataRes {
 	private String idFile;
 	private String fileExtensions;
 	private byte[] fileContents;
+	private List<GetCategoryDetailByEventCourseDtoRes> dataCategoryDetail;
 	private String createdBy;
 	private String fullName;
 	private LocalDateTime createdAt;
@@ -118,6 +122,14 @@ public class GetAllEventCourseDtoDataRes {
 
 	public void setFileContents(byte[] fileContents) {
 		this.fileContents = fileContents;
+	}
+
+	public List<GetCategoryDetailByEventCourseDtoRes> getDataCategoryDetail() {
+		return dataCategoryDetail;
+	}
+
+	public void setDataCategoryDetail(List<GetCategoryDetailByEventCourseDtoRes> dataCategoryDetail) {
+		this.dataCategoryDetail = dataCategoryDetail;
 	}
 
 	public String getCreatedBy() {

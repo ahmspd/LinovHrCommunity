@@ -12,6 +12,8 @@ import com.lawencon.linovhrcommunity.dao.EventCoursePaymentDao;
 import com.lawencon.linovhrcommunity.dao.EventCoursePaymentDetailDao;
 import com.lawencon.linovhrcommunity.dao.FileDao;
 import com.lawencon.linovhrcommunity.dao.PaymentMethodDao;
+import com.lawencon.linovhrcommunity.dto.eventcoursepayment.GetAllEventCoursePaymentDtoDataRes;
+import com.lawencon.linovhrcommunity.dto.eventcoursepayment.GetAllEventCoursePaymentDtoRes;
 import com.lawencon.linovhrcommunity.dto.eventcoursepayment.InsertEventCoursePaymentDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.eventcoursepayment.InsertEventCoursePaymentDtoReq;
 import com.lawencon.linovhrcommunity.dto.eventcoursepayment.InsertEventCoursePaymentDtoRes;
@@ -151,5 +153,13 @@ public class EventCoursePaymentService extends BaseServiceLinovCommunityImpl {
 			throw new Exception(err);
 		}
 
+	}
+	
+	public GetAllEventCoursePaymentDtoRes getAllUnAccepted() {
+		List<GetAllEventCoursePaymentDtoDataRes> dataRes = eventCoursePaymentDao.getAllUnaccepted();
+
+		GetAllEventCoursePaymentDtoRes result = new GetAllEventCoursePaymentDtoRes();
+		result.setData(dataRes);
+		return result;
 	}
 }

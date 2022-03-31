@@ -41,5 +41,11 @@ public class EventCourseController {
 		GetAllEventCourseDtoRes dataRes = eventCourseService.getAllActive(type);
 		return new ResponseEntity<GetAllEventCourseDtoRes>(dataRes, HttpStatus.OK);
 	}
+	
+	@GetMapping("event-detail/{id}")
+	public ResponseEntity<GetAllEventCourseDtoRes> getByEventCoursePaymentId(@PathVariable("id") String id) throws Exception {
+		GetAllEventCourseDtoRes dataRes = eventCourseService.getByEventCoursePaymentId(id);
+		return new ResponseEntity<GetAllEventCourseDtoRes>(dataRes, HttpStatus.OK);
+	}
 
 }

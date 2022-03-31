@@ -1,5 +1,7 @@
 package com.lawencon.linovhrcommunity.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +14,7 @@ import com.lawencon.linovhrcommunity.dao.EventCoursePaymentDetailDao;
 import com.lawencon.linovhrcommunity.dao.EventCourseTypeDao;
 import com.lawencon.linovhrcommunity.dao.FileDao;
 import com.lawencon.linovhrcommunity.dao.PriceListDao;
+import com.lawencon.linovhrcommunity.dto.eventcourse.GetAllEventCourseDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.eventcourse.GetAllEventCourseDtoRes;
 import com.lawencon.linovhrcommunity.dto.eventcourse.InsertEventCourseDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.eventcourse.InsertEventCourseDtoReq;
@@ -137,10 +140,35 @@ public class EventCourseService extends BaseServiceLinovCommunityImpl {
 	}
 	
 	public GetAllEventCourseDtoRes getAllActive(String type) throws Exception {
-		GetAllEventCourseDtoRes dataRes = new GetAllEventCourseDtoRes();
-		dataRes.setData(eventCourseDao.getAllActive(type));
+		List<GetAllEventCourseDtoDataRes> dataRes = eventCourseDao.getAllActive(type);
+		dataRes.forEach(data -> {
+			try {
+				data.setDataCategoryDetail(categoryDetailDao.getCategoryDetailByEventCourse(data.getId()));
+			} catch (Exception e) {
+				e.printStackTrace();
+				rollback();
+			}
+		});
 		
-		return dataRes;
+		GetAllEventCourseDtoRes result = new GetAllEventCourseDtoRes();
+		
+		result.setData(dataRes);
+		
+		return result;
+	}
+	
+	public GetAllEventCourseDtoRes getByEventCoursePaymentId(String id) throws Exception {
+		List<GetAllEventCourseDtoDataRes> dataRes = eventCourseDao.getByEventCoursePaymentId(id);
+		GetAllEventCourseDtoRes result = new GetAllEventCourseDtoRes();
+		result.setData(dataRes);
+		
+		return result;
 	}
 
 }
+
+
+
+
+
+

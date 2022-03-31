@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.lawencon.linovhrcommunity.dto.eventcoursepayment.GetAllEventCoursePaymentDtoRes;
 import com.lawencon.linovhrcommunity.dto.eventcoursepayment.InsertEventCoursePaymentDtoRes;
 import com.lawencon.linovhrcommunity.dto.eventcoursepayment.UpdateEventCoursePaymentDtoReq;
 import com.lawencon.linovhrcommunity.dto.eventcoursepayment.UpdateEventCoursePaymentDtoRes;
@@ -43,6 +45,12 @@ public class EventCoursePaymentController {
 	public ResponseEntity<UpdateEventCoursePaymentDtoRes> confirmPayment(@RequestBody @Valid UpdateEventCoursePaymentDtoReq dataReq) throws Exception {
 		UpdateEventCoursePaymentDtoRes dataRes = eventCoursePaymentService.confirmPayment(dataReq);
 		return new ResponseEntity<UpdateEventCoursePaymentDtoRes>(dataRes, HttpStatus.OK);
+	}
+	
+	@GetMapping
+	public ResponseEntity<GetAllEventCoursePaymentDtoRes> getAllUnAccepted() throws Exception {
+		GetAllEventCoursePaymentDtoRes res = eventCoursePaymentService.getAllUnAccepted();
+		return new ResponseEntity<GetAllEventCoursePaymentDtoRes>(res, HttpStatus.OK);
 	}
 }
 
