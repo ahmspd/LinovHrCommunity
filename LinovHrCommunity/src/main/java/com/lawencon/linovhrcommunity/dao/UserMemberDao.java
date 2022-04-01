@@ -26,4 +26,19 @@ public class UserMemberDao extends BaseDaoImpl<UserMember> {
 		return super.deleteById(id);
 	}
 
+	public boolean updateDateEnd(String duration, String id, String userId) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("UPDATE t_user_member ");
+		sql.append("SET date_end = INTERVAL now() + :duration, ");
+		sql.append("update_by = :userId, ");
+		sql.append("update_at = now(), ");
+		sql.append("version = version + 1 ");
+		sql.append("WHERE id = :id ");
+
+		int result = createNativeQuery(sql.toString()).setParameter("id", id).setParameter("duration", duration)
+				.setParameter("userId", userId).executeUpdate();
+
+		return result > 0;
+	}
+
 }

@@ -461,9 +461,9 @@ alter table t_order add constraint t_order_payment foreign key(id_payment_method
 
 create table t_order_detail(
 	id varchar(36) DEFAULT uuid_generate_v4 (),
-	id_event_course varchar(36)NOT NULL,
+	id_event_course varchar(36),
 	id_order varchar(36)NOT NULL,
-	id_user_member varchar(36)NOT NULL,
+	id_user_member varchar(36),
 	created_by varchar(36),
 	created_at timestamp without time zone,
 	updated_by varchar(36),
