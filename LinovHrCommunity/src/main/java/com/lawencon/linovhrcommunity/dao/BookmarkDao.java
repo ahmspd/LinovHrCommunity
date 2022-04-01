@@ -91,4 +91,20 @@ public class BookmarkDao extends BaseDaoImpl<Bookmark> {
 		}
 		return bookmark;
 	}
+	
+	public Integer getCountBookmark(String id) throws Exception {
+		String sql = "select count(id) from t_bookmark tb where tb.id_thread = :id";
+		Object result = null;
+		Integer res = 0;
+		try {
+			result = createNativeQuery(sql)
+					.setParameter("id", id)
+					.getSingleResult();
+			res = Integer.valueOf(result.toString());
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
 }

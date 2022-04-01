@@ -88,7 +88,8 @@ public class BookmarkService extends BaseServiceLinovCommunityImpl {
 			commit();
 			if (isDelete) {
 				result.setMessage("Delete Success");
-			} else {
+			} 
+			else {
 				throw new Exception("Delete Failed");
 			}
 			return result;
@@ -105,6 +106,7 @@ public class BookmarkService extends BaseServiceLinovCommunityImpl {
 		try {
 			GetBookmarkThreadDtoDataRes dataRes = new GetBookmarkThreadDtoDataRes();
 			dataRes.setIdThread(data.getThread().getId());
+			dataRes.setIdBookmark(data.getId());
 			result.setData(dataRes);
 		}
 		catch(NullPointerException e) {

@@ -1,5 +1,7 @@
 package com.lawencon.linovhrcommunity.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,14 +10,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lawencon.linovhrcommunity.constant.ThreadTypeCode;
+import com.lawencon.linovhrcommunity.dao.BookmarkDao;
 import com.lawencon.linovhrcommunity.dao.CategoryDao;
 import com.lawencon.linovhrcommunity.dao.CategoryDetailDao;
 import com.lawencon.linovhrcommunity.dao.FileDao;
+import com.lawencon.linovhrcommunity.dao.LikeDao;
 import com.lawencon.linovhrcommunity.dao.PollingDao;
 import com.lawencon.linovhrcommunity.dao.PollingDetailDao;
 import com.lawencon.linovhrcommunity.dao.ThreadDetailDao;
 import com.lawencon.linovhrcommunity.dao.ThreadModelDao;
 import com.lawencon.linovhrcommunity.dao.ThreadTypeDao;
+import com.lawencon.linovhrcommunity.dto.category.GetAllCategoryThreadDetail;
 import com.lawencon.linovhrcommunity.dto.category.InsertCategoryDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.categorydetail.GetCategoryDetailByThreadDtoRes;
 import com.lawencon.linovhrcommunity.dto.pollingdetail.GetPollingDetailByPollingIdDto;
@@ -50,6 +55,18 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 	private CategoryDetailDao categoryDetailDao;
 	private CategoryDao categoryDao;
 	private ThreadDetailDao threadDetailDao;
+	private BookmarkDao bookmarkDao;
+	private LikeDao likeDao;
+
+	@Autowired
+	public void setBookmarkDao(BookmarkDao bookmarkDao) {
+		this.bookmarkDao = bookmarkDao;
+	}
+
+	@Autowired
+	public void setLikeDao(LikeDao likeDao) {
+		this.likeDao = likeDao;
+	}
 
 	@Autowired
 	public void setThreadDetailDao(ThreadDetailDao threadDetailDao) {
@@ -134,7 +151,7 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 				}
 			}
 			
-			List<InsertCategoryDtoDataRes> listCategory = data.getDataCategory();
+			List<GetAllCategoryThreadDetail> listCategory = data.getDataCategory();
 			for(int i=0; i<listCategory.size();i++) {
 				Category dataCategory = new Category();
 				dataCategory = categoryDao.getById(listCategory.get(i).getId());
@@ -198,7 +215,19 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 	
 	public GetThreadDtoRes getThreadByType(String idType) throws Exception {
 		List<GetThreadDataDtoRes> data = threadDao.getThreadByType(idType);
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		 
+        // Format LocalDateTime to String
 		for(int i =0; i<data.size();i++) {
+			String id = data.get(i).getId();
+			String formattedDateTime = data.get(i).getCreatedAt().format(dateTimeFormatter);
+			Integer totalCommet = threadDetailDao.getCountComment(id);
+			Integer totalBookmark = bookmarkDao.getCountBookmark(id);
+			Integer totalLike = likeDao.getCountLike(id);
+			data.get(i).setDate(formattedDateTime);
+			data.get(i).setComment(totalCommet);
+			data.get(i).setBookmark(totalBookmark);
+			data.get(i).setLike(totalLike);
 			List<GetCategoryDetailByThreadDtoRes> categoryDetail = categoryDetailDao.getCategoryDetailByThread(data.get(i).getId());
 			data.get(i).setDataCategoryDetail(categoryDetail);
 		}
@@ -245,6 +274,21 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 	
 	public GetThreadDetailDtoRes getThreadDetail(String idThread) throws Exception {
 		GetThreadDataDtoRes data = threadDao.getThreadDetail(idThread);
+//		List<GetThreadDataDtoRes> data = threadDao.getThreadByType(idType);
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		 
+        // Format LocalDateTime to String
+//		for(int i =0; i<data.size();i++) {
+			String id = data.getId();
+			String formattedDateTime = data.getCreatedAt().format(dateTimeFormatter);
+			Integer totalCommet = threadDetailDao.getCountComment(id);
+			Integer totalBookmark = bookmarkDao.getCountBookmark(id);
+			Integer totalLike = likeDao.getCountLike(id);
+			data.setDate(formattedDateTime);
+			data.setComment(totalCommet);
+			data.setBookmark(totalBookmark);
+			data.setLike(totalLike);
+			
 		List<GetThreadDetailDataDtoRes> threadComment = threadDetailDao.getThreadDetailData(idThread);
 		List<GetCategoryDetailByThreadDtoRes> categoryDetail = categoryDetailDao.getCategoryDetailByThread(data.getId());
 		data.setDataCategoryDetail(categoryDetail);
