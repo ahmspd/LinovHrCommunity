@@ -225,8 +225,16 @@ SELECT * FROM t_event_course_payment_detail
 WHERE created_by = '1' AND id_event_course_payment ISNULL;
 
 
-
-
+SELECT tum.id, tp.full_name, tu.email, tpm.payment_name, tor.is_accept, tor.id_file, tpl.price_name, tum.is_active
+FROM t_order_detail tod
+LEFT JOIN t_user_member tum on tum.id = tod.id_user_member
+LEFT JOIN t_order tor on tor.id = tod.id_order
+LEFT JOIN t_user tu on tu.id = tor.id_user
+LEFT JOIN t_profile tp on tu.id = tp.id_user
+LEFT JOIN t_payment_method tpm on tpm.id = tor.id_payment_method
+LEFT JOIN t_file tf on tf.id = tor.id_file
+LEFT JOIN t_price_list tpl on tpl.id = tum.id_price_list
+WHERE tor.is_accept = true OR tor.is_accept ISNULL;
 
 
 

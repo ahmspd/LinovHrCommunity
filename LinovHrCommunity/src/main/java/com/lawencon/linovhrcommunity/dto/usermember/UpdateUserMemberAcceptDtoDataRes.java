@@ -1,23 +1,14 @@
 package com.lawencon.linovhrcommunity.dto.usermember;
 
 public class UpdateUserMemberAcceptDtoDataRes {
-	private String message;
-	private UpdateUserMemberAcceptDtoDataRes data;
+	private Integer version;
 
-	public String getMessage() {
-		return message;
+	public Integer getVersion() {
+		return version;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
-	public UpdateUserMemberAcceptDtoDataRes getData() {
-		return data;
-	}
-
-	public void setData(UpdateUserMemberAcceptDtoDataRes data) {
-		this.data = data;
+	public void setVersion(Integer version) {
+		this.version = version;
 	}
 
 }
