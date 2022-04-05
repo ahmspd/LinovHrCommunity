@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.lawencon.base.BaseDaoImpl;
 import com.lawencon.linovhrcommunity.dto.thread.GetThreadDataDtoRes;
+import com.lawencon.linovhrcommunity.dto.thread.GetThreadPollingDetailDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.thread.GetThreadPollingDtoDataRes;
 import com.lawencon.linovhrcommunity.model.ThreadModel;
 
@@ -84,6 +85,29 @@ public class ThreadModelDao extends BaseDaoImpl<ThreadModel> {
 			dataRes.add(reqData);
 		});
 		return dataRes;
+	}
+	
+	public GetThreadDataDtoRes getThreadDetail(String idThread) throws Exception {
+		StringBuilder sql = new StringBuilder();
+		sql.append("select tt.id , tt.title , tt.contents, tt.id_file as idFile , tf.extensions , tf.contents as fileContents, ttt.thread_type_name, tt.is_premium, tt.created_at , tt.created_by , tp.full_name ");
+		sql.append("from t_thread tt left join t_file tf on tt.id_file = tf.id  ");
+		sql.append("left join t_thread_type ttt on tt.id_thread_type = ttt.id ");
+		sql.append("left join t_user tu on tu.id = tt.created_by ");
+		sql.append("left join t_profile tp on tp.id_user = tu.id where tt.id = :id");
+
+		Object results = createNativeQuery(sql.toString()).setParameter("id", idThread).getSingleResult();
+			Object[] obj = (Object[]) results;
+			GetThreadDataDtoRes reqData = new GetThreadDataDtoRes();
+			reqData.setId(obj[0].toString());
+			reqData.setTitle(obj[1].toString());
+			reqData.setContents(obj[2].toString());
+			reqData.setIdFile((obj[3]!=null)? obj[3].toString():null);
+			reqData.setThreadTypeName(obj[6].toString());
+			reqData.setIsPremium(Boolean.valueOf(obj[7].toString()));
+			reqData.setCreatedAt(((Timestamp) obj[8]).toLocalDateTime());
+			reqData.setCreatedBy(obj[9].toString());
+			reqData.setFullName(obj[10].toString());
+		return reqData;
 	}
 	
 	public List<GetThreadDataDtoRes> getThreadPremium(Boolean isPremium) throws Exception {
@@ -206,5 +230,36 @@ public class ThreadModelDao extends BaseDaoImpl<ThreadModel> {
 			dataRes.add(reqData);
 		});
 		return dataRes;
+	}
+	
+	public GetThreadPollingDetailDtoDataRes getDetailThreadPolling(String codeThread,String idThread) throws Exception {
+		StringBuilder sql = new StringBuilder();
+		sql.append("select tt.id , tt.title , tt.contents as threadContent, tt.id_file , tf.extensions , tf.contents, ttt.thread_type_name, tt.is_premium, tt.created_at , tt.created_by , tp.full_name, tpl.polling_name, tpl.id as tplId ");
+		sql.append("from t_thread tt left join t_file tf on tt.id_file = tf.id  ");
+		sql.append("left join t_thread_type ttt on tt.id_thread_type = ttt.id  ");
+		sql.append("left join t_user tu on tu.id = tt.created_by ");
+		sql.append("left join t_profile tp on tp.id_user = tu.id ");
+		sql.append("left join t_polling tpl on tpl.id_thread = tt.id ");
+		sql.append("where tt.id_thread_type = (select id from t_thread_type ttt where ttt.code= :codeThread) ");
+		sql.append("and tt.id = :idThread ");
+		
+		Object results = createNativeQuery(sql.toString())
+				.setParameter("idThread", idThread)
+				.setParameter("codeThread", codeThread)
+				.getSingleResult();
+			Object[] obj = (Object[]) results;
+			GetThreadPollingDetailDtoDataRes reqData = new GetThreadPollingDetailDtoDataRes();
+			reqData.setId(obj[0].toString());
+			reqData.setTitle(obj[1].toString());
+			reqData.setContents(obj[2].toString());
+			reqData.setIdFile((obj[3]!=null)? obj[3].toString():null);
+			reqData.setThreadTypeName(obj[6].toString());
+			reqData.setIsPremium(Boolean.valueOf(obj[7].toString()));
+			reqData.setCreatedAt(obj[8].toString());
+			reqData.setCreatedBy(obj[9].toString());
+			reqData.setFullName(obj[10].toString());
+			reqData.setPollingName(obj[11].toString());
+			reqData.setIdPolling(obj[12].toString());
+		return reqData;
 	}
 }

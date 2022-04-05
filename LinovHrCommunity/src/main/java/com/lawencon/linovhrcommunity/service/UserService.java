@@ -13,8 +13,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lawencon.linovhrcommunity.dao.BookmarkDao;
 import com.lawencon.linovhrcommunity.dao.FileDao;
+import com.lawencon.linovhrcommunity.dao.IndustryDao;
+import com.lawencon.linovhrcommunity.dao.PositionDao;
 import com.lawencon.linovhrcommunity.dao.ProfileDao;
 import com.lawencon.linovhrcommunity.dao.UserDao;
+import com.lawencon.linovhrcommunity.dto.user.GetUserDtoDataRes;
+import com.lawencon.linovhrcommunity.dto.user.GetUserDtoRes;
 import com.lawencon.linovhrcommunity.dto.user.InsertUserDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.user.InsertUserDtoReq;
 import com.lawencon.linovhrcommunity.dto.user.InsertUserDtoRes;
@@ -41,6 +45,8 @@ public class UserService extends BaseServiceLinovCommunityImpl implements UserDe
 	private ProfileDao profileDao;
 	private BookmarkDao bookmarkDao;
 	private FileDao fileDao;
+	private IndustryDao industryDao;
+	private PositionDao positionDao;
 	
 	private PasswordEncoder passwordEncoder;
 
@@ -50,20 +56,15 @@ public class UserService extends BaseServiceLinovCommunityImpl implements UserDe
 	}
 	
 	@Autowired
-	public UserService(UserDao userDao, ProfileDao profileDao, BookmarkDao bookmarkDao, FileDao fileDao) {
+	public UserService(UserDao userDao, ProfileDao profileDao, BookmarkDao bookmarkDao, FileDao fileDao,
+						IndustryDao industryDao, PositionDao positionDao) {
 		this.userDao = userDao;
 		this.profileDao = profileDao;
 		this.bookmarkDao = bookmarkDao;
 		this.fileDao = fileDao;
+		this.positionDao = positionDao;
+		this.industryDao = industryDao;
 	}
-//	email
-//	password
-//	idRole
-//	fullName
-//	phoneNumber
-//	company
-//	idIndustry
-//	idPosition
 	public InsertUserDtoRes insert(InsertUserDtoReq data) throws Exception {
 		Role roleData = new Role();
 		roleData.setId(data.getIdRole());
@@ -95,15 +96,11 @@ public class UserService extends BaseServiceLinovCommunityImpl implements UserDe
 			profileData.setPhoneNumber(data.getPhoneNumber());
 			profileData.setCompany(data.getCompany());
 			
-			Industry dataIndustry = new Industry();
-			dataIndustry.setId(data.getIdIndustry());
-			dataIndustry.setVersion(0);
+			Industry dataIndustry = industryDao.getById(data.getIdIndustry());
 			
 			profileData.setIndustry(dataIndustry);
 			
-			Position dataPosition = new Position();
-			dataPosition.setId(data.getIdPosition());
-			dataPosition.setVersion(0);
+			Position dataPosition = positionDao.getById(data.getIdPosition());
 			
 			profileData.setPosition(dataPosition);
 			
@@ -164,6 +161,13 @@ public class UserService extends BaseServiceLinovCommunityImpl implements UserDe
 		return result;
 	}
 	
+	public GetUserDtoRes getByUserId(String idUser) throws Exception {
+		GetUserDtoDataRes data = userDao.getUserByIs(idUser);
+		GetUserDtoRes result = new GetUserDtoRes();
+		result.setData(data);
+		return result;
+	}
+	
 	public UpdateUserDtoRes updateUser(String content, MultipartFile file) throws Exception {
 		UpdateUserDtoReq data = new ObjectMapper().readValue(content, UpdateUserDtoReq.class);
 		
@@ -221,5 +225,28 @@ public class UserService extends BaseServiceLinovCommunityImpl implements UserDe
 		result.setData(dataRes);
 		
 		return result;
+	}
+	
+	public UpdateUserDtoRes updateByRegistraionCode(UpdateUserDtoReq data) throws Exception {
+		User userData = userDao.findById(data.getId());
+		userData.setIsActive(true);
+		try {
+			begin();
+			userData = userDao.save(userData);
+			commit();
+			
+			UpdateUserDtoDataRes dataRes = new UpdateUserDtoDataRes();
+			dataRes.setVersion(userData.getVersion());
+
+			UpdateUserDtoRes result = new UpdateUserDtoRes();
+			result.setData(dataRes);
+			result.setMessage(stringBuilder("Update ", userData.getEmail(), " Success !"));
+			return result;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
 	}
 }

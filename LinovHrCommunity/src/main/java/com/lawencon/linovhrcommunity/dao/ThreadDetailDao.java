@@ -50,4 +50,20 @@ public class ThreadDetailDao extends BaseDaoImpl<ThreadDetail> {
 		});
 		return dataRes;
 	}
+	
+	public Integer getCountComment(String id) throws Exception {
+		String sql = "select count(id) from t_thread_detail thd where thd.id_thread = :id";
+		Object result = null;
+		Integer res = 0;
+		try {
+			result = createNativeQuery(sql)
+					.setParameter("id", id)
+					.getSingleResult();
+			res = Integer.valueOf(result.toString());
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
 }

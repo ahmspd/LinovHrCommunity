@@ -18,10 +18,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lawencon.linovhrcommunity.dao.UserDao;
+import com.lawencon.linovhrcommunity.dto.user.GetUserDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.user.LoginUserDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.user.LoginUserDtoReq;
 import com.lawencon.linovhrcommunity.dto.user.LoginUserDtoRes;
-import com.lawencon.linovhrcommunity.model.User;
 
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -56,7 +56,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 		try {
 			LoginUserDtoDataRes user = userDao.getUserByEmail(authResult.getName());
 			String token = jwtBuilderComponent.generateToken(Duration.ofDays(1), user.getId());
-			LoginUserDtoDataRes loginDtoData = new LoginUserDtoDataRes();
+			GetUserDtoDataRes loginDtoData = new GetUserDtoDataRes();
 			loginDtoData.setId(user.getId());
 			loginDtoData.setEmail(user.getEmail());
 			loginDtoData.setIsMember(user.getIsMember());
