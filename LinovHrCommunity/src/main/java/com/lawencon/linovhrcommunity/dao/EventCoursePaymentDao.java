@@ -61,5 +61,4 @@ public class EventCoursePaymentDao extends BaseDaoImpl<EventCoursePayment> {
 		
 		return dataRes;
 	}
-	
 }

@@ -12,8 +12,6 @@ import com.lawencon.linovhrcommunity.dao.FileDao;
 import com.lawencon.linovhrcommunity.dto.file.DeleteByIdFileDtoRes;
 import com.lawencon.linovhrcommunity.dto.file.GetAllFileDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.file.GetAllFileDtoRes;
-import com.lawencon.linovhrcommunity.dto.file.GetByIdFileDtoDataRes;
-import com.lawencon.linovhrcommunity.dto.file.GetByIdFileDtoRes;
 import com.lawencon.linovhrcommunity.dto.file.InsertFileDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.file.InsertFileDtoRes;
 import com.lawencon.linovhrcommunity.dto.file.UpdateFileDtoDataRes;
@@ -105,19 +103,19 @@ public class FileService extends BaseServiceLinovCommunityImpl {
 		return dataRes;
 	}
 
-	public GetByIdFileDtoRes findById(String id) throws Exception {
-		File getFile = fileDao.findById(id);
-
-		GetByIdFileDtoDataRes data = new GetByIdFileDtoDataRes();
-		data.setId(getFile.getId());
-		data.setExtensions(getFile.getExtensions());
-		data.setContents(getFile.getContents());
-		data.setIsActive(getFile.getIsActive());
-		data.setVersion(getFile.getVersion());
-
-		GetByIdFileDtoRes dataRes = new GetByIdFileDtoRes();
-		dataRes.setData(data);
-		return dataRes;
+	public File findById(String id) throws Exception {
+//		File getFile = fileDao.findById(id);
+//
+//		GetByIdFileDtoDataRes data = new GetByIdFileDtoDataRes();
+//		data.setId(getFile.getId());
+//		data.setExtensions(getFile.getExtensions());
+//		data.setContents(getFile.getContents());
+//		data.setIsActive(getFile.getIsActive());
+//		data.setVersion(getFile.getVersion());
+//
+//		GetByIdFileDtoRes dataRes = new GetByIdFileDtoRes();
+//		dataRes.setData(data);
+		return fileDao.findById(id);
 	}
 
 	public DeleteByIdFileDtoRes deleteById(String id) throws Exception {

@@ -36,7 +36,7 @@ public class EventCoursePaymentDetailDao extends BaseDaoImpl<EventCoursePaymentD
 	
 	public List<GetAllEventCoursePaymentDetailDtoDataRes> getUnpaidEventCourse(String id) throws Exception {
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT ecpd.id, ecpd.id_event_course, ect.event_course_type_name, ec.title, ec.date_start, ec.date_end, ec.time_start, ec.time_end, pl.price, ecpd.created_at, ecpd.version, ecpd.is_active ");
+		sql.append("SELECT ecpd.id, ecpd.id_event_course, ect.event_course_type_name, ec.title, ec.date_start, ec.date_end, ec.time_start, ec.time_end, pl.price, ec.event_course_location, ec.price AS event_course_price, ec.id_file, ecpd.created_at, ecpd.version, ecpd.is_active ");
 		sql.append("FROM t_event_course_payment_detail ecpd ");
 		sql.append("INNER JOIN t_event_course ec ON ecpd.id_event_course = ec.id ");
 		sql.append("INNER JOIN t_event_course_type ect ON ec.id_event_course_type = ect.id ");
@@ -60,9 +60,12 @@ public class EventCoursePaymentDetailDao extends BaseDaoImpl<EventCoursePaymentD
 			reqData.setTimeStart((Time)obj[6]);
 			reqData.setTimeEnd((Time)obj[7]);
 			reqData.setPrice(new BigInteger(obj[8].toString()));
-			reqData.setCreatedAt(((Timestamp) obj[9]).toLocalDateTime());
-			reqData.setVersion((Integer)obj[10]);
-			reqData.setIsActive((Boolean)obj[11]);
+			reqData.setLocation(obj[9].toString());
+			reqData.setEventPrice(obj[10].toString());
+			reqData.setIdFile((obj[11] != null)?obj[11].toString():null);
+			reqData.setCreatedAt(((Timestamp) obj[12]).toLocalDateTime());
+			reqData.setVersion((Integer)obj[13]);
+			reqData.setIsActive((Boolean)obj[14]);
 			
 			dataRes.add(reqData);
 		});

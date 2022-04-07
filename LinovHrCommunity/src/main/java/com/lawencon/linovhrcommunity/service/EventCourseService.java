@@ -184,14 +184,10 @@ public class EventCourseService extends BaseServiceLinovCommunityImpl {
 
 	public GetAllEventCourseDtoRes getAllActive(String type) throws Exception {
 		List<GetAllEventCourseDtoDataRes> dataRes = eventCourseDao.getAllActive(type);
-		dataRes.forEach(data -> {
-			try {
-				data.setDataCategoryDetail(categoryDetailDao.getCategoryDetailByEventCourse(data.getId()));
-			} catch (Exception e) {
-				e.printStackTrace();
-				rollback();
-			}
-		});
+		for(int i=0; i<dataRes.size();i++) {
+			dataRes.get(i).setDataCategoryDetail(categoryDetailDao.getCategoryDetailByEventCourse(dataRes.get(i).getId()));
+			dataRes.get(i).setIsJoin(eventCourseDao.isJoin(getIdFromPrincipal(), dataRes.get(i).getId()));
+		}
 
 		GetAllEventCourseDtoRes result = new GetAllEventCourseDtoRes();
 		result.setData(dataRes);
@@ -216,8 +212,8 @@ public class EventCourseService extends BaseServiceLinovCommunityImpl {
 		return result;
 	}
 
-	public GetAllEventCourseDtoRes getByCreatedBy() throws Exception {
-		List<GetAllEventCourseDtoDataRes> dataRes = eventCourseDao.getByCreatedBy(getIdFromPrincipal());
+	public GetAllEventCourseDtoRes getByCreatedBy(String type) throws Exception {
+		List<GetAllEventCourseDtoDataRes> dataRes = eventCourseDao.getByCreatedBy(getIdFromPrincipal(), type);
 		dataRes.forEach(data -> {
 			try {
 				data.setDataCategoryDetail(categoryDetailDao.getCategoryDetailByEventCourse(data.getId()));
@@ -241,6 +237,7 @@ public class EventCourseService extends BaseServiceLinovCommunityImpl {
 			begin();
 			User getUser = userDao.getById(getIdFromPrincipal());
 			orderSave.setIdUser(getUser);
+			orderSave.setIsAccept(false);
 			orderSave.setCreatedBy(getIdFromPrincipal());
 			orderSave = orderDao.save(orderSave);
 
@@ -249,7 +246,6 @@ public class EventCourseService extends BaseServiceLinovCommunityImpl {
 			EventCourse getEventCourse = eventCourseDao.getById(id);
 			orderDetailSave.setEventCourse(getEventCourse);
 
-			orderDetailSave.setIsActive(false);
 			orderDetailSave.setCreatedBy(getIdFromPrincipal());
 			orderDetailSave = orderDetailDao.save(orderDetailSave);
 

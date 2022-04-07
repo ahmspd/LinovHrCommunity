@@ -38,10 +38,10 @@ public class EventCourseDao extends BaseDaoImpl<EventCourse> {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT ec.id AS ec_id, ec.contents AS ec_contents, ec.title, ec.event_course_location, ec.price, ec.date_start, ec.date_end, ec.time_start, ec.time_end, ec.id_file AS f_id, f.extensions, f.contents AS f_contents, ec.created_by AS u_id, p.full_name, ec.created_at, ec.version, ec.is_active ");
 		sql.append("FROM t_event_course ec ");
-		sql.append("INNER JOIN t_event_course_type ect ON ec.id_event_course_type = ect.id ");
-		sql.append("INNER JOIN t_file f ON ec.id_file = f.id ");
-		sql.append("INNER JOIN t_user u ON ec.created_by = u.id ");
-		sql.append("INNER JOIN t_profile p ON u.id = p.id_user ");
+		sql.append("LEFT JOIN t_event_course_type ect ON ec.id_event_course_type = ect.id ");
+		sql.append("LEFT JOIN t_file f ON ec.id_file = f.id ");
+		sql.append("LEFT JOIN t_user u ON ec.created_by = u.id ");
+		sql.append("LEFT JOIN t_profile p ON u.id = p.id_user ");
 		sql.append("WHERE ect.event_course_type_name = :type AND ec.is_active = true;");
 
 		List<?> results = createNativeQuery(sql.toString()).setParameter("type", type).getResultList();
@@ -59,9 +59,9 @@ public class EventCourseDao extends BaseDaoImpl<EventCourse> {
 			reqData.setDateEnd((Date)obj[6]);
 			reqData.setTimeStart((Time)obj[7]);
 			reqData.setTimeEnd((Time)obj[8]);
-			reqData.setIdFile(obj[9].toString());
-			reqData.setFileExtensions(obj[10].toString());
-			reqData.setFileContents((byte[])obj[11]);
+			reqData.setIdFile((obj[9]!=null)?obj[9].toString():null);
+			reqData.setFileExtensions((obj[10]!=null)?obj[10].toString():null);
+			reqData.setFileContents((obj[11]!=null)?(byte[])obj[11]:null);
 			reqData.setCreatedBy(obj[12].toString());
 			reqData.setFullName(obj[13].toString());
 			reqData.setCreatedAt(((Timestamp) obj[14]).toLocalDateTime());
@@ -115,7 +115,7 @@ public class EventCourseDao extends BaseDaoImpl<EventCourse> {
 		return dataRes;
 	}
 	
-	public List<GetAllEventCourseDtoDataRes> getByCreatedBy(String id) throws Exception {
+	public List<GetAllEventCourseDtoDataRes> getByCreatedBy(String id, String type) throws Exception {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT ec.id AS ec_id, ec.contents AS ec_contents, ec.title, ec.event_course_location, ec.price, ec.date_start, ec.date_end, ec.time_start, ec.time_end, ec.id_file AS f_id, f.extensions, f.contents AS f_contents, ec.created_by AS u_id, p.full_name, ec.created_at, ec.version, ec.is_active ");
 		sql.append("FROM t_event_course ec ");
@@ -123,9 +123,9 @@ public class EventCourseDao extends BaseDaoImpl<EventCourse> {
 		sql.append("INNER JOIN t_file f ON ec.id_file = f.id ");
 		sql.append("INNER JOIN t_user u ON ec.created_by = u.id ");
 		sql.append("INNER JOIN t_profile p ON u.id = p.id_user ");
-		sql.append("WHERE ec.created_by = :id");
+		sql.append("WHERE ec.created_by = :id AND ect.event_course_type_name = :type AND ec.is_active = true");
 
-		List<?> results = createNativeQuery(sql.toString()).setParameter("id", id).getResultList();
+		List<?> results = createNativeQuery(sql.toString()).setParameter("id", id).setParameter("type", type).getResultList();
 		List<GetAllEventCourseDtoDataRes> dataRes = new ArrayList<GetAllEventCourseDtoDataRes>();
 
 		results.forEach(result -> {
@@ -182,9 +182,9 @@ public class EventCourseDao extends BaseDaoImpl<EventCourse> {
 			reqData.setDateEnd((Date)obj[6]);
 			reqData.setTimeStart((Time)obj[7]);
 			reqData.setTimeEnd((Time)obj[8]);
-			reqData.setIdFile(obj[9].toString());
-			reqData.setFileExtensions(obj[10].toString());
-			reqData.setFileContents((byte[])obj[11]);
+			reqData.setIdFile((obj[9]!=null)?obj[9].toString():null);
+			reqData.setFileExtensions((obj[10]!=null)?obj[10].toString():null);
+			reqData.setFileContents((obj[11]!=null)?(byte[])obj[11]:null);
 			reqData.setCreatedBy(obj[12].toString());
 			reqData.setFullName(obj[13].toString());
 			reqData.setCreatedAt(((Timestamp) obj[14]).toLocalDateTime());
@@ -265,6 +265,25 @@ public class EventCourseDao extends BaseDaoImpl<EventCourse> {
 		});
 		
 		return dataRes;
+	}
+	
+	public Boolean isJoin(String idUser,String idEventCourse) throws Exception {
+		StringBuilder sql = new StringBuilder();
+		sql.append("select to2.is_accept from t_order_detail tod left join t_order to2 on tod.id_order = to2.id ");
+		sql.append("where tod.created_by = :idUser and tod.id_event_course  = :idEventCourse");
+		Object result = null;
+		Boolean res = null;
+		try {
+			result = createNativeQuery(sql.toString())
+					.setParameter("idUser", idUser)
+					.setParameter("idEventCourse", idEventCourse)
+					.getSingleResult();
+			res = Boolean.valueOf(result.toString());
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return res;
 	}
 }
 

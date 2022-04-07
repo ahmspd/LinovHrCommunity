@@ -7,7 +7,7 @@ import com.lawencon.linovhrcommunity.dao.EventCoursePaymentDetailDao;
 import com.lawencon.linovhrcommunity.dto.eventcoursepaymentdetail.GetAllEventCoursePaymentDetailDtoRes;
 
 @Service
-public class EventCoursePaymentDetailService {
+public class EventCoursePaymentDetailService extends BaseServiceLinovCommunityImpl{
 
 	private EventCoursePaymentDetailDao eventCoursePaymentDetailDao;
 
@@ -16,9 +16,9 @@ public class EventCoursePaymentDetailService {
 		this.eventCoursePaymentDetailDao = eventCoursePaymentDetailDao;
 	}
 	
-	public GetAllEventCoursePaymentDetailDtoRes getUnpaidEventCourse(String id) throws Exception {
+	public GetAllEventCoursePaymentDetailDtoRes getUnpaidEventCourse() throws Exception {
 		GetAllEventCoursePaymentDetailDtoRes result = new GetAllEventCoursePaymentDetailDtoRes();
-		result.setData(eventCoursePaymentDetailDao.getUnpaidEventCourse(id));
+		result.setData(eventCoursePaymentDetailDao.getUnpaidEventCourse(getIdFromPrincipal()));
 		
 		return result;
 	}

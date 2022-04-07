@@ -15,6 +15,9 @@ public class GetAllEventCoursePaymentDetailDtoDataRes {
 	private Time timeStart;
 	private Time timeEnd;
 	private BigInteger price;
+	private String location;
+	private String eventPrice;
+	private String idFile;
 	private LocalDateTime createdAt;
 	private Integer version;
 	private Boolean isActive;
@@ -89,6 +92,30 @@ public class GetAllEventCoursePaymentDetailDtoDataRes {
 
 	public void setPrice(BigInteger price) {
 		this.price = price;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getEventPrice() {
+		return eventPrice;
+	}
+
+	public void setEventPrice(String eventPrice) {
+		this.eventPrice = eventPrice;
+	}
+
+	public String getIdFile() {
+		return idFile;
+	}
+
+	public void setIdFile(String idFile) {
+		this.idFile = idFile;
 	}
 
 	public LocalDateTime getCreatedAt() {

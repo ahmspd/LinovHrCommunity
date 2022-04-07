@@ -17,9 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.lawencon.linovhrcommunity.dto.file.DeleteByIdFileDtoRes;
 import com.lawencon.linovhrcommunity.dto.file.GetAllFileDtoRes;
-import com.lawencon.linovhrcommunity.dto.file.GetByIdFileDtoRes;
 import com.lawencon.linovhrcommunity.dto.file.InsertFileDtoRes;
 import com.lawencon.linovhrcommunity.dto.file.UpdateFileDtoRes;
+import com.lawencon.linovhrcommunity.model.File;
 import com.lawencon.linovhrcommunity.service.FileService;
 
 
@@ -48,9 +48,9 @@ public class FileController {
 	}
 	
 	@GetMapping("{id}")
-	public ResponseEntity<GetByIdFileDtoRes> getById(@PathVariable("id") String id) throws Exception {
-		GetByIdFileDtoRes dataRes = fileService.findById(id);
-		return new ResponseEntity<GetByIdFileDtoRes>(dataRes, HttpStatus.OK);
+	public ResponseEntity<File> getById(@PathVariable("id") String id) throws Exception {
+		File dataRes = fileService.findById(id);
+		return new ResponseEntity<File>(dataRes, HttpStatus.OK);
 	}
 	
 	@PutMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
@@ -67,10 +67,10 @@ public class FileController {
 
     @GetMapping("download/{id}")
     public ResponseEntity<byte[]> downloadFile(@PathVariable("id") String id) throws Exception {
-        GetByIdFileDtoRes file = fileService.findById(id);
+        File file = fileService.findById(id);
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "file;filename=file." + file.getData().getExtensions());
+        httpHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "file;filename=file." + file.getExtensions());
 
-        return ResponseEntity.ok().headers(httpHeaders).contentType(MediaType.APPLICATION_OCTET_STREAM).body(file.getData().getContents());
+        return ResponseEntity.ok().headers(httpHeaders).contentType(MediaType.APPLICATION_OCTET_STREAM).body(file.getContents());
     }
 }

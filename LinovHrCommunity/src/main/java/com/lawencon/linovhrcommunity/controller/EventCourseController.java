@@ -39,9 +39,9 @@ public class EventCourseController {
 		return new ResponseEntity<InsertEventCourseDtoRes>(response, HttpStatus.CREATED);
 	}
 
-	@GetMapping
-	public ResponseEntity<GetAllEventCourseDtoRes> getByCreatedBy(@PathVariable("id") String id) throws Exception {
-		GetAllEventCourseDtoRes dataRes = eventCourseService.getByCreatedBy();
+	@GetMapping("{type}")
+	public ResponseEntity<GetAllEventCourseDtoRes> getByCreatedBy(@PathVariable("type") String type) throws Exception {
+		GetAllEventCourseDtoRes dataRes = eventCourseService.getByCreatedBy(type);
 		return new ResponseEntity<GetAllEventCourseDtoRes>(dataRes, HttpStatus.OK);
 	}
 	
