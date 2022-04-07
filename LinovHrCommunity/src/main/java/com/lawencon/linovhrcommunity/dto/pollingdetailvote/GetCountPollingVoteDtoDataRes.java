@@ -2,17 +2,30 @@ package com.lawencon.linovhrcommunity.dto.pollingdetailvote;
 
 public class GetCountPollingVoteDtoDataRes {
 	private String id;
-	private Long total;
+	private String name;
+	private Integer total;
+
 	public String getId() {
 		return id;
 	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
-	public Long getTotal() {
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Integer getTotal() {
 		return total;
 	}
-	public void setTotal(Long total) {
+
+	public void setTotal(Integer total) {
 		this.total = total;
 	}
 }

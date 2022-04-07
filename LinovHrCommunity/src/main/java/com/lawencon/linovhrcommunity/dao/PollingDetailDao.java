@@ -29,13 +29,14 @@ public class PollingDetailDao extends BaseDaoImpl<PollingDetail> {
 	}
 
 	public List<PollingDetail> findByIdPolling(String id) throws Exception {
-		String sql = "select id from t_polling_detail tpd where tpd.id_polling = :id";
+		String sql = "select id, polling_name from t_polling_detail tpd where tpd.id_polling = :id";
 		List<?> results = createNativeQuery(sql).setParameter("id", id).getResultList();
 		List<PollingDetail> dataRes = new ArrayList<PollingDetail>();
 		results.forEach(result -> {
 			Object[] obj = (Object[]) result;
 			PollingDetail reqData = new PollingDetail();
 			reqData.setId(obj[0].toString());
+			reqData.setPollingName(obj[1].toString());
 			dataRes.add(reqData);
 		});
 		return dataRes;
@@ -44,17 +45,23 @@ public class PollingDetailDao extends BaseDaoImpl<PollingDetail> {
 	public List<GetPollingDetailByPollingIdDto> getPollingDetailByIdPolling(String idPolling) throws Exception {
 		String sql = "select tpd.id , tpd.polling_name from t_polling_detail tpd where tpd.id_polling = :idPolling";
 		
-		List<?> results = createNativeQuery(sql)
-				.setParameter("idPolling", idPolling)
-				.getResultList();
+		List<?> results = null;
 		List<GetPollingDetailByPollingIdDto> dataRes = new ArrayList<GetPollingDetailByPollingIdDto>();
-		results.forEach(result -> {
-			Object[] obj = (Object[]) result;
-			GetPollingDetailByPollingIdDto resData = new GetPollingDetailByPollingIdDto();
-			resData.setId(obj[0].toString());
-			resData.setPollingName(obj[1].toString());
-			dataRes.add(resData);
-		});
+		try {			
+			results = createNativeQuery(sql)
+					.setParameter("idPolling", idPolling)
+					.getResultList();
+			results.forEach(result -> {
+				Object[] obj = (Object[]) result;
+				GetPollingDetailByPollingIdDto resData = new GetPollingDetailByPollingIdDto();
+				resData.setId(obj[0].toString());
+				resData.setPollingName(obj[1].toString());
+				dataRes.add(resData);
+			});
+		}
+		catch(Exception e) {
+			
+		}
 		return dataRes;
 	}
 }

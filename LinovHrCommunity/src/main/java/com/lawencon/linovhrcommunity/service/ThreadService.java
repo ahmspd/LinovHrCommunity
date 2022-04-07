@@ -35,7 +35,14 @@ import com.lawencon.linovhrcommunity.dto.thread.GetThreadPollingDtoRes;
 import com.lawencon.linovhrcommunity.dto.thread.InsertThreadDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.thread.InsertThreadDtoReq;
 import com.lawencon.linovhrcommunity.dto.thread.InsertThreadDtoRes;
+import com.lawencon.linovhrcommunity.dto.thread.UpdateArticleDtoDataRes;
+import com.lawencon.linovhrcommunity.dto.thread.UpdateArticleDtoReq;
+import com.lawencon.linovhrcommunity.dto.thread.UpdateArticleDtoRes;
+import com.lawencon.linovhrcommunity.dto.thread.UpdateThreadStatusDtoDataRes;
+import com.lawencon.linovhrcommunity.dto.thread.UpdateThreadStatusDtoRes;
+import com.lawencon.linovhrcommunity.dto.thread.UpdateThreadStatusDtoReq;
 import com.lawencon.linovhrcommunity.dto.threaddetail.GetThreadDetailDataDtoRes;
+import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadPageDtoRes;
 import com.lawencon.linovhrcommunity.model.Category;
 import com.lawencon.linovhrcommunity.model.CategoryDetail;
 import com.lawencon.linovhrcommunity.model.File;
@@ -116,8 +123,16 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 		dataThread.setTitle(data.getTitle());
 		dataThread.setContents(data.getContents());
 		dataThread.setThreadType(threadType);
-		dataThread.setIsPremium(data.getIsPremium());
+		if(data.getIsPremium()!=null) {			
+			dataThread.setIsPremium(data.getIsPremium());
+		}
+		else {
+			dataThread.setIsPremium(false);
+		}
 		dataThread.setCreatedBy(getIdFromPrincipal());
+		if(data.getIsActive()!=null) {			
+			dataThread.setIsActive(data.getIsActive());
+		}
 		try {
 			begin();
 			if(file != null) {
@@ -177,18 +192,6 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 		return result;
 	}
 	
-	public GetThreadDtoRes getAllThread() throws Exception {
-		List<GetThreadDataDtoRes> data = threadDao.getAllThread();
-		for(int i =0; i<data.size();i++) {
-			List<GetCategoryDetailByThreadDtoRes> categoryDetail = categoryDetailDao.getCategoryDetailByThread(data.get(i).getId());
-			data.get(i).setDataCategoryDetail(categoryDetail);
-		}
-		GetThreadDtoRes result = new GetThreadDtoRes();
-		result.setData(data);
-		
-		return result;
-	}
-	
 	public GetThreadDtoRes getThreadByUser(String idUser) throws Exception {
 		List<GetThreadDataDtoRes> data = threadDao.getThreadByUser(idUser);
 		for(int i =0; i<data.size();i++) {
@@ -215,6 +218,54 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 	
 	public GetThreadDtoRes getThreadByType(String idType) throws Exception {
 		List<GetThreadDataDtoRes> data = threadDao.getThreadByType(idType);
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		 
+        // Format LocalDateTime to String
+		for(int i =0; i<data.size();i++) {
+			String id = data.get(i).getId();
+			String formattedDateTime = data.get(i).getCreatedAt().format(dateTimeFormatter);
+			Integer totalCommet = threadDetailDao.getCountComment(id);
+			Integer totalBookmark = bookmarkDao.getCountBookmark(id);
+			Integer totalLike = likeDao.getCountLike(id);
+			data.get(i).setDate(formattedDateTime);
+			data.get(i).setComment(totalCommet);
+			data.get(i).setBookmark(totalBookmark);
+			data.get(i).setLike(totalLike);
+			List<GetCategoryDetailByThreadDtoRes> categoryDetail = categoryDetailDao.getCategoryDetailByThread(data.get(i).getId());
+			data.get(i).setDataCategoryDetail(categoryDetail);
+		}
+		GetThreadDtoRes result = new GetThreadDtoRes();
+		result.setData(data);
+		
+		return result;
+	}
+	
+	public GetThreadDtoRes getArticleNotAccpet(String idType) throws Exception {
+		List<GetThreadDataDtoRes> data = threadDao.getArticleNotAccept(idType);
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		 
+        // Format LocalDateTime to String
+		for(int i =0; i<data.size();i++) {
+			String id = data.get(i).getId();
+			String formattedDateTime = data.get(i).getCreatedAt().format(dateTimeFormatter);
+			Integer totalCommet = threadDetailDao.getCountComment(id);
+			Integer totalBookmark = bookmarkDao.getCountBookmark(id);
+			Integer totalLike = likeDao.getCountLike(id);
+			data.get(i).setDate(formattedDateTime);
+			data.get(i).setComment(totalCommet);
+			data.get(i).setBookmark(totalBookmark);
+			data.get(i).setLike(totalLike);
+			List<GetCategoryDetailByThreadDtoRes> categoryDetail = categoryDetailDao.getCategoryDetailByThread(data.get(i).getId());
+			data.get(i).setDataCategoryDetail(categoryDetail);
+		}
+		GetThreadDtoRes result = new GetThreadDtoRes();
+		result.setData(data);
+		
+		return result;
+	}
+	
+	public GetThreadDtoRes getAllThread() throws Exception {
+		List<GetThreadDataDtoRes> data = threadDao.getAllThread();
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		 
         // Format LocalDateTime to String
@@ -272,6 +323,50 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 		return result;
 	}
 	
+	public UpdateThreadStatusDtoRes updateStatus(UpdateThreadStatusDtoReq dataReq) throws Exception {
+		ThreadModel threadModel = threadDao.findById(dataReq.getId());
+		threadModel.setIsActive(dataReq.getIsActive());
+		threadModel.setUpdatedBy(getIdFromPrincipal());
+		try {
+			begin();
+			threadModel = threadDao.save(threadModel);
+			commit();
+			UpdateThreadStatusDtoDataRes dataRes = new UpdateThreadStatusDtoDataRes();
+			dataRes.setVersion(threadModel.getVersion());
+			UpdateThreadStatusDtoRes result = new UpdateThreadStatusDtoRes();
+			result.setData(dataRes);
+			result.setMessage("success");
+			return result;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
+	}
+	
+	public UpdateArticleDtoRes updateArticle(UpdateArticleDtoReq data) throws Exception {
+		ThreadModel dataThread = threadDao.findById(data.getId());
+		dataThread.setTitle(data.getTitle());
+		dataThread.setContents(data.getContents());
+		try {
+			begin();
+			dataThread = threadDao.save(dataThread);
+			commit();
+			UpdateArticleDtoDataRes dataRes = new UpdateArticleDtoDataRes();
+			dataRes.setVersion(dataThread.getVersion());
+			UpdateArticleDtoRes result = new UpdateArticleDtoRes();
+			result.setData(dataRes);
+			result.setMessage("success");
+			return result;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
+	}
+	
 	public GetThreadDetailDtoRes getThreadDetail(String idThread) throws Exception {
 		GetThreadDataDtoRes data = threadDao.getThreadDetail(idThread);
 //		List<GetThreadDataDtoRes> data = threadDao.getThreadByType(idType);
@@ -291,10 +386,96 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 			
 		List<GetThreadDetailDataDtoRes> threadComment = threadDetailDao.getThreadDetailData(idThread);
 		List<GetCategoryDetailByThreadDtoRes> categoryDetail = categoryDetailDao.getCategoryDetailByThread(data.getId());
+		List<GetPollingDetailByPollingIdDto> pollingDetail = pollingDetailDao.getPollingDetailByIdPolling(data.getIdPolling());
 		data.setDataCategoryDetail(categoryDetail);
 		data.setDataThreadComment(threadComment);
+		data.setDataThreadPolling(pollingDetail);
 		GetThreadDetailDtoRes result = new GetThreadDetailDtoRes();
 		result.setData(data);
+		return result;
+	}
+	
+	public GetAllThreadPageDtoRes getAllArticleWithPage(String idType, int startPage, int maxPage) throws Exception {
+		GetAllThreadPageDtoRes result = new GetAllThreadPageDtoRes();
+		
+		List<GetThreadDataDtoRes> data = threadDao.getThreadByTypeWithPage(idType, startPage, maxPage);
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		 
+        // Format LocalDateTime to String
+		for(int i =0; i<data.size();i++) {
+			String id = data.get(i).getId();
+			String formattedDateTime = data.get(i).getCreatedAt().format(dateTimeFormatter);
+			Integer totalCommet = threadDetailDao.getCountComment(id);
+			Integer totalBookmark = bookmarkDao.getCountBookmark(id);
+			Integer totalLike = likeDao.getCountLike(id);
+			data.get(i).setDate(formattedDateTime);
+			data.get(i).setComment(totalCommet);
+			data.get(i).setBookmark(totalBookmark);
+			data.get(i).setLike(totalLike);
+			List<GetCategoryDetailByThreadDtoRes> categoryDetail = categoryDetailDao.getCategoryDetailByThread(data.get(i).getId());
+			data.get(i).setDataCategoryDetail(categoryDetail);
+		}
+		
+		Integer totalPage = threadDao.getCountThreadByType(idType);
+		result.setData(data);
+		result.setTotal(totalPage);
+		
+		return result;
+	}
+	
+	public GetAllThreadPageDtoRes getAllArticleActiveWithPage(String idType, int startPage, int maxPage, Boolean isActive) throws Exception {
+		GetAllThreadPageDtoRes result = new GetAllThreadPageDtoRes();
+		
+		List<GetThreadDataDtoRes> data = threadDao.getThreadByTypeWithPage(idType, startPage, maxPage,isActive);
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		 
+        // Format LocalDateTime to String
+		for(int i =0; i<data.size();i++) {
+			String id = data.get(i).getId();
+			String formattedDateTime = data.get(i).getCreatedAt().format(dateTimeFormatter);
+			Integer totalCommet = threadDetailDao.getCountComment(id);
+			Integer totalBookmark = bookmarkDao.getCountBookmark(id);
+			Integer totalLike = likeDao.getCountLike(id);
+			data.get(i).setDate(formattedDateTime);
+			data.get(i).setComment(totalCommet);
+			data.get(i).setBookmark(totalBookmark);
+			data.get(i).setLike(totalLike);
+			List<GetCategoryDetailByThreadDtoRes> categoryDetail = categoryDetailDao.getCategoryDetailByThread(data.get(i).getId());
+			data.get(i).setDataCategoryDetail(categoryDetail);
+		}
+		
+		Integer totalPage = threadDao.getCountThreadByType(idType, isActive);
+		result.setData(data);
+		result.setTotal(totalPage);
+		
+		return result;
+	}
+	
+	public GetAllThreadPageDtoRes getAllThreadWithPage(int startPage, int maxPage) throws Exception {
+		GetAllThreadPageDtoRes result = new GetAllThreadPageDtoRes();
+		
+		List<GetThreadDataDtoRes> data = threadDao.getAllThreadWithPage(startPage, maxPage);	
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		 
+        // Format LocalDateTime to String
+		for(int i =0; i<data.size();i++) {
+			String id = data.get(i).getId();
+			String formattedDateTime = data.get(i).getCreatedAt().format(dateTimeFormatter);
+			Integer totalCommet = threadDetailDao.getCountComment(id);
+			Integer totalBookmark = bookmarkDao.getCountBookmark(id);
+			Integer totalLike = likeDao.getCountLike(id);
+			data.get(i).setDate(formattedDateTime);
+			data.get(i).setComment(totalCommet);
+			data.get(i).setBookmark(totalBookmark);
+			data.get(i).setLike(totalLike);
+			List<GetCategoryDetailByThreadDtoRes> categoryDetail = categoryDetailDao.getCategoryDetailByThread(data.get(i).getId());
+			data.get(i).setDataCategoryDetail(categoryDetail);
+		}
+		
+		Integer totalPage = threadDao.getCountAllThread();
+		result.setData(data);
+		result.setTotal(totalPage);
+		
 		return result;
 	}
 }

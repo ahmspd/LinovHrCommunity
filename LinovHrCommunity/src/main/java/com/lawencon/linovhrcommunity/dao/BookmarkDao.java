@@ -78,7 +78,6 @@ public class BookmarkDao extends BaseDaoImpl<Bookmark> {
 					.getSingleResult();
 
 		} catch (NoResultException e) {
-			e.printStackTrace();
 		}
 		Object[] obj = (Object[]) result;
 		if(obj!=null) {			

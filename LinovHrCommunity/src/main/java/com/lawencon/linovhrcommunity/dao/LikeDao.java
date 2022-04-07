@@ -83,7 +83,7 @@ public class LikeDao extends BaseDaoImpl<Like> {
 					.getSingleResult();
 
 		} catch (NoResultException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		Object[] obj = (Object[]) result;
 		if(obj!=null) {			

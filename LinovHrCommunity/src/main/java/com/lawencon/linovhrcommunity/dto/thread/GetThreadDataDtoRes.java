@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.lawencon.linovhrcommunity.dto.categorydetail.GetCategoryDetailByThreadDtoRes;
+import com.lawencon.linovhrcommunity.dto.pollingdetail.GetPollingDetailByPollingIdDto;
 import com.lawencon.linovhrcommunity.dto.threaddetail.GetThreadDetailDataDtoRes;
 
 public class GetThreadDataDtoRes {
@@ -22,8 +23,12 @@ public class GetThreadDataDtoRes {
 	private Integer like;
 	private Integer bookmark;
 	private Integer comment;
+	private String idPolling;
+	private String pollingName;
+	private Boolean isActive;
 	private List<GetCategoryDetailByThreadDtoRes> dataCategoryDetail;
 	private List<GetThreadDetailDataDtoRes> dataThreadComment;
+	private List<GetPollingDetailByPollingIdDto> dataThreadPolling;
 	public String getId() {
 		return id;
 	}
@@ -114,6 +119,24 @@ public class GetThreadDataDtoRes {
 	public void setComment(Integer comment) {
 		this.comment = comment;
 	}
+	public String getIdPolling() {
+		return idPolling;
+	}
+	public void setIdPolling(String idPolling) {
+		this.idPolling = idPolling;
+	}
+	public String getPollingName() {
+		return pollingName;
+	}
+	public void setPollingName(String pollingName) {
+		this.pollingName = pollingName;
+	}
+	public Boolean getIsActive() {
+		return isActive;
+	}
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
 	public List<GetCategoryDetailByThreadDtoRes> getDataCategoryDetail() {
 		return dataCategoryDetail;
 	}
@@ -125,5 +148,11 @@ public class GetThreadDataDtoRes {
 	}
 	public void setDataThreadComment(List<GetThreadDetailDataDtoRes> dataThreadComment) {
 		this.dataThreadComment = dataThreadComment;
+	}
+	public List<GetPollingDetailByPollingIdDto> getDataThreadPolling() {
+		return dataThreadPolling;
+	}
+	public void setDataThreadPolling(List<GetPollingDetailByPollingIdDto> dataThreadPolling) {
+		this.dataThreadPolling = dataThreadPolling;
 	}
 }

@@ -3,12 +3,12 @@ package com.lawencon.linovhrcommunity.dto.pollingdetailvote;
 import java.util.List;
 
 public class GetCountPollingVoteDtoRes {
-	private Long total;
+	private Integer total;
 	private List<GetCountPollingVoteDtoDataRes> data;
-	public Long getTotal() {
+	public Integer getTotal() {
 		return total;
 	}
-	public void setTotal(Long total) {
+	public void setTotal(Integer total) {
 		this.total = total;
 	}
 	public List<GetCountPollingVoteDtoDataRes> getData() {

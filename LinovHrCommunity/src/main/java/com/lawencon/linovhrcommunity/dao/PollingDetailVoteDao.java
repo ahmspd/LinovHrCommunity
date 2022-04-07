@@ -2,6 +2,8 @@ package com.lawencon.linovhrcommunity.dao;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import org.springframework.stereotype.Repository;
 
 import com.lawencon.base.BaseDaoImpl;
@@ -26,23 +28,65 @@ public class PollingDetailVoteDao extends BaseDaoImpl<PollingDetailVote> {
 		return super.deleteById(id);
 	}
 
-	public Long totalDetailVote(String id) throws Exception {
-		StringBuilder sql = new StringBuilder();
-		sql.append("select count(tpdv.id) from t_polling_detail_vote tpdv left join t_polling_detail tpd ");
-		sql.append("on tpdv.id_polling_detail = tpd.id where tpd.id_polling = :id");
+	public Integer totalDetailVote(String idPolling) throws Exception {
+		String sql = "select count(tpdv.id) from t_polling_detail_vote tpdv left join t_polling_detail tpd on tpdv.id_polling_detail = tpd.id where tpd.id_polling = :idPolling";
 
-		Object total = createNativeQuery(sql.toString()).setParameter("id", id).getSingleResult();
-
-		return (Long) total;
+//		Object total = createNativeQuery(sql.toString()).setParameter("id", id).getSingleResult();
+//
+//		return (Long) total;
+		Object result = null;
+		Integer res = 0;
+		try {
+			result = createNativeQuery(sql)
+					.setParameter("idPolling", idPolling)
+					.getSingleResult();
+			res = Integer.valueOf(result.toString());
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return res;
 	}
 
-	public Long getCountVote(String id) throws Exception {
-		String sql = "select count(id) as totalId from t_polling_detail_vote tpdv where tpdv.id_polling_detail = :id";
+	public Integer getCountVote(String id) throws Exception {
+		String sql = "select count(tpdv.id) as totalId from t_polling_detail_vote tpdv where tpdv.id_polling_detail = :id";
 
-		Object total = createNativeQuery(sql).setParameter("id", id).getSingleResult();
-
-		Object obj = (Object) total;
+		Object result = null;
+		Integer res = 0;
+		try {
+			result = createNativeQuery(sql)
+					.setParameter("id", id)
+					.getSingleResult();
+			res = Integer.valueOf(result.toString());
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return res;
 		
-		return Long.valueOf(obj.toString());
+//		Object total = createNativeQuery(sql).setParameter("id", id).getSingleResult();
+//
+//		Object obj = (Object) total;
+//		
+//		return Long.valueOf(obj.toString());
+	}
+	
+	public PollingDetailVote getVote(String idUser, String idPollingDetail) throws Exception {
+		String sql = "select tpdv.id, tpdv.id_polling_detail from t_polling_detail_vote tpdv where tpdv.id_polling_detail = :idPollingDetail and tpdv.created_by = :idUser";
+		
+		PollingDetailVote vote = new PollingDetailVote();
+		Object result = null;
+		try {
+			result = createNativeQuery(sql)
+					.setParameter("idUser", idUser)
+					.setParameter("idPollingDetail", idPollingDetail)
+					.getSingleResult();
+		} catch (NoResultException e){
+		}
+		Object[] obj = (Object[]) result;
+		if(obj!=null) {
+			vote.setId((obj[0] != null) ? obj[0].toString() : null);
+		}
+		return vote;
 	}
 }
