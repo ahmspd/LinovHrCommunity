@@ -56,8 +56,9 @@ public class UserDao extends BaseDaoImpl<User> {
 			userData.setPhoneNumber(obj[9]!=null? obj[9].toString():null);
 			userData.setIdFile(obj[10]!=null? obj[10].toString():null);
 		}
-		catch(NoResultException e) {
-			e.printStackTrace();
+		catch(Exception e) {
+//			e.printStackTrace();
+			return userData = null;
 		}
 		return userData;
 	}
@@ -65,7 +66,8 @@ public class UserDao extends BaseDaoImpl<User> {
 	public GetUserDtoDataRes getUserByIs(String idUser) throws Exception {
 		StringBuilder sql=new StringBuilder();  
 		sql.append("select ts.id, email, ts.is_member , tr.id as id_role, tr.code , tr.role_name, ");
-		sql.append("tp.id as id_profile, tp.full_name , tp.phone_number, tp.id_file ,ts.registration_code ");
+		sql.append("tp.id as id_profile, tp.full_name , tp.phone_number, tp.id_file ,ts.registration_code, ");
+		sql.append("tp.postal_code , tp.id_industry , tp.id_position , tp.id_province , tp.id_city, tp.instagram , tp.twitter , tp.facebook, tp.company ");
 		sql.append("from t_user ts left join t_role tr on ts.id_role = tr.id ");
 		sql.append("left join t_profile tp on tp.id_user = ts.id where ts.id = :idUser");
 		Object result = null;
@@ -86,6 +88,15 @@ public class UserDao extends BaseDaoImpl<User> {
 			userData.setPhoneNumber(obj[8]!=null? obj[8].toString():null);
 			userData.setIdFile(obj[9]!=null? obj[9].toString():null);
 			userData.setRegistrationCode(obj[10]!=null? obj[10].toString():null);
+			userData.setPostalCode(obj[11]!=null? obj[11].toString():null);
+			userData.setIdIndustry(obj[12]!=null? obj[12].toString():null);
+			userData.setIdPosition(obj[13]!=null? obj[13].toString():null);
+			userData.setIdProvince(obj[14]!=null? obj[14].toString():null);
+			userData.setIdCity(obj[15]!=null? obj[15].toString():null);
+			userData.setInstagram(obj[16]!=null? obj[16].toString():null);
+			userData.setTwitter(obj[17]!=null? obj[17].toString():null);
+			userData.setFacebook(obj[18]!=null? obj[18].toString():null);
+			userData.setCompany(obj[19]!=null? obj[19].toString():null);
 		}
 		catch(NoResultException e) {
 			e.printStackTrace();

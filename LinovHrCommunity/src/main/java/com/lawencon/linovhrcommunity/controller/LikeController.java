@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.linovhrcommunity.dto.like.DeleteLikeDtoRes;
@@ -16,6 +17,7 @@ import com.lawencon.linovhrcommunity.dto.like.GetLikeDtoRes;
 import com.lawencon.linovhrcommunity.dto.like.GetLikeThreadDtoRes;
 import com.lawencon.linovhrcommunity.dto.like.InsertLikeDtoReq;
 import com.lawencon.linovhrcommunity.dto.like.InsertLikeDtoRes;
+import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadPageDtoRes;
 import com.lawencon.linovhrcommunity.service.LikeService;
 
 @RestController
@@ -34,10 +36,10 @@ public class LikeController {
 		return new ResponseEntity<InsertLikeDtoRes>(response, HttpStatus.CREATED);
 	}
 	
-	@GetMapping("user/{id}")
-	public ResponseEntity<GetLikeDtoRes> getById(@PathVariable("id") String id) throws Exception {
-		GetLikeDtoRes dataRes = likeService.getByUser(id);
-		return new ResponseEntity<GetLikeDtoRes>(dataRes, HttpStatus.OK);
+	@GetMapping("user")
+	public ResponseEntity<GetAllThreadPageDtoRes> getById(@RequestParam int start, @RequestParam int max) throws Exception {
+		GetAllThreadPageDtoRes dataRes = likeService.getByUser(start, max);
+		return new ResponseEntity<GetAllThreadPageDtoRes>(dataRes, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("{id}")

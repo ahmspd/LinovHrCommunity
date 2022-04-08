@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.linovhrcommunity.dto.city.GetAllCityByProvinceDtoRes;
+import com.lawencon.linovhrcommunity.dto.city.GetAllCityDtoRes;
 import com.lawencon.linovhrcommunity.service.CityService;
 
 @RestController
@@ -25,5 +26,11 @@ public class CityController {
 	public ResponseEntity<GetAllCityByProvinceDtoRes> findAllByProvince(@PathVariable String code) throws Exception {
 		GetAllCityByProvinceDtoRes results = cityService.getAllCityByProvince(code);
 		return new ResponseEntity<GetAllCityByProvinceDtoRes>(results, HttpStatus.OK);
+	}
+	
+	@GetMapping()
+	public ResponseEntity<GetAllCityDtoRes> findAll() throws Exception {
+		GetAllCityDtoRes results = cityService.getAllCity();
+		return new ResponseEntity<GetAllCityDtoRes>(results, HttpStatus.OK);
 	}
 }

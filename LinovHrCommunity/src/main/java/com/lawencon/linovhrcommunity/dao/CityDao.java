@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import com.lawencon.base.BaseDaoImpl;
 import com.lawencon.linovhrcommunity.dto.city.GetAllCityByProvinceDtoDataRes;
+import com.lawencon.linovhrcommunity.dto.city.GetAllCityDtoDataRes;
+import com.lawencon.linovhrcommunity.dto.city.GetAllCityDtoRes;
 import com.lawencon.linovhrcommunity.model.City;
 
 @Repository
@@ -39,7 +41,23 @@ public class CityDao extends BaseDaoImpl<City> {
 			GetAllCityByProvinceDtoDataRes reqData = new GetAllCityByProvinceDtoDataRes();
 			reqData.setId(obj[0].toString());
 			reqData.setCode(obj[1].toString());
-			reqData.setCityName(obj[3].toString());
+			reqData.setCityName(obj[2].toString());
+			dataRes.add(reqData);
+		});
+		return dataRes;
+	}
+	
+	public List<GetAllCityDtoDataRes> getAllCity() throws Exception {
+		String sql = "select tc.id, tc.code , tc.city_name from t_city tc";
+		List<?> results = createNativeQuery(sql)
+				.getResultList();
+		List<GetAllCityDtoDataRes> dataRes = new ArrayList<GetAllCityDtoDataRes>();
+		results.forEach(result -> {
+			Object[] obj = (Object[]) result;
+			GetAllCityDtoDataRes reqData = new GetAllCityDtoDataRes();
+			reqData.setId(obj[0].toString());
+			reqData.setCode(obj[1].toString());
+			reqData.setCityName(obj[2].toString());
 			dataRes.add(reqData);
 		});
 		return dataRes;
