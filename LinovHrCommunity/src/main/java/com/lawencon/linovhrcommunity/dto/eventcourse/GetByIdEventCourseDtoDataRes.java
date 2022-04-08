@@ -8,7 +8,8 @@ import java.util.List;
 
 import com.lawencon.linovhrcommunity.dto.categorydetail.GetCategoryDetailByEventCourseDtoRes;
 
-public class GetAllEventCourseDtoDataRes {
+public class GetByIdEventCourseDtoDataRes {
+
 	private String id;
 	private String contents;
 	private String title;

@@ -21,6 +21,7 @@ public class GetAllEventCoursePaymentDetailDtoDataRes {
 	private LocalDateTime createdAt;
 	private Integer version;
 	private Boolean isActive;
+	private GetIdAndPriceDtoDataRes data;
 
 	public String getId() {
 		return id;
@@ -141,4 +142,13 @@ public class GetAllEventCoursePaymentDetailDtoDataRes {
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
 	}
+
+	public GetIdAndPriceDtoDataRes getData() {
+		return data;
+	}
+
+	public void setData(GetIdAndPriceDtoDataRes data) {
+		this.data = data;
+	}
+
 }

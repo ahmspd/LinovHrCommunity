@@ -22,6 +22,8 @@ import com.lawencon.linovhrcommunity.dto.eventcourse.ConfirmPayJoinEventCourseDt
 import com.lawencon.linovhrcommunity.dto.eventcourse.ConfirmPayJoinEventCourseDtoRes;
 import com.lawencon.linovhrcommunity.dto.eventcourse.GetAllEventCourseDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.eventcourse.GetAllEventCourseDtoRes;
+import com.lawencon.linovhrcommunity.dto.eventcourse.GetByIdEventCourseDtoDataRes;
+import com.lawencon.linovhrcommunity.dto.eventcourse.GetByIdEventCourseDtoRes;
 import com.lawencon.linovhrcommunity.dto.eventcourse.GetOrderEventCourseDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.eventcourse.GetOrderEventCourseDtoRes;
 import com.lawencon.linovhrcommunity.dto.eventcourse.GetProfileJoinEventCourseDtoDataRes;
@@ -114,6 +116,28 @@ public class EventCourseService extends BaseServiceLinovCommunityImpl {
 	@Autowired
 	public void setPaymentMethodDao(PaymentMethodDao paymentMethodDao) {
 		this.paymentMethodDao = paymentMethodDao;
+	}
+	
+	public GetByIdEventCourseDtoRes getById(String id) throws Exception {
+		EventCourse getEventCourse = eventCourseDao.findById(id);
+		
+		GetByIdEventCourseDtoDataRes data = new GetByIdEventCourseDtoDataRes();
+		data.setId(getEventCourse.getId());
+		data.setContents(getEventCourse.getContents());
+		data.setTitle(getEventCourse.getTitle());
+		data.setEventCourseLocation(getEventCourse.getEventCourseLocation());
+		data.setPrice(getEventCourse.getPrice());
+		data.setDateStart(getEventCourse.getDateStart());
+		data.setDateEnd(getEventCourse.getDateEnd());
+		data.setTimeStart(getEventCourse.getTimeStart());
+		data.setTimeEnd(getEventCourse.getTimeEnd());
+		data.setIdFile((getEventCourse.getFile() != null)?getEventCourse.getFile().getId():null);
+		data.setCreatedBy(getEventCourse.getCreatedBy());
+		data.setCreatedAt(getEventCourse.getCreatedAt());
+		
+		GetByIdEventCourseDtoRes dataRes = new GetByIdEventCourseDtoRes();
+		dataRes.setData(data);
+		return dataRes;
 	}
 
 	public InsertEventCourseDtoRes insert(String content, MultipartFile file) throws Exception {

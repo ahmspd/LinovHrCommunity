@@ -46,7 +46,7 @@ public class EventCoursePaymentDao extends BaseDaoImpl<EventCoursePayment> {
 			Object[] obj = (Object[]) result;
 			GetAllEventCoursePaymentDtoDataRes reqData = new GetAllEventCoursePaymentDtoDataRes();
 			reqData.setId(obj[0].toString());
-			reqData.setIdFile(obj[1].toString());
+			reqData.setIdFile((obj[1] != null)?obj[1].toString():null);
 			reqData.setTotalprice(new BigInteger(obj[2].toString()));
 			reqData.setPaymentName(obj[3].toString());
 			reqData.setFullName(obj[4].toString());

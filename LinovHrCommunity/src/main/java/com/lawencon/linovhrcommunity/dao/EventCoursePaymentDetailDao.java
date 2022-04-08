@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.lawencon.base.BaseDaoImpl;
 import com.lawencon.linovhrcommunity.dto.eventcoursepaymentdetail.GetAllEventCoursePaymentDetailDtoDataRes;
+import com.lawencon.linovhrcommunity.dto.eventcoursepaymentdetail.GetIdAndPriceDtoDataRes;
 import com.lawencon.linovhrcommunity.model.EventCourse;
 import com.lawencon.linovhrcommunity.model.EventCoursePayment;
 import com.lawencon.linovhrcommunity.model.EventCoursePaymentDetail;
@@ -66,6 +67,11 @@ public class EventCoursePaymentDetailDao extends BaseDaoImpl<EventCoursePaymentD
 			reqData.setCreatedAt(((Timestamp) obj[12]).toLocalDateTime());
 			reqData.setVersion((Integer)obj[13]);
 			reqData.setIsActive((Boolean)obj[14]);
+			
+			GetIdAndPriceDtoDataRes data = new GetIdAndPriceDtoDataRes();
+			data.setId(obj[0].toString());
+			data.setPrice(new BigInteger(obj[8].toString()));
+			reqData.setData(data);
 			
 			dataRes.add(reqData);
 		});
