@@ -49,6 +49,15 @@ public class Profile extends BaseEntity {
 	@OneToOne
 	@JoinColumn(name = "id_file")
 	private File file;
+	
+	@Column(name = "instagram")
+	private String instagram;
+	
+	@Column(name = "twitter")
+	private String twitter;
+	
+	@Column(name = "facebook")
+	private String facebook;
 
 	public User getUser() {
 		return user;
@@ -130,4 +139,31 @@ public class Profile extends BaseEntity {
 		this.file = file;
 	}
 
+	public String getInstagram() {
+		return instagram;
+	}
+
+	public void setInstagram(String instagram) {
+		this.instagram = instagram;
+	}
+
+	public String getTwitter() {
+		return twitter;
+	}
+
+	public void setTwitter(String twitter) {
+		this.twitter = twitter;
+	}
+
+	public String getFacebook() {
+		return facebook;
+	}
+
+	public void setFacebook(String facebook) {
+		this.facebook = facebook;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 }

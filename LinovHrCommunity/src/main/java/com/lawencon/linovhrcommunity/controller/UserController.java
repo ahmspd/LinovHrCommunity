@@ -19,8 +19,12 @@ import com.lawencon.linovhrcommunity.dto.user.InsertUserDtoReq;
 import com.lawencon.linovhrcommunity.dto.user.InsertUserDtoRes;
 import com.lawencon.linovhrcommunity.dto.user.RegistrationCodeDtoReq;
 import com.lawencon.linovhrcommunity.dto.user.RegistrationCodeDtoRes;
+import com.lawencon.linovhrcommunity.dto.user.UpdatePasswordDtoReq;
+import com.lawencon.linovhrcommunity.dto.user.UpdatePasswordDtoRes;
 import com.lawencon.linovhrcommunity.dto.user.UpdateUserDtoReq;
 import com.lawencon.linovhrcommunity.dto.user.UpdateUserDtoRes;
+import com.lawencon.linovhrcommunity.dto.user.UserForgotPasswordDtoReq;
+import com.lawencon.linovhrcommunity.dto.user.UserForgotPasswordDtoRes;
 import com.lawencon.linovhrcommunity.service.UserService;
 
 @RestController
@@ -49,7 +53,7 @@ public class UserController {
 			MediaType.APPLICATION_JSON_VALUE,
 			MediaType.MULTIPART_FORM_DATA_VALUE
 	})
-	public ResponseEntity<UpdateUserDtoRes> insertData(@RequestPart(name="content") String content, 
+	public ResponseEntity<UpdateUserDtoRes> updateUser(@RequestPart(name="content") String content, 
 			@RequestPart(required = false) MultipartFile file) throws Exception {
 		UpdateUserDtoRes response = userService.updateUser(content, file);
 		return new ResponseEntity<UpdateUserDtoRes>(response, HttpStatus.OK);
@@ -66,4 +70,17 @@ public class UserController {
 		UpdateUserDtoRes data = userService.updateByRegistraionCode(dataReq);
 		return new ResponseEntity<UpdateUserDtoRes>(data, HttpStatus.OK);
 	}
+	
+	@PutMapping("password")
+	public ResponseEntity<UpdatePasswordDtoRes> updatePassword(@RequestBody UpdatePasswordDtoReq dataReq) throws Exception {
+		UpdatePasswordDtoRes data = userService.updatePassword(dataReq);
+		return new ResponseEntity<UpdatePasswordDtoRes>(data, HttpStatus.OK);
+	}
+	
+	@PutMapping("forgot-password")
+	public ResponseEntity<UserForgotPasswordDtoRes> forgotPassword(@RequestBody UserForgotPasswordDtoReq datReq) throws Exception {
+		UserForgotPasswordDtoRes data = userService.forgotPassword(datReq);
+		return new ResponseEntity<UserForgotPasswordDtoRes>(data, HttpStatus.OK);
+	}
+	
 }

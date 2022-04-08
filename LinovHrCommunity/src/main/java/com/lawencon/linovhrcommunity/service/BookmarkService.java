@@ -1,5 +1,6 @@
 package com.lawencon.linovhrcommunity.service;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.linovhrcommunity.dao.BookmarkDao;
 import com.lawencon.linovhrcommunity.dao.CategoryDetailDao;
+import com.lawencon.linovhrcommunity.dao.LikeDao;
+import com.lawencon.linovhrcommunity.dao.ThreadDetailDao;
 import com.lawencon.linovhrcommunity.dao.ThreadModelDao;
 import com.lawencon.linovhrcommunity.dto.bookmark.DeleteBookmarkDtoRes;
 import com.lawencon.linovhrcommunity.dto.bookmark.GetBookmarkDtoDataRes;
@@ -18,6 +21,7 @@ import com.lawencon.linovhrcommunity.dto.bookmark.InsertBookmarkDtoReq;
 import com.lawencon.linovhrcommunity.dto.bookmark.InsertBookmarkDtoRes;
 import com.lawencon.linovhrcommunity.dto.categorydetail.GetCategoryDetailByThreadDtoRes;
 import com.lawencon.linovhrcommunity.dto.thread.GetThreadDataDtoRes;
+import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadPageDtoRes;
 import com.lawencon.linovhrcommunity.model.Bookmark;
 import com.lawencon.linovhrcommunity.model.ThreadModel;
 
@@ -26,6 +30,24 @@ public class BookmarkService extends BaseServiceLinovCommunityImpl {
 	private BookmarkDao bookmarkDao;
 	private ThreadModelDao threadModelDao;
 	private CategoryDetailDao categoryDetailDao;
+	private ThreadDetailDao threadDetailDao;
+	private ThreadModelDao threadDao;
+	private LikeDao likeDao;
+
+	@Autowired
+	public void setThreadDetailDao(ThreadDetailDao threadDetailDao) {
+		this.threadDetailDao = threadDetailDao;
+	}
+
+	@Autowired
+	public void setThreadDao(ThreadModelDao threadDao) {
+		this.threadDao = threadDao;
+	}
+
+	@Autowired
+	public void setLikeDao(LikeDao likeDao) {
+		this.likeDao = likeDao;
+	}
 
 	@Autowired
 	public void setCategoryDetailDao(CategoryDetailDao categoryDetailDao) {
@@ -68,15 +90,32 @@ public class BookmarkService extends BaseServiceLinovCommunityImpl {
 		}
 	}
 
-	public GetBookmarkDtoRes getByUser(String idUser) throws Exception {
-		List<GetBookmarkDtoDataRes> dataRes = bookmarkDao.getBookmark(idUser);
-		for (int i = 0; i < dataRes.size(); i++) {
+	public GetAllThreadPageDtoRes getByUser(int startPage, int maxPage) throws Exception {
+		GetAllThreadPageDtoRes result = new GetAllThreadPageDtoRes();
+
+		List<GetThreadDataDtoRes> data = bookmarkDao.getBookmark(getIdFromPrincipal(), startPage, maxPage);
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+		// Format LocalDateTime to String
+		for (int i = 0; i < data.size(); i++) {
+			String id = data.get(i).getId();
+			String formattedDateTime = data.get(i).getCreatedAt().format(dateTimeFormatter);
+			Integer totalCommet = threadDetailDao.getCountComment(id);
+			Integer totalBookmark = bookmarkDao.getCountBookmark(id);
+			Integer totalLike = likeDao.getCountLike(id);
+			data.get(i).setDate(formattedDateTime);
+			data.get(i).setComment(totalCommet);
+			data.get(i).setBookmark(totalBookmark);
+			data.get(i).setLike(totalLike);
 			List<GetCategoryDetailByThreadDtoRes> categoryDetail = categoryDetailDao
-					.getCategoryDetailByThread(dataRes.get(i).getId());
-			dataRes.get(i).setDataCategoryDetail(categoryDetail);
+					.getCategoryDetailByThread(data.get(i).getId());
+			data.get(i).setDataCategoryDetail(categoryDetail);
 		}
-		GetBookmarkDtoRes result = new GetBookmarkDtoRes();
-		result.setData(dataRes);
+
+		Integer totalPage = threadDao.getCountAllThread();
+		result.setData(data);
+		result.setTotal(totalPage);
+
 		return result;
 	}
 
@@ -88,8 +127,7 @@ public class BookmarkService extends BaseServiceLinovCommunityImpl {
 			commit();
 			if (isDelete) {
 				result.setMessage("Delete Success");
-			} 
-			else {
+			} else {
 				throw new Exception("Delete Failed");
 			}
 			return result;
@@ -99,7 +137,7 @@ public class BookmarkService extends BaseServiceLinovCommunityImpl {
 			throw new Exception(e);
 		}
 	}
-	
+
 	public GetBookmarkThreadDtoRes getBookmarkThread(String idUser, String idThread) throws Exception {
 		Bookmark data = bookmarkDao.getBookmarkThread(idUser, idThread);
 		GetBookmarkThreadDtoRes result = new GetBookmarkThreadDtoRes();
@@ -108,9 +146,8 @@ public class BookmarkService extends BaseServiceLinovCommunityImpl {
 			dataRes.setIdThread(data.getThread().getId());
 			dataRes.setIdBookmark(data.getId());
 			result.setData(dataRes);
-		}
-		catch(NullPointerException e) {
-			
+		} catch (NullPointerException e) {
+
 		}
 		return result;
 	}

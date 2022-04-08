@@ -1,12 +1,15 @@
 package com.lawencon.linovhrcommunity.service;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.linovhrcommunity.dao.BookmarkDao;
 import com.lawencon.linovhrcommunity.dao.CategoryDetailDao;
 import com.lawencon.linovhrcommunity.dao.LikeDao;
+import com.lawencon.linovhrcommunity.dao.ThreadDetailDao;
 import com.lawencon.linovhrcommunity.dao.ThreadModelDao;
 import com.lawencon.linovhrcommunity.dto.categorydetail.GetCategoryDetailByThreadDtoRes;
 import com.lawencon.linovhrcommunity.dto.like.DeleteLikeDtoRes;
@@ -17,6 +20,8 @@ import com.lawencon.linovhrcommunity.dto.like.GetLikeThreadDtoRes;
 import com.lawencon.linovhrcommunity.dto.like.InsertLikeDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.like.InsertLikeDtoReq;
 import com.lawencon.linovhrcommunity.dto.like.InsertLikeDtoRes;
+import com.lawencon.linovhrcommunity.dto.thread.GetThreadDataDtoRes;
+import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadPageDtoRes;
 import com.lawencon.linovhrcommunity.model.Like;
 import com.lawencon.linovhrcommunity.model.ThreadModel;
 
@@ -25,15 +30,30 @@ public class LikeService extends BaseServiceLinovCommunityImpl {
 	private LikeDao likeDao;
 	private ThreadModelDao threadModelDao;
 	private CategoryDetailDao categoryDetailDao;
+	private BookmarkDao bookmarkDao;
+	private ThreadDetailDao threadDetailDao;
+	private ThreadModelDao threadDao;
 
+	@Autowired
+	public void setBookmarkDao(BookmarkDao bookmarkDao) {
+		this.bookmarkDao = bookmarkDao;
+	}
 	@Autowired
 	public void setLikeDao(LikeDao likeDao) {
 		this.likeDao = likeDao;
+	}
+	@Autowired
+	public void setThreadDetailDao(ThreadDetailDao threadDetailDao) {
+		this.threadDetailDao = threadDetailDao;
 	}
 
 	@Autowired
 	public void setThreadModelDao(ThreadModelDao threadModelDao) {
 		this.threadModelDao = threadModelDao;
+	}
+	@Autowired
+	public void setThreadDao(ThreadModelDao threadDao) {
+		this.threadDao = threadDao;
 	}
 
 	@Autowired
@@ -68,15 +88,32 @@ public class LikeService extends BaseServiceLinovCommunityImpl {
 		}
 	}
 	
-	public GetLikeDtoRes getByUser(String idUser) throws Exception {
-		List<GetLikeDtoDataRes> dataRes = likeDao.getThreadLike(idUser);
-		for (int i = 0; i < dataRes.size(); i++) {
+	public GetAllThreadPageDtoRes getByUser(int startPage, int maxPage) throws Exception {
+		GetAllThreadPageDtoRes result = new GetAllThreadPageDtoRes();
+
+		List<GetThreadDataDtoRes> data = likeDao.getThreadLike(getIdFromPrincipal(), startPage, maxPage);
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+		// Format LocalDateTime to String
+		for (int i = 0; i < data.size(); i++) {
+			String id = data.get(i).getId();
+			String formattedDateTime = data.get(i).getCreatedAt().format(dateTimeFormatter);
+			Integer totalCommet = threadDetailDao.getCountComment(id);
+			Integer totalBookmark = bookmarkDao.getCountBookmark(id);
+			Integer totalLike = likeDao.getCountLike(id);
+			data.get(i).setDate(formattedDateTime);
+			data.get(i).setComment(totalCommet);
+			data.get(i).setBookmark(totalBookmark);
+			data.get(i).setLike(totalLike);
 			List<GetCategoryDetailByThreadDtoRes> categoryDetail = categoryDetailDao
-					.getCategoryDetailByThread(dataRes.get(i).getId());
-			dataRes.get(i).setDataCategoryDetail(categoryDetail);
+					.getCategoryDetailByThread(data.get(i).getId());
+			data.get(i).setDataCategoryDetail(categoryDetail);
 		}
-		GetLikeDtoRes result = new GetLikeDtoRes();
-		result.setData(dataRes);
+
+		Integer totalPage = threadDao.getCountAllThread();
+		result.setData(data);
+		result.setTotal(totalPage);
+
 		return result;
 	}
 	

@@ -58,10 +58,10 @@ public class ThreadController {
 		return new ResponseEntity<GetThreadDtoRes>(response, HttpStatus.OK);
 	}
 	
-	@GetMapping("{id}")
-	public ResponseEntity<GetThreadDtoRes> getThreadByUser(@PathVariable("id") String id) throws Exception {
-		GetThreadDtoRes response = threadService.getThreadByUser(id);
-		return new ResponseEntity<GetThreadDtoRes>(response, HttpStatus.OK);
+	@GetMapping("user")
+	public ResponseEntity<GetAllThreadPageDtoRes> getThreadByUser(@RequestParam String idUser,@RequestParam int start, @RequestParam int max) throws Exception {
+		GetAllThreadPageDtoRes response = threadService.getThreadByUser(idUser,start,max);
+		return new ResponseEntity<GetAllThreadPageDtoRes>(response, HttpStatus.OK);
 	}
 	
 	@GetMapping("detail/{id}")

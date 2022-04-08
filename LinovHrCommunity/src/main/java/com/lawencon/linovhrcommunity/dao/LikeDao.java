@@ -40,29 +40,36 @@ public class LikeDao extends BaseDaoImpl<Like> {
 		return (Long) result;
 	}
 	
-	public List<GetLikeDtoDataRes> getThreadLike(String idUser) throws Exception {
+	public List<GetThreadDataDtoRes> getThreadLike(String idUser,int startPage, int maxPage) throws Exception {
 		StringBuilder sql = new StringBuilder();
-		sql.append("select tt.id as idThread , tt.title , tt.contents, tt.id_file as idFile , tf.extensions , tf.contents as fileContents, ttt.thread_type_name, tt.is_premium, tt.created_at , tt.created_by , tp.full_name, tl.id as idLike ");
+		sql.append("select tt.id as idThread , tt.title , tt.contents, tt.id_file as idFile , tf.extensions , tf.contents as fileContents, ttt.thread_type_name, tt.is_premium, tt.created_at , tt.created_by , tp.full_name, tl.id as idLike ,tpl.id as tpl_id, tt.is_active ");
 		sql.append("from t_like tl left join t_thread tt on tl.id_thread = tt.id ");
 		sql.append("left join t_file tf on tt.id_file = tf.id left join t_thread_type ttt  ");
 		sql.append("on tt.id_thread_type = ttt.id left join t_user tu on tu.id = tt.created_by ");
-		sql.append("left join t_profile tp on tp.id_user = tu.id where tl.created_by = :idUser");
+		sql.append("left join t_polling tpl on tpl.id_thread = tt.id ");
+		sql.append("left join t_profile tp on tp.id_user = tu.id where tl.created_by = :idUser ");
+		sql.append("and ttt.id <> '2' and ttt.id <> '3' ");
 
-		List<?> results = createNativeQuery(sql.toString()).setParameter("idUser", idUser).getResultList();
-		List<GetLikeDtoDataRes> dataRes = new ArrayList<GetLikeDtoDataRes>();
+		List<?> results = createNativeQuery(sql.toString())
+				.setParameter("idUser", idUser)
+				.setFirstResult(startPage)
+                .setMaxResults(maxPage)
+                .getResultList();
+		List<GetThreadDataDtoRes> dataRes = new ArrayList<GetThreadDataDtoRes>();
 		results.forEach(result -> {
 			Object[] obj = (Object[]) result;
-			GetLikeDtoDataRes reqData = new GetLikeDtoDataRes();
-			reqData.setIdThread(obj[0].toString());
+			GetThreadDataDtoRes reqData = new GetThreadDataDtoRes();
+			reqData.setId(obj[0].toString());
 			reqData.setTitle(obj[1].toString());
 			reqData.setContents(obj[2].toString());
-			reqData.setIdFile(obj[3].toString());
+			reqData.setIdFile((obj[3]!=null)? obj[3].toString():null);
 			reqData.setThreadTypeName(obj[6].toString());
-			reqData.setIsPremium(Boolean.valueOf(obj[7].toString()));
+			reqData.setIsPremium((obj[7]!=null)? Boolean.valueOf(obj[7].toString()):null);
 			reqData.setCreatedAt(((Timestamp) obj[8]).toLocalDateTime());
 			reqData.setCreatedBy(obj[9].toString());
 			reqData.setFullName(obj[10].toString());
-			reqData.setId(obj[11].toString());
+			reqData.setIdPolling((obj[11]!=null)? obj[11].toString():null);
+			reqData.setIsActive((obj[12]!=null)? Boolean.valueOf(obj[12].toString()):null);
 			dataRes.add(reqData);
 		});
 		return dataRes;
