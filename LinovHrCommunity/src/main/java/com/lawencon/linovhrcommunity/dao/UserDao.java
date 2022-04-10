@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.lawencon.base.BaseDaoImpl;
@@ -14,6 +15,13 @@ import com.lawencon.linovhrcommunity.model.User;
 
 @Repository
 public class UserDao extends BaseDaoImpl<User> {
+
+	private OrderDao orderDao;
+	
+	@Autowired
+	public void setOrderDao(OrderDao orderDao) {
+		this.orderDao = orderDao;
+	}
 
 	public User findById(String id) throws Exception {
 		return getById(id);
@@ -97,6 +105,8 @@ public class UserDao extends BaseDaoImpl<User> {
 			userData.setTwitter(obj[17]!=null? obj[17].toString():null);
 			userData.setFacebook(obj[18]!=null? obj[18].toString():null);
 			userData.setCompany(obj[19]!=null? obj[19].toString():null);
+			userData.setStatUserMember(orderDao.getOrderMember(idUser));
+			userData.setIdOrder(orderDao.getIdOrderMember(idUser));
 		}
 		catch(NoResultException e) {
 			e.printStackTrace();

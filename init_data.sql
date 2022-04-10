@@ -1,6 +1,6 @@
-insert into t_role(code, role_name, created_at, "version") values 
-	('SA001', 'Super Admin', now(), 0),
-	('MB001', 'Member', now(), 0);
+insert into t_role(id,code, role_name, created_at, "version") values 
+	('1','SA001', 'Super Admin', now(), 0),
+	('2','MB001', 'Member', now(), 0);
 
 insert into t_industry (code, industry_name, created_at, "version") values 
 	('IDS01', 'Industry 1', now(), 0),
@@ -9,6 +9,27 @@ insert into t_industry (code, industry_name, created_at, "version") values
 insert into t_position (code, position_name, created_at, "version") values 
 	('PS001', 'Position 1', now(), 0),
 	('PSS02', 'Position 2', now(), 0);
+
+insert into t_thread_type (id, code, thread_type_name, created_by, created_at, "version") values 
+	('1','TYP001','Thread', '1',now(),0),
+	('2','TYP002','Artikel', '1',now(),0),
+	('3','TPP001','Premium', '1', now(), 0),
+	('4','PL0001','Polling','1',now(), 0);
+
+insert into t_price_type (id, code, price_type_name, created_by, created_at, "version") values 
+	('1','PT0001','Price Member','1',now(), 0),
+	('2','PT0002','Price Event','1',now(), 0),
+	('3','PT0003','Price Course','1',now(), 0);
+	
+insert into t_price_list (id, code, price_name, price, id_price_type, created_by, created_at, "version") values 
+	('1','PL0001','Member Price 1 bulan',300000,'1','1',now(), 0),
+	('2','PL0002','Member Price 3 bulan',450000,'1','1',now(), 0),
+	('3','PL0003','Event Price',3900000,'2','1',now(), 0),
+	('4','PL0004','Course Price',5900000,'3','1',now(), 0);
+
+insert into t_event_course_type (id, code, event_course_type_name, created_by, created_at, "version") values 
+	('1','EV01','Event','1',now(),0),
+	('2','CO01','Course','1',now(),0);
 
 insert into t_province(code, province_name, created_at, "version") values
 ('11', 'ACEH',now(),0),

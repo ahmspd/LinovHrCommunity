@@ -209,12 +209,14 @@ public class UserMemberService extends BaseServiceLinovCommunityImpl {
 
 	}
 
-	public GetAllUserMemberDtoRes getAllIsNotAccept() throws Exception {
+	public GetAllUserMemberDtoRes getAllIsNotAccept(Boolean isAccept, int startPage, int maxPage) throws Exception {
 		
 		try {
 			begin();
-			List<GetAllUserMemberDtoDataRes> listData = userMemberDao.getAllToAccept();
+			List<GetAllUserMemberDtoDataRes> listData = userMemberDao.getAllToAccept(isAccept, startPage, maxPage);
+			Integer total = userMemberDao.getCountToAccept(isAccept);
 			GetAllUserMemberDtoRes getAllRes = new GetAllUserMemberDtoRes();
+			getAllRes.setTotal(total);
 			getAllRes.setData(listData);
 			commit();
 

@@ -30,16 +30,20 @@ public class EventCoursePaymentDao extends BaseDaoImpl<EventCoursePayment> {
 		return super.deleteById(id);
 	}
 
-	public List<GetAllEventCoursePaymentDtoDataRes> getAllUnaccepted() {
+	public List<GetAllEventCoursePaymentDtoDataRes> getAllUnaccepted(Boolean isAccept, int startPage, int maxPage) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT ecp.id, ecp.id_file, ecp.total_price, pm.payment_name, p.full_name, p.phone_number, u.email, ecp.created_at, ecp.version, ecp.is_active ");
+		sql.append("SELECT ecp.id, ecp.id_file, ecp.total_price, pm.payment_name, p.full_name, p.phone_number, u.email, ecp.created_at, ecp.version, ecp.is_active, ecp.is_accept ");
 		sql.append("FROM t_event_course_payment ecp ");
 		sql.append("INNER JOIN t_payment_method pm ON ecp.id_payment_method = pm.id ");
 		sql.append("INNER JOIN t_user u ON ecp.created_by = u.id ");
 		sql.append("INNER JOIN t_profile p ON u.id = p.id_user ");
-		sql.append("WHERE ecp.is_accept = false ");
+		sql.append("WHERE ecp.is_accept = :isAccept ");
 		
-		List<?> results = createNativeQuery(sql.toString()).getResultList();
+		List<?> results = createNativeQuery(sql.toString())
+				.setParameter("isAccept", isAccept)
+				.setFirstResult(startPage)
+                .setMaxResults(maxPage)
+				.getResultList();
 		List<GetAllEventCoursePaymentDtoDataRes> dataRes = new ArrayList<GetAllEventCoursePaymentDtoDataRes>();
 		
 		results.forEach(result -> {
@@ -55,10 +59,34 @@ public class EventCoursePaymentDao extends BaseDaoImpl<EventCoursePayment> {
 			reqData.setCreatedAt(((Timestamp) obj[7]).toLocalDateTime());
 			reqData.setVersion((Integer)obj[8]);
 			reqData.setIsActive((Boolean)obj[9]);
+			reqData.setIsAccept((obj[10] != null)?Boolean.valueOf(obj[10].toString()):null);
 			
 			dataRes.add(reqData);
 		});
 		
 		return dataRes;
+	}
+	
+	public Integer getCoungUnaccepted(Boolean isAccept) throws Exception {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT count(ecp.id) ");
+		sql.append("FROM t_event_course_payment ecp ");
+		sql.append("INNER JOIN t_payment_method pm ON ecp.id_payment_method = pm.id ");
+		sql.append("INNER JOIN t_user u ON ecp.created_by = u.id ");
+		sql.append("INNER JOIN t_profile p ON u.id = p.id_user ");
+		sql.append("WHERE ecp.is_accept = :isAccept ");
+		
+		Object result = null;
+		Integer res = 0;
+		try {
+			result = createNativeQuery(sql.toString())
+					.setParameter("isAccept", isAccept)
+					.getSingleResult();
+			res = Integer.valueOf(result.toString());
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return res;
 	}
 }
