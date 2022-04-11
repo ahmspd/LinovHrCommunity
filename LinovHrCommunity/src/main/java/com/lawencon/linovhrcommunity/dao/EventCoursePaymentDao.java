@@ -54,7 +54,7 @@ public class EventCoursePaymentDao extends BaseDaoImpl<EventCoursePayment> {
 			reqData.setTotalprice(new BigInteger(obj[2].toString()));
 			reqData.setPaymentName(obj[3].toString());
 			reqData.setFullName(obj[4].toString());
-			reqData.setPhoneNumber(obj[5].toString());
+			reqData.setPhoneNumber((obj[5]!=null)?obj[5].toString():null);
 			reqData.setEmail(obj[6].toString());
 			reqData.setCreatedAt(((Timestamp) obj[7]).toLocalDateTime());
 			reqData.setVersion((Integer)obj[8]);
