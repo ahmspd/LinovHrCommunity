@@ -157,7 +157,7 @@ public class EventCourseDao extends BaseDaoImpl<EventCourse> {
 	
 	public List<GetAllEventCourseDtoDataRes> getJoinedEventCourse(String id) throws Exception {
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT ec.id AS ec_id, ec.contents AS ec_contents, ec.title, ec.event_course_location, ec.price, ec.date_start, ec.date_end, ec.time_start, ec.time_end, ec.id_file AS f_id, f.extensions, f.contents AS f_contents, ec.created_by AS u_id, p.full_name, ec.created_at, ec.version, ec.is_active ");
+		sql.append("SELECT ec.id AS ec_id, ec.contents AS ec_contents, ec.title, ect.event_course_type_name, ec.event_course_location, ec.price, ec.date_start, ec.date_end, ec.time_start, ec.time_end, ec.id_file AS f_id, f.extensions, f.contents AS f_contents, ec.created_by AS u_id, p.full_name, ec.created_at, ec.version, ec.is_active ");
 		sql.append("FROM t_event_course ec ");
 		sql.append("INNER JOIN t_event_course_type ect ON ec.id_event_course_type = ect.id ");
 		sql.append("INNER JOIN t_file f ON ec.id_file = f.id ");
@@ -176,20 +176,21 @@ public class EventCourseDao extends BaseDaoImpl<EventCourse> {
 			reqData.setId(obj[0].toString());
 			reqData.setContents(obj[1].toString());
 			reqData.setTitle(obj[2].toString());
-			reqData.setEventCourseLocation(obj[3].toString());
-			reqData.setPrice(new BigInteger(obj[4].toString()));
-			reqData.setDateStart((Date)obj[5]);
-			reqData.setDateEnd((Date)obj[6]);
-			reqData.setTimeStart((Time)obj[7]);
-			reqData.setTimeEnd((Time)obj[8]);
-			reqData.setIdFile((obj[9]!=null)?obj[9].toString():null);
-			reqData.setFileExtensions((obj[10]!=null)?obj[10].toString():null);
-			reqData.setFileContents((obj[11]!=null)?(byte[])obj[11]:null);
-			reqData.setCreatedBy(obj[12].toString());
-			reqData.setFullName(obj[13].toString());
-			reqData.setCreatedAt(((Timestamp) obj[14]).toLocalDateTime());
-			reqData.setVersion((Integer)obj[15]);
-			reqData.setIsActive((Boolean)obj[16]);
+			reqData.setType(obj[3].toString());
+			reqData.setEventCourseLocation(obj[4].toString());
+			reqData.setPrice(new BigInteger(obj[5].toString()));
+			reqData.setDateStart((Date)obj[6]);
+			reqData.setDateEnd((Date)obj[7]);
+			reqData.setTimeStart((Time)obj[8]);
+			reqData.setTimeEnd((Time)obj[9]);
+			reqData.setIdFile((obj[9]!=null)?obj[10].toString():null);
+			reqData.setFileExtensions((obj[11]!=null)?obj[11].toString():null);
+			reqData.setFileContents((obj[12]!=null)?(byte[])obj[12]:null);
+			reqData.setCreatedBy(obj[13].toString());
+			reqData.setFullName(obj[14].toString());
+			reqData.setCreatedAt(((Timestamp) obj[15]).toLocalDateTime());
+			reqData.setVersion((Integer)obj[16]);
+			reqData.setIsActive((Boolean)obj[17]);
 			
 			dataRes.add(reqData);
 		});
@@ -215,7 +216,7 @@ public class EventCourseDao extends BaseDaoImpl<EventCourse> {
 			Object[] obj = (Object[]) result;
 			dataReq.setEmail(obj[0].toString());
 			dataReq.setFullName(obj[1].toString());
-			dataReq.setPhoneNumber(obj[2].toString());
+			dataReq.setPhoneNumber((obj[2]!=null)?obj[2].toString():null);
 			
 			if(obj[3] != null) {
 				dataReq.setInstagram(obj[3].toString());
@@ -254,7 +255,7 @@ public class EventCourseDao extends BaseDaoImpl<EventCourse> {
 			dataReq.setId(obj[0].toString());
 			dataReq.setFullName(obj[1].toString());
 			dataReq.setEmail(obj[2].toString());
-			dataReq.setPhoneNumber(obj[3].toString());
+			dataReq.setPhoneNumber((obj[3]!=null)?obj[3].toString():null);
 			dataReq.setIsAccept((Boolean)obj[4]);
 			dataReq.setIdFile((obj[5]!=null)?obj[5].toString():null);
 			dataReq.setPaymentName((obj[6]!=null)?obj[6].toString():null);

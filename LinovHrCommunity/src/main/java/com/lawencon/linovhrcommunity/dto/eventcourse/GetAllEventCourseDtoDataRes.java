@@ -12,6 +12,7 @@ public class GetAllEventCourseDtoDataRes {
 	private String id;
 	private String contents;
 	private String title;
+	private String type;
 	private String eventCourseLocation;
 	private BigInteger price;
 	private Date dateStart;
@@ -51,6 +52,14 @@ public class GetAllEventCourseDtoDataRes {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public String getEventCourseLocation() {
