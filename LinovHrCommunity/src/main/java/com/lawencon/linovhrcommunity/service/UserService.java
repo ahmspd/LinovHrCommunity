@@ -151,7 +151,7 @@ public class UserService extends BaseServiceLinovCommunityImpl implements UserDe
 			emailTemplate.setModel(model);
 			
 			excecutorService.submit(()->{			
-				sendEmail("image/sending-email.png","EmailTemplateVerifyAccount.flth",emailTemplate);
+				sendEmail("image/Security_Flatline.png","EmailTemplateRegistration.flth",emailTemplate);
 			});
 			excecutorService.shutdown();
 		}
@@ -339,7 +339,7 @@ public class UserService extends BaseServiceLinovCommunityImpl implements UserDe
 				emailTemplate.setModel(model);
 				
 				excecutorService.submit(()->{			
-					sendEmail("image/Password_Monochromatic.png","EmailTemplateForgotPassword.flth",emailTemplate);
+					sendEmail("image/new-password.png","EmailTemplateForgotPassword.flth",emailTemplate);
 				});
 				excecutorService.shutdown();
 				

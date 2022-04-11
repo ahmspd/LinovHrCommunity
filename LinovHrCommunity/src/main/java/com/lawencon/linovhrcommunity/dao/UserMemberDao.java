@@ -89,16 +89,16 @@ public class UserMemberDao extends BaseDaoImpl<UserMember> {
 	
 	public List<GetAllUserMemberDtoDataRes> getAllToAccept(Boolean isAccept, int startPage, int maxPage) throws Exception {
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT tum.id, tp.full_name, tu.email, tpm.payment_name, tor.is_accept, tor.id_file, tpl.price_name, tum.is_active");
-		sql.append(" FROM t_order_detail tod");
-		sql.append(" LEFT JOIN t_user_member tum on tum.id = tod.id_user_member");
-		sql.append(" LEFT JOIN t_order tor on tor.id = tod.id_order");
-		sql.append(" LEFT JOIN t_user tu on tu.id = tor.id_user");
-		sql.append(" LEFT JOIN t_profile tp on tu.id = tp.id_user");
-		sql.append(" LEFT JOIN t_payment_method tpm on tpm.id = tor.id_payment_method");
-		sql.append(" LEFT JOIN t_file tf on tf.id = tor.id_file");
-		sql.append(" LEFT JOIN t_price_list tpl on tpl.id = tum.id_price_list");
-		sql.append(" WHERE tor.is_accept = :isAccept OR tor.is_accept ISNULL");
+		sql.append("SELECT tum.id, tp.full_name, tu.email, tpm.payment_name, tor.is_accept, tor.id_file, tpl.price_name, tum.is_active ");
+		sql.append(" FROM t_order_detail tod ");
+		sql.append(" LEFT JOIN t_user_member tum on tum.id = tod.id_user_member ");
+		sql.append(" LEFT JOIN t_order tor on tor.id = tod.id_order ");
+		sql.append(" LEFT JOIN t_user tu on tu.id = tor.id_user ");
+		sql.append(" LEFT JOIN t_profile tp on tu.id = tp.id_user ");
+		sql.append(" LEFT JOIN t_payment_method tpm on tpm.id = tor.id_payment_method ");
+		sql.append(" LEFT JOIN t_file tf on tf.id = tor.id_file ");
+		sql.append(" LEFT JOIN t_price_list tpl on tpl.id = tum.id_price_list ");
+		sql.append(" WHERE tor.is_accept = :isAccept and tod.id_event_course is null");
 		
 		List<?> results = createNativeQuery(sql.toString())
 				.setParameter("isAccept", isAccept)
@@ -110,14 +110,14 @@ public class UserMemberDao extends BaseDaoImpl<UserMember> {
 		results.forEach(result -> {
 			Object[] obj = (Object[]) result;
 			GetAllUserMemberDtoDataRes data = new GetAllUserMemberDtoDataRes();
-			data.setId(obj[0].toString());
-			data.setFullName(String.valueOf(obj[1]).toString());
-			data.setEmail(String.valueOf(obj[2]).toString());
-			data.setPaymentName(String.valueOf(obj[3]).toString());
+			data.setId((obj[0]!=null)?obj[0].toString():null);
+			data.setFullName((obj[1]!=null)?String.valueOf(obj[1]).toString():null);
+			data.setEmail((obj[2]!=null)?String.valueOf(obj[2]).toString():null);
+			data.setPaymentName((obj[3]!=null)?String.valueOf(obj[3]).toString():null);
 			data.setIsAccept(obj[4]!=null? Boolean.valueOf(obj[4].toString()):null);
-			data.setIdFile(String.valueOf(obj[5]).toString());
-			data.setPriceName(String.valueOf(obj[6]).toString());
-			data.setIsActive(Boolean.valueOf(obj[7].toString()));
+			data.setIdFile((obj[5]!=null)?String.valueOf(obj[5]).toString():null);
+			data.setPriceName((obj[6]!=null)?String.valueOf(obj[6]).toString():null);
+			data.setIsActive((obj[7]!=null)?Boolean.valueOf(obj[7].toString()):null);
 					
 			dataRes.add(data);
 		});
@@ -128,15 +128,15 @@ public class UserMemberDao extends BaseDaoImpl<UserMember> {
 	public Integer getCountToAccept(Boolean isAccept) throws Exception {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT count(tum.id) ");
-		sql.append(" FROM t_order_detail tod");
-		sql.append(" LEFT JOIN t_user_member tum on tum.id = tod.id_user_member");
-		sql.append(" LEFT JOIN t_order tor on tor.id = tod.id_order");
-		sql.append(" LEFT JOIN t_user tu on tu.id = tor.id_user");
-		sql.append(" LEFT JOIN t_profile tp on tu.id = tp.id_user");
-		sql.append(" LEFT JOIN t_payment_method tpm on tpm.id = tor.id_payment_method");
-		sql.append(" LEFT JOIN t_file tf on tf.id = tor.id_file");
-		sql.append(" LEFT JOIN t_price_list tpl on tpl.id = tum.id_price_list");
-		sql.append(" WHERE tor.is_accept = :isAccept OR tor.is_accept ISNULL");
+		sql.append(" FROM t_order_detail tod ");
+		sql.append(" LEFT JOIN t_user_member tum on tum.id = tod.id_user_member ");
+		sql.append(" LEFT JOIN t_order tor on tor.id = tod.id_order ");
+		sql.append(" LEFT JOIN t_user tu on tu.id = tor.id_user ");
+		sql.append(" LEFT JOIN t_profile tp on tu.id = tp.id_user ");
+		sql.append(" LEFT JOIN t_payment_method tpm on tpm.id = tor.id_payment_method ");
+		sql.append(" LEFT JOIN t_file tf on tf.id = tor.id_file ");
+		sql.append(" LEFT JOIN t_price_list tpl on tpl.id = tum.id_price_list ");
+		sql.append(" WHERE tor.is_accept = :isAccept and tod.id_event_course is null");
 		
 		Object result = null;
 		Integer res = 0;
