@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.lawencon.linovhrcommunity.dto.eventcourse.ConfirmPayJoinEventCourseDtoRes;
 import com.lawencon.linovhrcommunity.dto.eventcourse.GetAllEventCourseDtoRes;
+import com.lawencon.linovhrcommunity.dto.eventcourse.GetByIdEventCourseDtoRes;
 import com.lawencon.linovhrcommunity.dto.eventcourse.GetOrderEventCourseDtoRes;
 import com.lawencon.linovhrcommunity.dto.eventcourse.GetProfileJoinEventCourseDtoRes;
 import com.lawencon.linovhrcommunity.dto.eventcourse.InsertEventCourseDtoRes;
@@ -43,6 +44,12 @@ public class EventCourseController {
 	public ResponseEntity<GetAllEventCourseDtoRes> getByCreatedBy(@PathVariable("type") String type) throws Exception {
 		GetAllEventCourseDtoRes dataRes = eventCourseService.getByCreatedBy(type);
 		return new ResponseEntity<GetAllEventCourseDtoRes>(dataRes, HttpStatus.OK);
+	}
+	
+	@GetMapping("id/{id}")
+	public ResponseEntity<GetByIdEventCourseDtoRes> getById(@PathVariable("id") String id) throws Exception {
+		GetByIdEventCourseDtoRes dataRes = eventCourseService.getById(id);
+		return new ResponseEntity<GetByIdEventCourseDtoRes>(dataRes, HttpStatus.OK);
 	}
 	
 	@GetMapping("joined")
