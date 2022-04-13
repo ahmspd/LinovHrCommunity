@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.linovhrcommunity.dto.bookmark.DeleteBookmarkDtoRes;
-import com.lawencon.linovhrcommunity.dto.bookmark.GetBookmarkDtoRes;
 import com.lawencon.linovhrcommunity.dto.bookmark.GetBookmarkThreadDtoRes;
 import com.lawencon.linovhrcommunity.dto.bookmark.InsertBookmarkDtoReq;
 import com.lawencon.linovhrcommunity.dto.bookmark.InsertBookmarkDtoRes;

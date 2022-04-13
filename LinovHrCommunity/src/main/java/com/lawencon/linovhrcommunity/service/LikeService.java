@@ -13,8 +13,6 @@ import com.lawencon.linovhrcommunity.dao.ThreadDetailDao;
 import com.lawencon.linovhrcommunity.dao.ThreadModelDao;
 import com.lawencon.linovhrcommunity.dto.categorydetail.GetCategoryDetailByThreadDtoRes;
 import com.lawencon.linovhrcommunity.dto.like.DeleteLikeDtoRes;
-import com.lawencon.linovhrcommunity.dto.like.GetLikeDtoDataRes;
-import com.lawencon.linovhrcommunity.dto.like.GetLikeDtoRes;
 import com.lawencon.linovhrcommunity.dto.like.GetLikeThreadDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.like.GetLikeThreadDtoRes;
 import com.lawencon.linovhrcommunity.dto.like.InsertLikeDtoDataRes;
@@ -32,7 +30,6 @@ public class LikeService extends BaseServiceLinovCommunityImpl {
 	private CategoryDetailDao categoryDetailDao;
 	private BookmarkDao bookmarkDao;
 	private ThreadDetailDao threadDetailDao;
-	private ThreadModelDao threadDao;
 
 	@Autowired
 	public void setBookmarkDao(BookmarkDao bookmarkDao) {
@@ -50,10 +47,6 @@ public class LikeService extends BaseServiceLinovCommunityImpl {
 	@Autowired
 	public void setThreadModelDao(ThreadModelDao threadModelDao) {
 		this.threadModelDao = threadModelDao;
-	}
-	@Autowired
-	public void setThreadDao(ThreadModelDao threadDao) {
-		this.threadDao = threadDao;
 	}
 
 	@Autowired
@@ -94,7 +87,6 @@ public class LikeService extends BaseServiceLinovCommunityImpl {
 		List<GetThreadDataDtoRes> data = likeDao.getThreadLike(getIdFromPrincipal(), startPage, maxPage);
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-		// Format LocalDateTime to String
 		for (int i = 0; i < data.size(); i++) {
 			String id = data.get(i).getId();
 			String formattedDateTime = data.get(i).getCreatedAt().format(dateTimeFormatter);
@@ -110,7 +102,7 @@ public class LikeService extends BaseServiceLinovCommunityImpl {
 			data.get(i).setDataCategoryDetail(categoryDetail);
 		}
 
-		Integer totalPage = threadDao.getCountAllThread();
+		Integer totalPage = data.size();
 		result.setData(data);
 		result.setTotal(totalPage);
 

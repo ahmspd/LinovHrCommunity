@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import com.lawencon.base.BaseDaoImpl;
 import com.lawencon.linovhrcommunity.dto.user.GetUserDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.user.LoginUserDtoDataRes;
-import com.lawencon.linovhrcommunity.model.Role;
 import com.lawencon.linovhrcommunity.model.User;
 
 @Repository
@@ -65,7 +64,6 @@ public class UserDao extends BaseDaoImpl<User> {
 			userData.setIdFile(obj[10]!=null? obj[10].toString():null);
 		}
 		catch(Exception e) {
-//			e.printStackTrace();
 			return userData = null;
 		}
 		return userData;

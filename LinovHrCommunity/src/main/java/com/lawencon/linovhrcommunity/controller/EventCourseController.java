@@ -9,7 +9,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.server.reactive.HttpHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,8 +29,6 @@ import com.lawencon.linovhrcommunity.dto.eventcourse.GetReportEventCourseByIdRes
 import com.lawencon.linovhrcommunity.dto.eventcourse.InsertEventCourseDtoRes;
 import com.lawencon.linovhrcommunity.dto.eventcourse.JoinEventCourseDtoRes;
 import com.lawencon.linovhrcommunity.dto.eventcourse.PayJoinEventCourseDtoRes;
-import com.lawencon.linovhrcommunity.dto.eventcoursepayment.GetAllEventCoursePaymentDtoRes;
-import com.lawencon.linovhrcommunity.dto.eventcoursepayment.GetReportEventCoursePaymentDtoRes;
 import com.lawencon.linovhrcommunity.service.EventCourseService;
 import com.lawencon.util.JasperUtil;
 

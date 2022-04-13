@@ -7,6 +7,4 @@ import com.lawencon.linovhrcommunity.model.Category;
 
 @Repository
 public class CategoryDao extends BaseDaoImpl<Category> {
-
-	
 }

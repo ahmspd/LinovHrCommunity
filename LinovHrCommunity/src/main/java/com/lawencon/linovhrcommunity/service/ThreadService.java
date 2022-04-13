@@ -1,6 +1,5 @@
 package com.lawencon.linovhrcommunity.service;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -21,7 +20,6 @@ import com.lawencon.linovhrcommunity.dao.ThreadDetailDao;
 import com.lawencon.linovhrcommunity.dao.ThreadModelDao;
 import com.lawencon.linovhrcommunity.dao.ThreadTypeDao;
 import com.lawencon.linovhrcommunity.dto.category.GetAllCategoryThreadDetail;
-import com.lawencon.linovhrcommunity.dto.category.InsertCategoryDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.categorydetail.GetCategoryDetailByThreadDtoRes;
 import com.lawencon.linovhrcommunity.dto.pollingdetail.GetPollingDetailByPollingIdDto;
 import com.lawencon.linovhrcommunity.dto.pollingdetail.InsertPollingDetailDtoReq;
@@ -39,8 +37,8 @@ import com.lawencon.linovhrcommunity.dto.thread.UpdateArticleDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.thread.UpdateArticleDtoReq;
 import com.lawencon.linovhrcommunity.dto.thread.UpdateArticleDtoRes;
 import com.lawencon.linovhrcommunity.dto.thread.UpdateThreadStatusDtoDataRes;
-import com.lawencon.linovhrcommunity.dto.thread.UpdateThreadStatusDtoRes;
 import com.lawencon.linovhrcommunity.dto.thread.UpdateThreadStatusDtoReq;
+import com.lawencon.linovhrcommunity.dto.thread.UpdateThreadStatusDtoRes;
 import com.lawencon.linovhrcommunity.dto.threaddetail.GetThreadDetailDataDtoRes;
 import com.lawencon.linovhrcommunity.dto.threadtype.GetAllThreadPageDtoRes;
 import com.lawencon.linovhrcommunity.model.Category;
@@ -197,7 +195,6 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 		List<GetThreadDataDtoRes> data = threadDao.getThreadByUser(idUser, startPage, maxPage);
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-		// Format LocalDateTime to String
 		for (int i = 0; i < data.size(); i++) {
 			String id = data.get(i).getId();
 			String formattedDateTime = data.get(i).getCreatedAt().format(dateTimeFormatter);
@@ -213,7 +210,7 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 			data.get(i).setDataCategoryDetail(categoryDetail);
 		}
 
-		Integer totalPage = threadDao.getCountAllThread();
+		Integer totalPage = data.size();
 		result.setData(data);
 		result.setTotal(totalPage);
 
@@ -226,7 +223,6 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 		List<GetThreadDataDtoRes> data = threadDao.getAllThreadWithPage(startPage, maxPage);
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-		// Format LocalDateTime to String
 		for (int i = 0; i < data.size(); i++) {
 			String id = data.get(i).getId();
 			String formattedDateTime = data.get(i).getCreatedAt().format(dateTimeFormatter);
@@ -242,7 +238,7 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 			data.get(i).setDataCategoryDetail(categoryDetail);
 		}
 
-		Integer totalPage = threadDao.getCountAllThread();
+		Integer totalPage = data.size();
 		result.setData(data);
 		result.setTotal(totalPage);
 
@@ -266,7 +262,6 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 		List<GetThreadDataDtoRes> data = threadDao.getThreadByType(idType);
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-		// Format LocalDateTime to String
 		for (int i = 0; i < data.size(); i++) {
 			String id = data.get(i).getId();
 			String formattedDateTime = data.get(i).getCreatedAt().format(dateTimeFormatter);
@@ -291,7 +286,6 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 		List<GetThreadDataDtoRes> data = threadDao.getArticleNotAccept(idType);
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-		// Format LocalDateTime to String
 		for (int i = 0; i < data.size(); i++) {
 			String id = data.get(i).getId();
 			String formattedDateTime = data.get(i).getCreatedAt().format(dateTimeFormatter);
@@ -316,7 +310,6 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 		List<GetThreadDataDtoRes> data = threadDao.getAllThread();
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-		// Format LocalDateTime to String
 		for (int i = 0; i < data.size(); i++) {
 			String id = data.get(i).getId();
 			String formattedDateTime = data.get(i).getCreatedAt().format(dateTimeFormatter);
@@ -421,12 +414,9 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 	}
 
 	public GetThreadDetailDtoRes getThreadDetail(String idThread) throws Exception {
-		GetThreadDataDtoRes data = threadDao.getThreadDetail(idThread);
-//		List<GetThreadDataDtoRes> data = threadDao.getThreadByType(idType);
+		GetThreadDataDtoRes data = threadDao.getThreadDetail(idThread);;
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-		// Format LocalDateTime to String
-//		for(int i =0; i<data.size();i++) {
 		String id = data.getId();
 		String formattedDateTime = data.getCreatedAt().format(dateTimeFormatter);
 		Integer totalCommet = threadDetailDao.getCountComment(id);
@@ -456,7 +446,6 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 		List<GetThreadDataDtoRes> data = threadDao.getThreadByTypeWithPage(idType, startPage, maxPage);
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-		// Format LocalDateTime to String
 		for (int i = 0; i < data.size(); i++) {
 			String id = data.get(i).getId();
 			String formattedDateTime = data.get(i).getCreatedAt().format(dateTimeFormatter);
@@ -472,7 +461,7 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 			data.get(i).setDataCategoryDetail(categoryDetail);
 		}
 
-		Integer totalPage = threadDao.getCountThreadByType(idType);
+		Integer totalPage = data.size();
 		result.setData(data);
 		result.setTotal(totalPage);
 
@@ -486,7 +475,6 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 		List<GetThreadDataDtoRes> data = threadDao.getThreadByTypeWithPage(idType, startPage, maxPage, isActive);
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-		// Format LocalDateTime to String
 		for (int i = 0; i < data.size(); i++) {
 			String id = data.get(i).getId();
 			String formattedDateTime = data.get(i).getCreatedAt().format(dateTimeFormatter);
@@ -502,7 +490,7 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 			data.get(i).setDataCategoryDetail(categoryDetail);
 		}
 
-		Integer totalPage = threadDao.getCountThreadByType(idType, isActive);
+		Integer totalPage = data.size();
 		result.setData(data);
 		result.setTotal(totalPage);
 

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.linovhrcommunity.dao.PollingDetailDao;
 import com.lawencon.linovhrcommunity.dao.PollingDetailVoteDao;
-import com.lawencon.linovhrcommunity.dto.categorydetail.GetCategoryDetailByThreadDtoRes;
 import com.lawencon.linovhrcommunity.dto.pollingdetailvote.GetCountPollingVoteDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.pollingdetailvote.GetCountPollingVoteDtoRes;
 import com.lawencon.linovhrcommunity.dto.pollingdetailvote.GetPollingDtoDataRes;

@@ -238,7 +238,7 @@ public class UserMemberService extends BaseServiceLinovCommunityImpl {
 		try {
 			begin();
 			List<GetAllUserMemberDtoDataRes> listData = userMemberDao.getAllToAccept(isAccept, startPage, maxPage);
-			Integer total = userMemberDao.getCountToAccept(isAccept);
+			Integer total = listData.size();
 			GetAllUserMemberDtoRes getAllRes = new GetAllUserMemberDtoRes();
 			getAllRes.setTotal(total);
 			getAllRes.setData(listData);

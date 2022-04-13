@@ -9,7 +9,6 @@ import javax.persistence.NoResultException;
 import org.springframework.stereotype.Repository;
 
 import com.lawencon.base.BaseDaoImpl;
-import com.lawencon.linovhrcommunity.dto.bookmark.GetBookmarkDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.thread.GetThreadDataDtoRes;
 import com.lawencon.linovhrcommunity.model.Bookmark;
 import com.lawencon.linovhrcommunity.model.ThreadModel;

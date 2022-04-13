@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.lawencon.base.BaseDaoImpl;
 import com.lawencon.linovhrcommunity.dto.city.GetAllCityByProvinceDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.city.GetAllCityDtoDataRes;
-import com.lawencon.linovhrcommunity.dto.city.GetAllCityDtoRes;
 import com.lawencon.linovhrcommunity.model.City;
 
 @Repository

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.linovhrcommunity.dto.like.DeleteLikeDtoRes;
-import com.lawencon.linovhrcommunity.dto.like.GetLikeDtoRes;
 import com.lawencon.linovhrcommunity.dto.like.GetLikeThreadDtoRes;
 import com.lawencon.linovhrcommunity.dto.like.InsertLikeDtoReq;
 import com.lawencon.linovhrcommunity.dto.like.InsertLikeDtoRes;

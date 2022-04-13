@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lawencon.linovhrcommunity.dto.bookmark.GetBookmarkThreadDtoRes;
 import com.lawencon.linovhrcommunity.dto.pollingdetailvote.GetCountPollingVoteDtoRes;
 import com.lawencon.linovhrcommunity.dto.pollingdetailvote.GetPollingDtoRes;
 import com.lawencon.linovhrcommunity.dto.pollingdetailvote.InsertPollingVoteDtoReq;

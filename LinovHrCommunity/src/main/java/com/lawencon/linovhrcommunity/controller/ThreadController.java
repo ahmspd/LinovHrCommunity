@@ -17,9 +17,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.lawencon.linovhrcommunity.dto.category.GetAllCategoryPageDtoRes;
-import com.lawencon.linovhrcommunity.dto.category.UpdateCategoryDtoReq;
-import com.lawencon.linovhrcommunity.dto.category.UpdateCategoryDtoRes;
 import com.lawencon.linovhrcommunity.dto.thread.GetThreadDetailDtoRes;
 import com.lawencon.linovhrcommunity.dto.thread.GetThreadDtoRes;
 import com.lawencon.linovhrcommunity.dto.thread.GetThreadPollingDetailDtoRes;

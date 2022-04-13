@@ -31,9 +31,6 @@ public class PollingDetailVoteDao extends BaseDaoImpl<PollingDetailVote> {
 	public Integer totalDetailVote(String idPolling) throws Exception {
 		String sql = "select count(tpdv.id) from t_polling_detail_vote tpdv left join t_polling_detail tpd on tpdv.id_polling_detail = tpd.id where tpd.id_polling = :idPolling";
 
-//		Object total = createNativeQuery(sql.toString()).setParameter("id", id).getSingleResult();
-//
-//		return (Long) total;
 		Object result = null;
 		Integer res = 0;
 		try {
@@ -64,11 +61,6 @@ public class PollingDetailVoteDao extends BaseDaoImpl<PollingDetailVote> {
 		}
 		return res;
 		
-//		Object total = createNativeQuery(sql).setParameter("id", id).getSingleResult();
-//
-//		Object obj = (Object) total;
-//		
-//		return Long.valueOf(obj.toString());
 	}
 	
 	public PollingDetailVote getVote(String idUser, String idPollingDetail) throws Exception {

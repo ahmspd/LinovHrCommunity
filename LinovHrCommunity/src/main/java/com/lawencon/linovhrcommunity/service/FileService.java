@@ -104,17 +104,6 @@ public class FileService extends BaseServiceLinovCommunityImpl {
 	}
 
 	public File findById(String id) throws Exception {
-//		File getFile = fileDao.findById(id);
-//
-//		GetByIdFileDtoDataRes data = new GetByIdFileDtoDataRes();
-//		data.setId(getFile.getId());
-//		data.setExtensions(getFile.getExtensions());
-//		data.setContents(getFile.getContents());
-//		data.setIsActive(getFile.getIsActive());
-//		data.setVersion(getFile.getVersion());
-//
-//		GetByIdFileDtoRes dataRes = new GetByIdFileDtoRes();
-//		dataRes.setData(data);
 		return fileDao.findById(id);
 	}
 

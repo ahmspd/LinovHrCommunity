@@ -12,8 +12,6 @@ import com.lawencon.linovhrcommunity.dao.LikeDao;
 import com.lawencon.linovhrcommunity.dao.ThreadDetailDao;
 import com.lawencon.linovhrcommunity.dao.ThreadModelDao;
 import com.lawencon.linovhrcommunity.dto.bookmark.DeleteBookmarkDtoRes;
-import com.lawencon.linovhrcommunity.dto.bookmark.GetBookmarkDtoDataRes;
-import com.lawencon.linovhrcommunity.dto.bookmark.GetBookmarkDtoRes;
 import com.lawencon.linovhrcommunity.dto.bookmark.GetBookmarkThreadDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.bookmark.GetBookmarkThreadDtoRes;
 import com.lawencon.linovhrcommunity.dto.bookmark.InsertBookmarkDtoDataRes;
@@ -31,17 +29,11 @@ public class BookmarkService extends BaseServiceLinovCommunityImpl {
 	private ThreadModelDao threadModelDao;
 	private CategoryDetailDao categoryDetailDao;
 	private ThreadDetailDao threadDetailDao;
-	private ThreadModelDao threadDao;
 	private LikeDao likeDao;
 
 	@Autowired
 	public void setThreadDetailDao(ThreadDetailDao threadDetailDao) {
 		this.threadDetailDao = threadDetailDao;
-	}
-
-	@Autowired
-	public void setThreadDao(ThreadModelDao threadDao) {
-		this.threadDao = threadDao;
 	}
 
 	@Autowired
@@ -96,7 +88,6 @@ public class BookmarkService extends BaseServiceLinovCommunityImpl {
 		List<GetThreadDataDtoRes> data = bookmarkDao.getBookmark(getIdFromPrincipal(), startPage, maxPage);
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-		// Format LocalDateTime to String
 		for (int i = 0; i < data.size(); i++) {
 			String id = data.get(i).getId();
 			String formattedDateTime = data.get(i).getCreatedAt().format(dateTimeFormatter);
@@ -112,7 +103,7 @@ public class BookmarkService extends BaseServiceLinovCommunityImpl {
 			data.get(i).setDataCategoryDetail(categoryDetail);
 		}
 
-		Integer totalPage = threadDao.getCountAllThread();
+		Integer totalPage = data.size();
 		result.setData(data);
 		result.setTotal(totalPage);
 
