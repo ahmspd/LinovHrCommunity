@@ -8,7 +8,9 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.lawencon.base.BaseDaoImpl;
+import com.lawencon.linovhrcommunity.dto.eventcourse.GetReportEventCourseById;
 import com.lawencon.linovhrcommunity.dto.eventcoursepayment.GetAllEventCoursePaymentDtoDataRes;
+import com.lawencon.linovhrcommunity.dto.eventcoursepayment.GetReportEventCoursePaymentDtoDataRes;
 import com.lawencon.linovhrcommunity.model.EventCoursePayment;
 
 @Repository
@@ -88,5 +90,38 @@ public class EventCoursePaymentDao extends BaseDaoImpl<EventCoursePayment> {
 			e.printStackTrace();
 		}
 		return res;
+	}
+	
+	/*
+	 * Report All Payment event course for admin
+	 */
+	public List<GetReportEventCoursePaymentDtoDataRes> getAllReportPaymentEventCourse(int startPage, int maxPage) throws Exception {
+		StringBuilder sql = new StringBuilder();
+		sql.append("select tu.email , tp.full_name , tp.phone_number , tecp.total_price , tecp.invoice, tpm.payment_name ");
+		sql.append("from t_event_course_payment tecp ");
+		sql.append("left join t_user tu on tecp.created_by = tu.id ");
+		sql.append("left join t_profile tp on tu.id = tp.id_user ");
+		sql.append("left join t_payment_method tpm on tecp.id_payment_method  = tpm.id  where is_accept = true ");
+		
+		List<?> results = createNativeQuery(sql.toString())
+				.setFirstResult(startPage)
+                .setMaxResults(maxPage)
+                .getResultList();
+		List<GetReportEventCoursePaymentDtoDataRes> dataRes = new ArrayList<GetReportEventCoursePaymentDtoDataRes>();
+		
+		results.forEach(result -> {
+			GetReportEventCoursePaymentDtoDataRes dataReq = new GetReportEventCoursePaymentDtoDataRes();
+			Object[] obj = (Object[]) result;
+			dataReq.setEmail(obj[0].toString());
+			dataReq.setFullName(obj[1].toString());
+			dataReq.setPhoneNumber((obj[2]!=null)?obj[2].toString():null);
+			dataReq.setTotalPrice(Float.valueOf(obj[3].toString()));
+			dataReq.setInvoice(obj[4].toString());
+			dataReq.setPaymentName(obj[5].toString());
+			
+			dataRes.add(dataReq);
+		});
+		
+		return dataRes;
 	}
 }

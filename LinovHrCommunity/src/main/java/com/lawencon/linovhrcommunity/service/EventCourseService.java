@@ -1,6 +1,10 @@
 package com.lawencon.linovhrcommunity.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +22,7 @@ import com.lawencon.linovhrcommunity.dao.OrderDetailDao;
 import com.lawencon.linovhrcommunity.dao.PaymentMethodDao;
 import com.lawencon.linovhrcommunity.dao.PriceListDao;
 import com.lawencon.linovhrcommunity.dao.UserDao;
+import com.lawencon.linovhrcommunity.dto.email.EmailTemplate;
 import com.lawencon.linovhrcommunity.dto.eventcourse.ConfirmPayJoinEventCourseDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.eventcourse.ConfirmPayJoinEventCourseDtoRes;
 import com.lawencon.linovhrcommunity.dto.eventcourse.GetAllEventCourseDtoDataRes;
@@ -28,6 +33,8 @@ import com.lawencon.linovhrcommunity.dto.eventcourse.GetOrderEventCourseDtoDataR
 import com.lawencon.linovhrcommunity.dto.eventcourse.GetOrderEventCourseDtoRes;
 import com.lawencon.linovhrcommunity.dto.eventcourse.GetProfileJoinEventCourseDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.eventcourse.GetProfileJoinEventCourseDtoRes;
+import com.lawencon.linovhrcommunity.dto.eventcourse.GetReportEventCourseById;
+import com.lawencon.linovhrcommunity.dto.eventcourse.GetReportEventCourseByIdRes;
 import com.lawencon.linovhrcommunity.dto.eventcourse.InsertEventCourseDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.eventcourse.InsertEventCourseDtoReq;
 import com.lawencon.linovhrcommunity.dto.eventcourse.InsertEventCourseDtoRes;
@@ -36,6 +43,7 @@ import com.lawencon.linovhrcommunity.dto.eventcourse.JoinEventCourseDtoRes;
 import com.lawencon.linovhrcommunity.dto.eventcourse.PayJoinEventCourseDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.eventcourse.PayJoinEventCourseDtoReq;
 import com.lawencon.linovhrcommunity.dto.eventcourse.PayJoinEventCourseDtoRes;
+import com.lawencon.linovhrcommunity.dto.user.GetUserDtoDataRes;
 import com.lawencon.linovhrcommunity.model.Category;
 import com.lawencon.linovhrcommunity.model.CategoryDetail;
 import com.lawencon.linovhrcommunity.model.EventCourse;
@@ -326,14 +334,32 @@ public class EventCourseService extends BaseServiceLinovCommunityImpl {
 		}
 	}
 
+	//user to user
 	public ConfirmPayJoinEventCourseDtoRes confirmJoinPayment(String id) throws Exception {
+		ExecutorService excecutorService = Executors.newFixedThreadPool(1);
 		try {
 			begin();
 			Order orderConfirm = orderDao.getById(id);
 			orderConfirm.setIsAccept(true);
-			orderConfirm.setInvoice(generateCode(7));
+			String invoice = generateCode(7);
+			orderConfirm.setInvoice(invoice);
 			orderConfirm.setUpdatedBy(getIdFromPrincipal());
 			orderConfirm = orderDao.save(orderConfirm);
+			
+			GetUserDtoDataRes userData = userDao.getUserByIs(orderConfirm.getCreatedBy());
+			EmailTemplate emailTemplate = new EmailTemplate();
+			emailTemplate.setFrom("LawenconCommunity");
+			emailTemplate.setSubject("Invoice Event Course");
+			emailTemplate.setTo(userData.getEmail());
+			Map<String, Object> model = new HashMap<>();
+			model.put("profileName", userData.getFullName());
+			model.put("invoice", invoice);
+			emailTemplate.setModel(model);
+			
+			excecutorService.submit(()->{			
+				sendEmail("image/online-payment.png","EmailTemplatePaymentEventCourse.flth",emailTemplate);
+			});
+			excecutorService.shutdown();
 			
 			ConfirmPayJoinEventCourseDtoRes result = new ConfirmPayJoinEventCourseDtoRes();
 			ConfirmPayJoinEventCourseDtoDataRes dataRes = new ConfirmPayJoinEventCourseDtoDataRes();
@@ -382,6 +408,46 @@ public class EventCourseService extends BaseServiceLinovCommunityImpl {
 
 		return result;
 		
+	}
+	
+	public GetReportEventCourseByIdRes getReportUserJoinByAdmin(int start, int max) throws Exception {
+		List<GetReportEventCourseById> dataRes = eventCourseDao.getAllReportEventCourse(start, max);
+		Integer total = dataRes.size();
+		GetReportEventCourseByIdRes result = new GetReportEventCourseByIdRes();
+		result.setData(dataRes);
+		result.setTotal(total);
+		
+		return result;
+	}
+	
+	public GetReportEventCourseByIdRes getReportUserJoinByIdEvent(String idEvent) throws Exception {
+		List<GetReportEventCourseById> dataRes = eventCourseDao.getReportEventCourseById(idEvent);
+		Integer total = dataRes.size();
+		Float totalPrice = 0F;
+		for(int i=0; i<dataRes.size();i++) {
+			totalPrice += dataRes.get(i).getPrice();
+		}
+		GetReportEventCourseByIdRes result = new GetReportEventCourseByIdRes();
+		result.setData(dataRes);
+		result.setTotal(total);
+		result.setTotalPrice(totalPrice);
+		
+		return result;
+	}
+	
+	public GetReportEventCourseByIdRes getReportUserJoinByUser(String idUser) throws Exception {
+		List<GetReportEventCourseById> dataRes = eventCourseDao.getReportEventCourseByUser(idUser);
+		Integer total = dataRes.size();
+		Float totalPrice = 0F;
+		for(int i=0; i<dataRes.size();i++) {
+			totalPrice += dataRes.get(i).getPrice();
+		}
+		GetReportEventCourseByIdRes result = new GetReportEventCourseByIdRes();
+		result.setData(dataRes);
+		result.setTotal(total);
+		result.setTotalPrice(totalPrice);
+		
+		return result;
 	}
 
 }

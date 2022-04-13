@@ -13,6 +13,7 @@ import com.lawencon.base.BaseDaoImpl;
 import com.lawencon.linovhrcommunity.dto.eventcourse.GetAllEventCourseDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.eventcourse.GetOrderEventCourseDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.eventcourse.GetProfileJoinEventCourseDtoDataRes;
+import com.lawencon.linovhrcommunity.dto.eventcourse.GetReportEventCourseById;
 import com.lawencon.linovhrcommunity.model.EventCourse;
 
 @Repository
@@ -285,6 +286,126 @@ public class EventCourseDao extends BaseDaoImpl<EventCourse> {
 			e.printStackTrace();
 		}
 		return res;
+	}
+	
+	/*
+	 * Report user join to user event/course by event id
+	 */
+	public List<GetReportEventCourseById> getReportEventCourseById(String idEventCourse) throws Exception {
+		StringBuilder sql = new StringBuilder();
+		sql.append("select tec.title , tec.price , tu.email , tp.full_name , tp.company, ti.industry_name , tp2.position_name, tect.event_course_type_name, tpm.payment_name ");
+		sql.append("from t_order_detail tod ");
+		sql.append("left join t_order to2 on tod.id_order = to2.id ");
+		sql.append("left join t_user tu on to2.id_user = tu.id ");
+		sql.append("left join t_profile tp on tu.id = tp.id_user ");
+		sql.append("left join t_event_course tec on tec.id = tod.id_event_course " );
+		sql.append("left join t_industry ti on tp.id_industry = ti.id ");
+		sql.append("left join t_position tp2 on tp.id_position = tp2.id ");
+		sql.append("left join t_event_course_type tect on tec.id_event_course_type = tect.id ");
+		sql.append("left join t_payment_method tpm on to2.id_payment_method = tpm.id ");
+		sql.append("where tod.id_user_member is null and tod.id_event_course = :idEventCourse and to2.is_accept = true ");
+		
+		List<?> results = createNativeQuery(sql.toString()).setParameter("idEventCourse", idEventCourse).getResultList();
+		List<GetReportEventCourseById> dataRes = new ArrayList<GetReportEventCourseById>();
+		
+		results.forEach(result -> {
+			GetReportEventCourseById dataReq = new GetReportEventCourseById();
+			Object[] obj = (Object[]) result;
+			dataReq.setTitle(obj[0].toString());
+			dataReq.setPrice(Float.valueOf(obj[1].toString()));
+			dataReq.setEmail(obj[2].toString());
+			dataReq.setFullName(obj[3].toString());
+			dataReq.setCompany(obj[4].toString());
+			dataReq.setIndustry(obj[5].toString());
+			dataReq.setPosition(obj[6].toString());
+			dataReq.setEventCourseType(obj[7].toString());
+			dataReq.setPaymentName(obj[8].toString());
+			
+			dataRes.add(dataReq);
+		});
+		
+		return dataRes;
+	}
+	
+	/*
+	 * Report ALL user join to user event/course by event id
+	 */
+	public List<GetReportEventCourseById> getReportEventCourseByUser(String idUser) throws Exception {
+		StringBuilder sql = new StringBuilder();
+		sql.append("select tec.title , tec.price , tu.email , tp.full_name , tp.company, ti.industry_name , tp2.position_name, tect.event_course_type_name, tpm.payment_name ");
+		sql.append("from t_order_detail tod ");
+		sql.append("left join t_order to2 on tod.id_order = to2.id ");
+		sql.append("left join t_user tu on to2.id_user = tu.id ");
+		sql.append("left join t_profile tp on tu.id = tp.id_user ");
+		sql.append("left join t_event_course tec on tec.id = tod.id_event_course " );
+		sql.append("left join t_industry ti on tp.id_industry = ti.id ");
+		sql.append("left join t_position tp2 on tp.id_position = tp2.id ");
+		sql.append("left join t_event_course_type tect on tec.id_event_course_type = tect.id ");
+		sql.append("left join t_payment_method tpm on to2.id_payment_method = tpm.id ");
+		sql.append("where tod.id_user_member is null and tec.created_by = :idUser and to2.is_accept = true ");
+		
+		List<?> results = createNativeQuery(sql.toString()).setParameter("idUser", idUser).getResultList();
+		List<GetReportEventCourseById> dataRes = new ArrayList<GetReportEventCourseById>();
+		
+		results.forEach(result -> {
+			GetReportEventCourseById dataReq = new GetReportEventCourseById();
+			Object[] obj = (Object[]) result;
+			dataReq.setTitle(obj[0].toString());
+			dataReq.setPrice(Float.valueOf(obj[1].toString()));
+			dataReq.setEmail(obj[2].toString());
+			dataReq.setFullName(obj[3].toString());
+			dataReq.setCompany(obj[4].toString());
+			dataReq.setIndustry(obj[5].toString());
+			dataReq.setPosition(obj[6].toString());
+			dataReq.setEventCourseType(obj[7].toString());
+			dataReq.setPaymentName(obj[8].toString());
+			
+			dataRes.add(dataReq);
+		});
+		
+		return dataRes;
+	}
+	
+	/*
+	 * Report All user join for admin
+	 */
+	public List<GetReportEventCourseById> getAllReportEventCourse(int startPage, int maxPage) throws Exception {
+		StringBuilder sql = new StringBuilder();
+		sql.append("select tec.title , tec.price , tu.email , tp.full_name , tp.company, ti.industry_name , tp2.position_name, tect.event_course_type_name, tpm.payment_name ");
+		sql.append("from t_order_detail tod ");
+		sql.append("left join t_order to2 on tod.id_order = to2.id ");
+		sql.append("left join t_user tu on to2.id_user = tu.id ");
+		sql.append("left join t_profile tp on tu.id = tp.id_user ");
+		sql.append("left join t_event_course tec on tec.id = tod.id_event_course ");
+		sql.append("left join t_industry ti on tp.id_industry = ti.id ");
+		sql.append("left join t_position tp2 on tp.id_position = tp2.id ");
+		sql.append("left join t_event_course_type tect on tec.id_event_course_type = tect.id ");
+		sql.append("left join t_payment_method tpm on to2.id_payment_method = tpm.id ");
+		sql.append("where to2.is_accept = true ");
+		
+		List<?> results = createNativeQuery(sql.toString())
+				.setFirstResult(startPage)
+                .setMaxResults(maxPage)
+                .getResultList();
+		List<GetReportEventCourseById> dataRes = new ArrayList<GetReportEventCourseById>();
+		
+		results.forEach(result -> {
+			GetReportEventCourseById dataReq = new GetReportEventCourseById();
+			Object[] obj = (Object[]) result;
+			dataReq.setTitle(obj[0].toString());
+			dataReq.setPrice(Float.valueOf(obj[1].toString()));
+			dataReq.setEmail(obj[2].toString());
+			dataReq.setFullName(obj[3].toString());
+			dataReq.setCompany(obj[4].toString());
+			dataReq.setIndustry(obj[5].toString());
+			dataReq.setPosition(obj[6].toString());
+			dataReq.setEventCourseType(obj[7].toString());
+			dataReq.setPaymentName(obj[8].toString());
+			
+			dataRes.add(dataReq);
+		});
+		
+		return dataRes;
 	}
 }
 

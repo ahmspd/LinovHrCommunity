@@ -1,6 +1,10 @@
 package com.lawencon.linovhrcommunity.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,14 +16,19 @@ import com.lawencon.linovhrcommunity.dao.EventCoursePaymentDao;
 import com.lawencon.linovhrcommunity.dao.EventCoursePaymentDetailDao;
 import com.lawencon.linovhrcommunity.dao.FileDao;
 import com.lawencon.linovhrcommunity.dao.PaymentMethodDao;
+import com.lawencon.linovhrcommunity.dao.UserDao;
+import com.lawencon.linovhrcommunity.dto.email.EmailTemplate;
 import com.lawencon.linovhrcommunity.dto.eventcoursepayment.GetAllEventCoursePaymentDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.eventcoursepayment.GetAllEventCoursePaymentDtoRes;
+import com.lawencon.linovhrcommunity.dto.eventcoursepayment.GetReportEventCoursePaymentDtoDataRes;
+import com.lawencon.linovhrcommunity.dto.eventcoursepayment.GetReportEventCoursePaymentDtoRes;
 import com.lawencon.linovhrcommunity.dto.eventcoursepayment.InsertEventCoursePaymentDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.eventcoursepayment.InsertEventCoursePaymentDtoReq;
 import com.lawencon.linovhrcommunity.dto.eventcoursepayment.InsertEventCoursePaymentDtoRes;
 import com.lawencon.linovhrcommunity.dto.eventcoursepayment.UpdateEventCoursePaymentDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.eventcoursepayment.UpdateEventCoursePaymentDtoReq;
 import com.lawencon.linovhrcommunity.dto.eventcoursepayment.UpdateEventCoursePaymentDtoRes;
+import com.lawencon.linovhrcommunity.dto.user.GetUserDtoDataRes;
 import com.lawencon.linovhrcommunity.model.EventCourse;
 import com.lawencon.linovhrcommunity.model.EventCoursePayment;
 import com.lawencon.linovhrcommunity.model.EventCoursePaymentDetail;
@@ -34,6 +43,12 @@ public class EventCoursePaymentService extends BaseServiceLinovCommunityImpl {
 	private PaymentMethodDao paymentMethodDao;
 	private FileDao fileDao;
 	private EventCourseDao eventCourseDao;
+	private UserDao userDao;
+
+	@Autowired
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
+	}
 
 	@Autowired
 	public void setEventCoursePaymentDao(EventCoursePaymentDao eventCoursePaymentDao) {
@@ -113,16 +128,21 @@ public class EventCoursePaymentService extends BaseServiceLinovCommunityImpl {
 
 	}
 
+	//confirm by admin
 	public UpdateEventCoursePaymentDtoRes confirmPayment(UpdateEventCoursePaymentDtoReq
 			dataReq) throws Exception {
+		ExecutorService excecutorService = Executors.newFixedThreadPool(1);
 		EventCoursePayment eventCoursePaymentUpdate;
 		try {
 			begin();
 			eventCoursePaymentUpdate = eventCoursePaymentDao.findById(dataReq.getId());
 			eventCoursePaymentUpdate.setIsAccept(true);
-			eventCoursePaymentUpdate.setInvoice(generateCode(7));
+			String invoice = generateCode(7);
+			eventCoursePaymentUpdate.setInvoice(invoice);
 			eventCoursePaymentUpdate.setUpdatedBy(getIdFromPrincipal());
 			eventCoursePaymentUpdate = eventCoursePaymentDao.save(eventCoursePaymentUpdate);
+			
+			GetUserDtoDataRes userData = userDao.getUserByIs(eventCoursePaymentUpdate.getCreatedBy());
 			
 			List<EventCoursePaymentDetail> eventCoursePaymentDetailDatas = eventCoursePaymentDetailDao
 					.getByEventCoursePaymentId(dataReq.getId());
@@ -132,6 +152,20 @@ public class EventCoursePaymentService extends BaseServiceLinovCommunityImpl {
 					eventCourseUpdate.setIsActive(true);
 					eventCourseUpdate.setUpdatedBy(getIdFromPrincipal());
 					eventCourseUpdate = eventCourseDao.save(eventCourseUpdate);
+					
+					EmailTemplate emailTemplate = new EmailTemplate();
+					emailTemplate.setFrom("LawenconCommunity");
+					emailTemplate.setSubject("Invoice Event Course");
+					emailTemplate.setTo(userData.getEmail());
+					Map<String, Object> model = new HashMap<>();
+					model.put("profileName", userData.getFullName());
+					model.put("invoice", invoice);
+					emailTemplate.setModel(model);
+					
+					excecutorService.submit(()->{			
+						sendEmail("image/online-payment.png","EmailTemplatePaymentEventCourse.flth",emailTemplate);
+					});
+					excecutorService.shutdown();
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -161,6 +195,21 @@ public class EventCoursePaymentService extends BaseServiceLinovCommunityImpl {
 		GetAllEventCoursePaymentDtoRes result = new GetAllEventCoursePaymentDtoRes();
 		result.setTotal(total);
 		result.setData(dataRes);
+		return result;
+	}
+	
+	public GetReportEventCoursePaymentDtoRes getReportPaymentEventCourse(int start, int max) throws Exception {
+		List<GetReportEventCoursePaymentDtoDataRes> dataRes = eventCoursePaymentDao.getAllReportPaymentEventCourse(start, max);
+		Integer total = dataRes.size();
+		Float totalPrice = 0f;
+		for(int i=0; i<dataRes.size(); i++) {
+			totalPrice += dataRes.get(i).getTotalPrice();
+		}
+		GetReportEventCoursePaymentDtoRes result = new GetReportEventCoursePaymentDtoRes();
+		result.setData(dataRes);
+		result.setTotal(total);
+		result.setTotalPrice(totalPrice);
+		
 		return result;
 	}
 }

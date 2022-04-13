@@ -1,6 +1,10 @@
 package com.lawencon.linovhrcommunity.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +19,8 @@ import com.lawencon.linovhrcommunity.dao.PaymentMethodDao;
 import com.lawencon.linovhrcommunity.dao.PriceListDao;
 import com.lawencon.linovhrcommunity.dao.UserDao;
 import com.lawencon.linovhrcommunity.dao.UserMemberDao;
+import com.lawencon.linovhrcommunity.dto.email.EmailTemplate;
+import com.lawencon.linovhrcommunity.dto.user.GetUserDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.usermember.GetAllUserMemberDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.usermember.GetAllUserMemberDtoRes;
 import com.lawencon.linovhrcommunity.dto.usermember.InsertUserMemberDtoDataRes;
@@ -164,6 +170,7 @@ public class UserMemberService extends BaseServiceLinovCommunityImpl {
 	}
 
 	public UpdateUserMemberAcceptDtoRes updateAccept(UpdateUserMemberAcceptDtoReq data) throws Exception {
+		ExecutorService excecutorService = Executors.newFixedThreadPool(1);
 		try {
 			begin();
 			OrderDetail orderDetail = userMemberDao.getByUserMember(data.getIdUserMember());
@@ -183,12 +190,29 @@ public class UserMemberService extends BaseServiceLinovCommunityImpl {
 			boolean updateDateEnd = userMemberDao.updateDateEnd(duration, userMember.getId(), getIdFromPrincipal());
 
 			order.setIsAccept(true);
-			order.setInvoice(generateCode(15));
+			String invoice = generateCode(15);
+			order.setInvoice(invoice);
 			order = orderDao.save(order);
 
 			userPremium.setIsMember(true);
 			userPremium = userDao.save(userPremium);
 
+			GetUserDtoDataRes userData = userDao.getUserByIs(order.getCreatedBy());
+			
+			EmailTemplate emailTemplate = new EmailTemplate();
+			emailTemplate.setFrom("LawenconCommunity");
+			emailTemplate.setSubject("Invoice User Premium");
+			emailTemplate.setTo(userData.getEmail());
+			Map<String, Object> model = new HashMap<>();
+			model.put("profileName", userData.getFullName());
+			model.put("invoice", invoice);
+			emailTemplate.setModel(model);
+			
+			excecutorService.submit(()->{			
+				sendEmail("image/premium-member.png","EmailTemplatePaymentEventCourse.flth",emailTemplate);
+			});
+			excecutorService.shutdown();
+			
 			commit();
 
 			UpdateUserMemberAcceptDtoRes updateRes = new UpdateUserMemberAcceptDtoRes();
