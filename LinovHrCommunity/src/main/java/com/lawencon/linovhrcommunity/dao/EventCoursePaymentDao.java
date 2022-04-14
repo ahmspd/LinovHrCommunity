@@ -100,4 +100,27 @@ public class EventCoursePaymentDao extends BaseDaoImpl<EventCoursePayment> {
 		
 		return dataRes;
 	}
+	
+	public Integer getCoungUnaccepted(Boolean isAccept) throws Exception {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT count(ecp.id) ");
+		sql.append("FROM t_event_course_payment ecp ");
+		sql.append("INNER JOIN t_payment_method pm ON ecp.id_payment_method = pm.id ");
+		sql.append("INNER JOIN t_user u ON ecp.created_by = u.id ");
+		sql.append("INNER JOIN t_profile p ON u.id = p.id_user ");
+		sql.append("WHERE ecp.is_accept = :isAccept ");
+
+		Object result = null;
+		Integer res = 0;
+		try {
+			result = createNativeQuery(sql.toString())
+					.setParameter("isAccept", isAccept)
+					.getSingleResult();
+			res = Integer.valueOf(result.toString());
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
 }

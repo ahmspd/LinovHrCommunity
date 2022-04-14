@@ -210,7 +210,7 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 			data.get(i).setDataCategoryDetail(categoryDetail);
 		}
 
-		Integer totalPage = data.size();
+		Integer totalPage = threadDao.getCountAllThreadByUser(idUser);
 		result.setData(data);
 		result.setTotal(totalPage);
 
@@ -238,7 +238,7 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 			data.get(i).setDataCategoryDetail(categoryDetail);
 		}
 
-		Integer totalPage = data.size();
+		Integer totalPage = threadDao.getCountAllThread();
 		result.setData(data);
 		result.setTotal(totalPage);
 
@@ -461,7 +461,7 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 			data.get(i).setDataCategoryDetail(categoryDetail);
 		}
 
-		Integer totalPage = data.size();
+		Integer totalPage =  threadDao.getCountThreadByType(idType);
 		result.setData(data);
 		result.setTotal(totalPage);
 
@@ -473,6 +473,7 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 		GetAllThreadPageDtoRes result = new GetAllThreadPageDtoRes();
 
 		List<GetThreadDataDtoRes> data = threadDao.getThreadByTypeWithPage(idType, startPage, maxPage, isActive);
+		List<GetThreadDataDtoRes> listArticle = threadDao.getThreadByType("2");
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
 		for (int i = 0; i < data.size(); i++) {
@@ -490,7 +491,7 @@ public class ThreadService extends BaseServiceLinovCommunityImpl {
 			data.get(i).setDataCategoryDetail(categoryDetail);
 		}
 
-		Integer totalPage = data.size();
+		Integer totalPage = listArticle.size();
 		result.setData(data);
 		result.setTotal(totalPage);
 

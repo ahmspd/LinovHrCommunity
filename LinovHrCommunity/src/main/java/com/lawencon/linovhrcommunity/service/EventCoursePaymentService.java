@@ -191,7 +191,7 @@ public class EventCoursePaymentService extends BaseServiceLinovCommunityImpl {
 	
 	public GetAllEventCoursePaymentDtoRes getAllUnAccepted(Boolean isAccept, int startPage, int maxPage) throws Exception {
 		List<GetAllEventCoursePaymentDtoDataRes> dataRes = eventCoursePaymentDao.getAllUnaccepted(isAccept, startPage, maxPage);
-		Integer total = dataRes.size();
+		Integer total = eventCoursePaymentDao.getCoungUnaccepted(isAccept);
 		GetAllEventCoursePaymentDtoRes result = new GetAllEventCoursePaymentDtoRes();
 		result.setTotal(total);
 		result.setData(dataRes);
