@@ -1,5 +1,8 @@
 package com.lawencon.linovhrcommunity.service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +23,7 @@ import com.lawencon.linovhrcommunity.dao.PriceListDao;
 import com.lawencon.linovhrcommunity.dao.UserDao;
 import com.lawencon.linovhrcommunity.dao.UserMemberDao;
 import com.lawencon.linovhrcommunity.dto.email.EmailTemplate;
+import com.lawencon.linovhrcommunity.dto.scheduler.SchedulerUserMemberData;
 import com.lawencon.linovhrcommunity.dto.user.GetUserDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.usermember.GetAllUserMemberDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.usermember.GetAllUserMemberDtoRes;
@@ -32,6 +36,7 @@ import com.lawencon.linovhrcommunity.dto.usermember.UpdateUserMemberAcceptDtoRes
 import com.lawencon.linovhrcommunity.dto.usermember.UpdateUserMemberPaymentDtoDataRes;
 import com.lawencon.linovhrcommunity.dto.usermember.UpdateUserMemberPaymentDtoReq;
 import com.lawencon.linovhrcommunity.dto.usermember.UpdateUserMemberPaymentDtoRes;
+import com.lawencon.linovhrcommunity.job.UserMemberJob;
 import com.lawencon.linovhrcommunity.model.File;
 import com.lawencon.linovhrcommunity.model.Order;
 import com.lawencon.linovhrcommunity.model.OrderDetail;
@@ -49,6 +54,7 @@ public class UserMemberService extends BaseServiceLinovCommunityImpl {
 	private PriceListDao priceListDao;
 	private OrderDetailDao orderDetailDao;
 	private FileDao fileDao;
+	private SchedulerService schedulerService;
 
 	@Autowired
 	public void setUserMemberDao(UserMemberDao userMemberDao) {
@@ -83,6 +89,11 @@ public class UserMemberService extends BaseServiceLinovCommunityImpl {
 	@Autowired
 	public void setFileDao(FileDao fileDao) {
 		this.fileDao = fileDao;
+	}
+
+	@Autowired
+	public void setSchedulerService(SchedulerService schedulerService) {
+		this.schedulerService = schedulerService;
 	}
 
 	public InsertUserMemberDtoRes insert(InsertUserMemberDtoReq data) throws Exception {
@@ -187,7 +198,7 @@ public class UserMemberService extends BaseServiceLinovCommunityImpl {
 				duration = PriceListDuration.THREEMONTH.getDuration();
 			}
 
-			boolean updateDateEnd = userMemberDao.updateDateEnd(duration, userMember.getId(), getIdFromPrincipal());
+			UserMember updatedUserMember = userMemberDao.updateDateEnd(duration, userMember.getId(), getIdFromPrincipal());
 
 			order.setIsAccept(true);
 			String invoice = generateCode(15);
@@ -195,10 +206,11 @@ public class UserMemberService extends BaseServiceLinovCommunityImpl {
 			order = orderDao.save(order);
 
 			userPremium.setIsMember(true);
+			userPremium.setUpdatedBy(getIdFromPrincipal());
 			userPremium = userDao.save(userPremium);
 
 			GetUserDtoDataRes userData = userDao.getUserByIs(order.getCreatedBy());
-			
+
 			EmailTemplate emailTemplate = new EmailTemplate();
 			emailTemplate.setFrom("LawenconCommunity");
 			emailTemplate.setSubject("Invoice User Premium");
@@ -207,19 +219,20 @@ public class UserMemberService extends BaseServiceLinovCommunityImpl {
 			model.put("profileName", userData.getFullName());
 			model.put("invoice", invoice);
 			emailTemplate.setModel(model);
-			
-			excecutorService.submit(()->{			
-				sendEmail("image/premium-member.png","EmailTemplatePaymentEventCourse.flth",emailTemplate);
+
+			excecutorService.submit(() -> {
+				sendEmail("image/premium-member.png", "EmailTemplatePaymentEventCourse.flth", emailTemplate);
 			});
 			excecutorService.shutdown();
-			
+
 			commit();
 
 			UpdateUserMemberAcceptDtoRes updateRes = new UpdateUserMemberAcceptDtoRes();
 
-			if (updateDateEnd) {
+			if (updatedUserMember != null) {
+				scheduleUserMember(updatedUserMember);
 				UpdateUserMemberAcceptDtoDataRes dataRes = new UpdateUserMemberAcceptDtoDataRes();
-				dataRes.setVersion(userMember.getVersion());
+				dataRes.setVersion(updatedUserMember.getVersion());
 				updateRes.setData(dataRes);
 				updateRes.setMessage("Sucess");
 			}
@@ -233,8 +246,23 @@ public class UserMemberService extends BaseServiceLinovCommunityImpl {
 
 	}
 
+	public void scheduleUserMember(UserMember data) throws Exception {
+		LocalDateTime dateEnd = data.getDateEnd();
+		ZonedDateTime dateEndSchedule = dateEnd.atZone(ZoneId.of("Asia/Jakarta"));
+		Long dateEndScheduleMs = dateEndSchedule.toInstant().toEpochMilli();
+
+		SchedulerUserMemberData dataSchedule = new SchedulerUserMemberData();
+		dataSchedule.setIdUser(data.getCreatedBy());
+		dataSchedule.setIdUpdatedBy(getIdFromPrincipal());
+		dataSchedule.setRunForever(false);
+		dataSchedule.setRepeatIntervalMs(0L);
+		dataSchedule.setInitialOffsetMs(dateEndScheduleMs);
+		dataSchedule.setTotalFireCount(1);
+
+		schedulerService.schedule(dataSchedule, UserMemberJob.class);
+	}
+
 	public GetAllUserMemberDtoRes getAllIsNotAccept(Boolean isAccept, int startPage, int maxPage) throws Exception {
-		
 		try {
 			begin();
 			List<GetAllUserMemberDtoDataRes> listData = userMemberDao.getAllToAccept(isAccept, startPage, maxPage);
@@ -250,6 +278,21 @@ public class UserMemberService extends BaseServiceLinovCommunityImpl {
 			rollback();
 			throw new Exception(e);
 		}
+	}
+
+	public void expiredMember(String idUser, String updatedby) throws Exception {
+		try {
+			begin();
+			User userUpdate = userDao.findById(idUser);
+			userUpdate.setIsMember(false);
+			userUpdate.setUpdatedBy(updatedby);
+			userUpdate = userDao.save(userUpdate);
+
+			commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }

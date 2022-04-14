@@ -59,6 +59,7 @@ public class UserMemberController {
 	public ResponseEntity<UpdateUserMemberAcceptDtoRes> updateAccept(
 			@RequestBody @Valid UpdateUserMemberAcceptDtoReq request) throws Exception {
 		UpdateUserMemberAcceptDtoRes response = userMemberService.updateAccept(request);
+//		userMemberService.scheduleUserMember(request.getIdUserMember());
 		return new ResponseEntity<UpdateUserMemberAcceptDtoRes>(response, HttpStatus.OK);
 	}
 }
