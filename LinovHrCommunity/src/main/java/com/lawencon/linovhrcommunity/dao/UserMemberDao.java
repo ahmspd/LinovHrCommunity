@@ -32,7 +32,7 @@ public class UserMemberDao extends BaseDaoImpl<UserMember> {
 		return super.deleteById(id);
 	}
 
-	public boolean updateDateEnd(Integer duration, String id, String userId) {
+	public UserMember updateDateEnd(Integer duration, String id, String userId) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("UPDATE t_user_member ");
 		sql.append("SET date_end = now() + INTERVAL ");
@@ -40,14 +40,19 @@ public class UserMemberDao extends BaseDaoImpl<UserMember> {
 		sql.append("updated_by = :userId, ");
 		sql.append("updated_at = now(), ");
 		sql.append("version = version + 1 ");
-		sql.append("WHERE id = :id ");
+		sql.append("WHERE id = :id returning date_end, created_by, version");
 
-		int result = createNativeQuery(sql.toString())
+		Object result = createNativeQuery(sql.toString())
 				.setParameter("id", id)
 				.setParameter("userId", userId)
-				.executeUpdate();
+				.getSingleResult();
 
-		return result > 0;
+		Object[] obj = (Object[]) result;
+		UserMember data = new UserMember();
+		data.setDateEnd(((Timestamp) obj[0]).toLocalDateTime());
+		data.setCreatedBy(obj[1].toString());
+		data.setVersion(Integer.valueOf(obj[2].toString()));
+		return data;
 	}
 	
 	public OrderDetail getByUserMember(String id) throws Exception {
