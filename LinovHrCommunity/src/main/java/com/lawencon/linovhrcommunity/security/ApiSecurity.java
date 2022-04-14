@@ -67,6 +67,7 @@ public class ApiSecurity extends WebSecurityConfigurerAdapter {
 		web.ignoring().antMatchers(HttpMethod.GET,"/categories");
 		web.ignoring().antMatchers(HttpMethod.GET,"/event-course/page/report/admin/**");
 		web.ignoring().antMatchers(HttpMethod.GET,"/event-course/report/**");
+		web.ignoring().antMatchers(HttpMethod.GET,"/event-course/type/{type}/{idUser}");
 		web.ignoring().antMatchers(HttpMethod.GET,"/event-course-payment/page/report/admin/payment/**");
 		web.ignoring().antMatchers(HttpMethod.GET,"/files/**");
 		web.ignoring().antMatchers(HttpMethod.PUT,"/users/forgot-password");

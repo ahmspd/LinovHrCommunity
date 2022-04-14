@@ -402,4 +402,96 @@ public class ThreadModelDao extends BaseDaoImpl<ThreadModel> {
 			reqData.setIdPolling(obj[12].toString());
 		return reqData;
 	}
+	
+	public Integer getCountThreadByType(String idType) throws Exception {
+		StringBuilder sql = new StringBuilder();
+		sql.append("select count(tt.id) ");
+		sql.append("from t_thread tt left join t_file tf on tt.id_file = tf.id  ");
+		sql.append("left join t_thread_type ttt on tt.id_thread_type = ttt.id ");
+		sql.append("left join t_user tu on tu.id = tt.created_by ");
+		sql.append("left join t_profile tp on tp.id_user = tu.id where tt.id_thread_type = :idType");
+
+		Object result = null;
+		Integer res = 0;
+		try {
+			result = createNativeQuery(sql.toString())
+					.setParameter("idType", idType)
+					.getSingleResult();
+			res = Integer.valueOf(result.toString());
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+
+	public Integer getCountThreadByType(String idType, Boolean isActive) throws Exception {
+		StringBuilder sql = new StringBuilder();
+		sql.append("select count(tt.id) ");
+		sql.append("from t_thread tt left join t_file tf on tt.id_file = tf.id  ");
+		sql.append("left join t_thread_type ttt on tt.id_thread_type = ttt.id ");
+		sql.append("left join t_user tu on tu.id = tt.created_by ");
+		sql.append("left join t_profile tp on tp.id_user = tu.id where tt.id_thread_type = :idType and tt.is_active = :isActive");
+
+		Object result = null;
+		Integer res = 0;
+		try {
+			result = createNativeQuery(sql.toString())
+					.setParameter("idType", idType)
+					.setParameter("isActive", isActive)
+					.getSingleResult();
+			res = Integer.valueOf(result.toString());
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+
+	public Integer getCountAllThreadByUser(String idUser) throws Exception {
+		StringBuilder sql = new StringBuilder();
+		sql.append("select count(tt.id) ");
+		sql.append("from t_thread tt left join t_file tf on tt.id_file = tf.id  ");
+		sql.append("left join t_thread_type ttt on tt.id_thread_type = ttt.id ");
+		sql.append("left join t_user tu on tu.id = tt.created_by ");
+		sql.append("left join t_profile tp on tp.id_user = tu.id ");
+		sql.append("left join t_polling tpl on tpl.id_thread = tt.id ");
+		sql.append("where ttt.id <> '2' and ttt.id <> '3' and tt.created_by = :idUser");
+
+		Object result = null;
+		Integer res = 0;
+		try {
+			result = createNativeQuery(sql.toString())
+					.setParameter("idUser", idUser)
+					.getSingleResult();
+			res = Integer.valueOf(result.toString());
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	public Integer getCountAllThread() throws Exception {
+		StringBuilder sql = new StringBuilder();
+		sql.append("select count(tt.id) ");
+		sql.append("from t_thread tt left join t_file tf on tt.id_file = tf.id  ");
+		sql.append("left join t_thread_type ttt on tt.id_thread_type = ttt.id ");
+		sql.append("left join t_user tu on tu.id = tt.created_by ");
+		sql.append("left join t_profile tp on tp.id_user = tu.id ");
+		sql.append("left join t_polling tpl on tpl.id_thread = tt.id ");
+		sql.append("where ttt.id <> '2' and ttt.id <> '3' ");
+
+		Object result = null;
+		Integer res = 0;
+		try {
+			result = createNativeQuery(sql.toString())
+					.getSingleResult();
+			res = Integer.valueOf(result.toString());
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
 }

@@ -128,5 +128,32 @@ public class UserMemberDao extends BaseDaoImpl<UserMember> {
 		
 		return dataRes;
 	}
+	
+	public Integer getCountToAccept(Boolean isAccept) throws Exception {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT count(tum.id) ");
+		sql.append(" FROM t_order_detail tod ");
+		sql.append(" LEFT JOIN t_user_member tum on tum.id = tod.id_user_member ");
+		sql.append(" LEFT JOIN t_order tor on tor.id = tod.id_order ");
+		sql.append(" LEFT JOIN t_user tu on tu.id = tor.id_user ");
+		sql.append(" LEFT JOIN t_profile tp on tu.id = tp.id_user ");
+		sql.append(" LEFT JOIN t_payment_method tpm on tpm.id = tor.id_payment_method ");
+		sql.append(" LEFT JOIN t_file tf on tf.id = tor.id_file ");
+		sql.append(" LEFT JOIN t_price_list tpl on tpl.id = tum.id_price_list ");
+		sql.append(" WHERE tor.is_accept = :isAccept and tod.id_event_course is null");
+
+		Object result = null;
+		Integer res = 0;
+		try {
+			result = createNativeQuery(sql.toString())
+					.setParameter("isAccept", isAccept)
+					.getSingleResult();
+			res = Integer.valueOf(result.toString());
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
 
 }

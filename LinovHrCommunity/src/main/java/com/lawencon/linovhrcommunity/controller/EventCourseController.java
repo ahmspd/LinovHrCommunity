@@ -73,9 +73,9 @@ public class EventCourseController {
 		return new ResponseEntity<GetProfileJoinEventCourseDtoRes>(dataRes, HttpStatus.OK);
 	}
 
-	@GetMapping("type/{type}")
-	public ResponseEntity<GetAllEventCourseDtoRes> getAllActive(@PathVariable("type") String type) throws Exception {
-		GetAllEventCourseDtoRes dataRes = eventCourseService.getAllActive(type);
+	@GetMapping("type/{type}/{idUser}")
+	public ResponseEntity<GetAllEventCourseDtoRes> getAllActive(@PathVariable("type") String type,@PathVariable("idUser") String idUser) throws Exception {
+		GetAllEventCourseDtoRes dataRes = eventCourseService.getAllActive(type,idUser);
 		return new ResponseEntity<GetAllEventCourseDtoRes>(dataRes, HttpStatus.OK);
 	}
 
