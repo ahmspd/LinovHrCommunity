@@ -214,11 +214,13 @@ public class EventCourseService extends BaseServiceLinovCommunityImpl {
 
 	}
 
-	public GetAllEventCourseDtoRes getAllActive(String type) throws Exception {
+	public GetAllEventCourseDtoRes getAllActive(String type, String idUser) throws Exception {
 		List<GetAllEventCourseDtoDataRes> dataRes = eventCourseDao.getAllActive(type);
 		for(int i=0; i<dataRes.size();i++) {
 			dataRes.get(i).setDataCategoryDetail(categoryDetailDao.getCategoryDetailByEventCourse(dataRes.get(i).getId()));
-			dataRes.get(i).setIsJoin(eventCourseDao.isJoin(getIdFromPrincipal(), dataRes.get(i).getId()));
+			if(idUser!=null) {				
+				dataRes.get(i).setIsJoin(eventCourseDao.isJoin(idUser, dataRes.get(i).getId()));
+			}
 		}
 
 		GetAllEventCourseDtoRes result = new GetAllEventCourseDtoRes();
