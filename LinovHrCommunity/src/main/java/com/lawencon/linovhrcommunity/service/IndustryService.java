@@ -44,6 +44,8 @@ public class IndustryService extends BaseServiceLinovCommunityImpl {
 		Industry industryAdded;
 		try {
 			begin();
+			valBkNotExist(dataReq.getCode());
+			valBkNotNull(dataReq.getCode());
 			industryAdded = industryDao.save(addIndustry);
 			commit();
 			
@@ -72,6 +74,9 @@ public class IndustryService extends BaseServiceLinovCommunityImpl {
 		Industry industryUpdated;
 		try {
 			begin();
+			valIdNotNull(dataReq.getId());
+			valBkNotNull(dataReq.getCode());
+			valIdExist(dataReq.getId());
 			industryUpdated = industryDao.save(updateIndustry);
 			commit();
 			
@@ -149,6 +154,7 @@ public class IndustryService extends BaseServiceLinovCommunityImpl {
 		DeleteByIdIndustryDtoRes dataRes = new DeleteByIdIndustryDtoRes();
 		try {
 			begin();
+			valIdExist(id);
 			boolean isDeleted = industryDao.deleteById(id);
 			commit();
 
@@ -188,6 +194,31 @@ public class IndustryService extends BaseServiceLinovCommunityImpl {
 			e.printStackTrace();
 			rollback();
 			throw new Exception(e);
+		}
+	}
+	
+	private void valBkNotExist(String code) {
+		Integer res = industryDao.isIndustryCodeExist(code);
+		if(res == 1) {
+			throw new RuntimeException("Industry Code Exist");
+		}
+	}
+	
+	private void valIdExist(String id) {
+		Integer res = industryDao.isIndustryIdExist(id);
+		if(res == 0) {
+			throw new RuntimeException("Industry Id Not Exist");
+		}
+	}
+	private void valIdNotNull(String id) {
+		Integer res = industryDao.isIndustryIdExist(id);
+		if(res == 0) {
+			throw new RuntimeException("Industry Id Not Exist");
+		}
+	}
+	private void valBkNotNull(String code) {
+		if(code==null) {
+			throw new RuntimeException("Industry Code Is Null");
 		}
 	}
 }

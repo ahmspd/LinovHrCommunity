@@ -44,6 +44,8 @@ public class PriceTypeService extends BaseServiceLinovCommunityImpl {
 		PriceType priceTypeAdded;
 		try {
 			begin();
+			valBkNotExist(dataReq.getCode());
+			valBkNotNull(dataReq.getCode());
 			priceTypeAdded = priceTypeDao.save(addPriceType);
 			commit();
 
@@ -64,12 +66,16 @@ public class PriceTypeService extends BaseServiceLinovCommunityImpl {
 	public UpdatePriceTypeDtoRes update(UpdatePriceTypeDtoReq dataReq) throws Exception {
 		PriceType updatePriceType = priceTypeDao.getById(dataReq.getId());
 		updatePriceType.setPriceTypeName(dataReq.getPriceTypeName());
+		updatePriceType.setCode(dataReq.getCode());
 		updatePriceType.setUpdatedBy(getIdFromPrincipal());
 		updatePriceType.setVersion(dataReq.getVersion());
 
 		PriceType priceTypeUpdated;
 		try {
 			begin();
+			valIdNotNull(dataReq.getId());
+			valBkNotNull(dataReq.getCode());
+			valIdExist(dataReq.getId());
 			priceTypeUpdated = priceTypeDao.save(updatePriceType);
 			commit();
 		} catch (Exception e) {
@@ -147,6 +153,7 @@ public class PriceTypeService extends BaseServiceLinovCommunityImpl {
 		DeleteByIdPriceTypeDtoRes dataRes = new DeleteByIdPriceTypeDtoRes();
 		try {
 			begin();
+			valIdExist(id);
 			boolean isDeleted = priceTypeDao.deleteById(id);
 			commit();
 
@@ -171,6 +178,7 @@ public class PriceTypeService extends BaseServiceLinovCommunityImpl {
 			begin();
 			List<DeleteMultiplePriceTypeDtoDataReq> dataReq = data.getData();
 			for(int i=0; i<dataReq.size();i++) {
+				valIdExist(dataReq.get(i).getId());
 				isDeleted = priceTypeDao.deleteById(dataReq.get(i).getId());
 			}
 
@@ -186,6 +194,30 @@ public class PriceTypeService extends BaseServiceLinovCommunityImpl {
 			e.printStackTrace();
 			rollback();
 			throw new Exception(e);
+		}
+	}
+	private void valBkNotExist(String code) {
+		Integer res = priceTypeDao.isPriceTypeCodeExist(code);
+		if(res == 1) {
+			throw new RuntimeException("PriceType Code Exist");
+		}
+	}
+	
+	private void valIdExist(String id) {
+		Integer res = priceTypeDao.isPriceTypeIdExist(id);
+		if(res == 0) {
+			throw new RuntimeException("PriceType Id Not Exist");
+		}
+	}
+	private void valIdNotNull(String id) {
+		Integer res = priceTypeDao.isPriceTypeIdExist(id);
+		if(res == 0) {
+			throw new RuntimeException("PriceType Id Not Exist");
+		}
+	}
+	private void valBkNotNull(String code) {
+		if(code==null) {
+			throw new RuntimeException("PriceType Code Is Null");
 		}
 	}
 }

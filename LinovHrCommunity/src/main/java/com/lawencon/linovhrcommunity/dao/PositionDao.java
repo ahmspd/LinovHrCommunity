@@ -25,5 +25,16 @@ public class PositionDao extends BaseDaoImpl<Position> {
 	public boolean deleteById(String id) throws Exception {
 		return super.deleteById(id);
 	}
-
+	public Integer isPositionCodeExist(String code) {
+		String sql = "select count(id) from t_position where code = :code";
+		Object result = createNativeQuery(sql).setParameter("code", code).getSingleResult();
+		Integer res = Integer.valueOf(result.toString());
+		return res;
+	}
+	public Integer isPositionIdExist(String id) {
+		String sql = "select count(id) from t_position where id = :id";
+		Object result = createNativeQuery(sql).setParameter("id", id).getSingleResult();
+		Integer res = Integer.valueOf(result.toString());
+		return res;
+	}
 }

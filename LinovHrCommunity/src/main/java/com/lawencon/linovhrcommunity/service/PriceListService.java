@@ -55,6 +55,8 @@ public class PriceListService extends BaseServiceLinovCommunityImpl {
 		PriceList priceListAdded;
 		try {
 			begin();
+			valBkNotExist(dataReq.getCode());
+			valBkNotNull(dataReq.getCode());
 			priceListAdded = priceListDao.save(addPriceList);
 			commit();
 			
@@ -85,6 +87,9 @@ public class PriceListService extends BaseServiceLinovCommunityImpl {
 		PriceList priceListUpdated;
 		try {
 			begin();
+			valIdNotNull(dataReq.getId());
+			valBkNotNull(dataReq.getCode());
+			valIdExist(dataReq.getId());
 			priceListUpdated = priceListDao.save(updatePriceList);
 			commit();
 		} catch (Exception e) {
@@ -168,6 +173,7 @@ public class PriceListService extends BaseServiceLinovCommunityImpl {
 		DeleteByIdPriceListDtoRes dataRes = new DeleteByIdPriceListDtoRes();
 		try {
 			begin();
+			valIdExist(id);
 			boolean isDeleted = priceListDao.deleteById(id);
 			commit();
 
@@ -192,6 +198,7 @@ public class PriceListService extends BaseServiceLinovCommunityImpl {
 			begin();
 			List<DeleteMultiplePriceListDtoDataReq> dataReq = data.getData();
 			for(int i=0; i<dataReq.size();i++) {
+				valIdExist(dataReq.get(i).getId());
 				isDeleted = priceListDao.deleteById(dataReq.get(i).getId());
 			}
 
@@ -207,6 +214,31 @@ public class PriceListService extends BaseServiceLinovCommunityImpl {
 			e.printStackTrace();
 			rollback();
 			throw new Exception(e);
+		}
+	}
+	
+	private void valBkNotExist(String code) {
+		Integer res = priceListDao.isPriceListCodeExist(code);
+		if(res == 1) {
+			throw new RuntimeException("PriceList Code Exist");
+		}
+	}
+	
+	private void valIdExist(String id) {
+		Integer res = priceListDao.isPriceListIdExist(id);
+		if(res == 0) {
+			throw new RuntimeException("PriceList Id Not Exist");
+		}
+	}
+	private void valIdNotNull(String id) {
+		Integer res = priceListDao.isPriceListIdExist(id);
+		if(res == 0) {
+			throw new RuntimeException("PriceList Id Not Exist");
+		}
+	}
+	private void valBkNotNull(String code) {
+		if(code==null) {
+			throw new RuntimeException("PriceList Code Is Null");
 		}
 	}
 }

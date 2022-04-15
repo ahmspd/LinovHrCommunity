@@ -45,6 +45,8 @@ public class PaymentMethodService extends BaseServiceLinovCommunityImpl {
 			newPaymentMethod.setCreatedBy(getIdFromPrincipal());
 			
 			begin();
+			valBkNotExist(dataReq.getCode());
+			valBkNotNull(dataReq.getCode());
 			newPaymentMethod = paymentMethodDao.save(newPaymentMethod);			
 			commit();
 			
@@ -74,6 +76,9 @@ public class PaymentMethodService extends BaseServiceLinovCommunityImpl {
 			editPaymentMethod.setVersion(dataReq.getVersion());
 			
 			begin();
+			valIdNotNull(dataReq.getId());
+			valBkNotNull(dataReq.getCode());
+			valIdExist(dataReq.getId());
 			editPaymentMethod = paymentMethodDao.save(editPaymentMethod);			
 			commit();
 			
@@ -199,6 +204,31 @@ public class PaymentMethodService extends BaseServiceLinovCommunityImpl {
 			e.printStackTrace();
 			rollback();
 			throw new Exception(e);
+		}
+	}
+	
+	private void valBkNotExist(String code) {
+		Integer res = paymentMethodDao.isPaymentMethodCodeExist(code);
+		if(res == 1) {
+			throw new RuntimeException("PaymentMethod Code Exist");
+		}
+	}
+	
+	private void valIdExist(String id) {
+		Integer res = paymentMethodDao.isPaymentMethodIdExist(id);
+		if(res == 0) {
+			throw new RuntimeException("PaymentMethod Id Not Exist");
+		}
+	}
+	private void valIdNotNull(String id) {
+		Integer res = paymentMethodDao.isPaymentMethodIdExist(id);
+		if(res == 0) {
+			throw new RuntimeException("PaymentMethod Id Not Exist");
+		}
+	}
+	private void valBkNotNull(String code) {
+		if(code==null) {
+			throw new RuntimeException("PaymentMethod Code Is Null");
 		}
 	}
 }

@@ -42,6 +42,8 @@ public class CategoryService extends BaseServiceLinovCommunityImpl{
 
 		try {
 			begin();
+			valBkNotExist(dataReq.getCode());
+			valBkNotNull(dataReq.getCode());
 			addCategory = cateogryDao.save(addCategory);
 			commit();
 			
@@ -69,6 +71,9 @@ public class CategoryService extends BaseServiceLinovCommunityImpl{
 
 		try {
 			begin();
+			valIdNotNull(dataReq.getId());
+			valBkNotNull(dataReq.getCode());
+			valIdExist(dataReq.getId());
 			updateCategory = cateogryDao.save(updateCategory);
 			commit();
 			
@@ -146,6 +151,7 @@ public class CategoryService extends BaseServiceLinovCommunityImpl{
 		DeleteByIdCategoryDtoDataRes dataRes = new DeleteByIdCategoryDtoDataRes();
 		try {
 			begin();
+			valIdExist(id);
 			boolean isDeleted = cateogryDao.deleteById(id);
 			commit();
 
@@ -170,6 +176,7 @@ public class CategoryService extends BaseServiceLinovCommunityImpl{
 			begin();
 			List<DeleteMultipleCategoryDtoDataReq> dataReq = data.getData();
 			for(int i=0; i<dataReq.size();i++) {
+				valIdExist(dataReq.get(i).getId());
 				isDeleted = cateogryDao.deleteById(dataReq.get(i).getId());
 			}
 
@@ -185,6 +192,31 @@ public class CategoryService extends BaseServiceLinovCommunityImpl{
 			e.printStackTrace();
 			rollback();
 			throw new Exception(e);
+		}
+	}
+	
+	private void valBkNotExist(String code) {
+		Integer res = cateogryDao.isCategoryCodeExist(code);
+		if(res == 1) {
+			throw new RuntimeException("Category Code Exist");
+		}
+	}
+	
+	private void valIdExist(String id) {
+		Integer res = cateogryDao.isCategoryIdExist(id);
+		if(res == 0) {
+			throw new RuntimeException("Category Id Not Exist");
+		}
+	}
+	private void valIdNotNull(String id) {
+		Integer res = cateogryDao.isCategoryIdExist(id);
+		if(res == 0) {
+			throw new RuntimeException("Category Id Not Exist");
+		}
+	}
+	private void valBkNotNull(String code) {
+		if(code==null) {
+			throw new RuntimeException("Category Code Is Null");
 		}
 	}
 }

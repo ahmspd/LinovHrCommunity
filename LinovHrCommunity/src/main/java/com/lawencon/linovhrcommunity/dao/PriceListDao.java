@@ -25,5 +25,16 @@ public class PriceListDao extends BaseDaoImpl<PriceList> {
 	public boolean deleteById(String id) throws Exception {
 		return super.deleteById(id);
 	}
-
+	public Integer isPriceListCodeExist(String code) {
+		String sql = "select count(id) from t_price_list where code = :code";
+		Object result = createNativeQuery(sql).setParameter("code", code).getSingleResult();
+		Integer res = Integer.valueOf(result.toString());
+		return res;
+	}
+	public Integer isPriceListIdExist(String id) {
+		String sql = "select count(id) from t_price_list where id = :id";
+		Object result = createNativeQuery(sql).setParameter("id", id).getSingleResult();
+		Integer res = Integer.valueOf(result.toString());
+		return res;
+	}
 }

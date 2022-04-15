@@ -80,7 +80,7 @@ public class EventCoursePaymentController {
 		
 		return ResponseEntity.ok()
 				.contentType(MediaType.APPLICATION_PDF)
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename\""+fileName+"\"")
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+fileName+"\"")
 				.body(out);
 	}
 }

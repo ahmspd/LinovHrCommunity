@@ -283,7 +283,7 @@ public class EventCourseDao extends BaseDaoImpl<EventCourse> {
 			res = Boolean.valueOf(result.toString());
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+			res = null;
 		}
 		return res;
 	}
@@ -381,7 +381,7 @@ public class EventCourseDao extends BaseDaoImpl<EventCourse> {
 		sql.append("left join t_position tp2 on tp.id_position = tp2.id ");
 		sql.append("left join t_event_course_type tect on tec.id_event_course_type = tect.id ");
 		sql.append("left join t_payment_method tpm on to2.id_payment_method = tpm.id ");
-		sql.append("where to2.is_accept = true ");
+		sql.append("where to2.is_accept = true and tod.id_event_course is not null ");
 		
 		List<?> results = createNativeQuery(sql.toString())
 				.setFirstResult(startPage)

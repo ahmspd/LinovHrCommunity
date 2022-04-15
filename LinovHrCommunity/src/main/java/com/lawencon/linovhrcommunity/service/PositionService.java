@@ -44,6 +44,8 @@ public class PositionService extends BaseServiceLinovCommunityImpl {
 		Position positionAdded;
 		try {
 			begin();
+			valBkNotExist(dataReq.getCode());
+			valBkNotNull(dataReq.getCode());
 			positionAdded = positionDao.save(addPosition);
 			commit();
 			
@@ -71,6 +73,9 @@ public class PositionService extends BaseServiceLinovCommunityImpl {
 		Position positionUpdated;
 		try {
 			begin();
+			valIdNotNull(dataReq.getId());
+			valBkNotNull(dataReq.getCode());
+			valIdExist(dataReq.getId());
 			positionUpdated = positionDao.save(updatePosition);
 			commit();
 			
@@ -150,6 +155,7 @@ public class PositionService extends BaseServiceLinovCommunityImpl {
 		DeleteByIdPositionDtoRes dataRes = new DeleteByIdPositionDtoRes();
 		try {
 			begin();
+			valIdExist(id);
 			boolean isDeleted = positionDao.deleteById(id);
 			commit();
 
@@ -174,6 +180,7 @@ public class PositionService extends BaseServiceLinovCommunityImpl {
 			begin();
 			List<DeleteMultiplePositionDtoDataReq> dataReq = data.getData();
 			for(int i=0; i<dataReq.size();i++) {
+				valIdExist(dataReq.get(i).getId());
 				isDeleted = positionDao.deleteById(dataReq.get(i).getId());
 			}
 
@@ -189,6 +196,30 @@ public class PositionService extends BaseServiceLinovCommunityImpl {
 			e.printStackTrace();
 			rollback();
 			throw new Exception(e);
+		}
+	}
+	private void valBkNotExist(String code) {
+		Integer res = positionDao.isPositionCodeExist(code);
+		if(res == 1) {
+			throw new RuntimeException("Position Code Exist");
+		}
+	}
+	
+	private void valIdExist(String id) {
+		Integer res = positionDao.isPositionIdExist(id);
+		if(res == 0) {
+			throw new RuntimeException("Position Id Not Exist");
+		}
+	}
+	private void valIdNotNull(String id) {
+		Integer res = positionDao.isPositionIdExist(id);
+		if(res == 0) {
+			throw new RuntimeException("Position Id Not Exist");
+		}
+	}
+	private void valBkNotNull(String code) {
+		if(code==null) {
+			throw new RuntimeException("Position Code Is Null");
 		}
 	}
 }

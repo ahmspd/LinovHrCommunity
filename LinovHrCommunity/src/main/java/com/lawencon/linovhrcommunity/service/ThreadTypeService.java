@@ -45,6 +45,8 @@ public class ThreadTypeService extends BaseServiceLinovCommunityImpl {
 			newThreadType.setCreatedBy(getIdFromPrincipal());
 			
 			begin();
+			valBkNotExist(dataReq.getCode());
+			valBkNotNull(dataReq.getCode());
 			newThreadType = threadTypeDao.save(newThreadType);			
 			commit();
 			
@@ -74,6 +76,9 @@ public class ThreadTypeService extends BaseServiceLinovCommunityImpl {
 			editThreadType.setVersion(dataReq.getVersion());
 			
 			begin();
+			valIdNotNull(dataReq.getId());
+			valBkNotNull(dataReq.getCode());
+			valIdExist(dataReq.getId());
 			editThreadType = threadTypeDao.save(editThreadType);			
 			commit();
 			
@@ -135,6 +140,7 @@ public class ThreadTypeService extends BaseServiceLinovCommunityImpl {
 		DeleteByIdThreadTypeRes delRes = new DeleteByIdThreadTypeRes();
 		try {
 			begin();
+			valIdExist(id);
 			boolean isDeleted = threadTypeDao.deleteById(id);
 			commit();
 			
@@ -185,6 +191,7 @@ public class ThreadTypeService extends BaseServiceLinovCommunityImpl {
 			begin();
 			List<DeleteMultipleThreadTypeDtoDataReq> dataReq = data.getData();
 			for(int i=0; i<dataReq.size();i++) {
+				valIdExist(dataReq.get(i).getId());
 				isDeleted = threadTypeDao.deleteById(dataReq.get(i).getId());
 			}
 
@@ -200,6 +207,31 @@ public class ThreadTypeService extends BaseServiceLinovCommunityImpl {
 			e.printStackTrace();
 			rollback();
 			throw new Exception(e);
+		}
+	}
+	
+	private void valBkNotExist(String code) {
+		Integer res = threadTypeDao.isThreadTypeCodeExist(code);
+		if(res == 1) {
+			throw new RuntimeException("ThreadType Code Exist");
+		}
+	}
+	
+	private void valIdExist(String id) {
+		Integer res = threadTypeDao.isThreadTypeIdExist(id);
+		if(res == 0) {
+			throw new RuntimeException("ThreadType Id Not Exist");
+		}
+	}
+	private void valIdNotNull(String id) {
+		Integer res = threadTypeDao.isThreadTypeIdExist(id);
+		if(res == 0) {
+			throw new RuntimeException("ThreadType Id Not Exist");
+		}
+	}
+	private void valBkNotNull(String code) {
+		if(code==null) {
+			throw new RuntimeException("ThreadType Code Is Null");
 		}
 	}
 

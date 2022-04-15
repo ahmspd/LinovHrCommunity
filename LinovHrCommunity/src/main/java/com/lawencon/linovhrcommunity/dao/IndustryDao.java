@@ -25,4 +25,18 @@ public class IndustryDao extends BaseDaoImpl<Industry> {
 	public boolean deleteById(String id) throws Exception {
 		return super.deleteById(id);
 	}
+	
+	public Integer isIndustryCodeExist(String code) {
+		String sql = "select count(id) from t_industry where code = :code";
+		Object result = createNativeQuery(sql).setParameter("code", code).getSingleResult();
+		Integer res = Integer.valueOf(result.toString());
+		return res;
+	}
+	
+	public Integer isIndustryIdExist(String id) {
+		String sql = "select count(id) from t_industry where id = :id";
+		Object result = createNativeQuery(sql).setParameter("id", id).getSingleResult();
+		Integer res = Integer.valueOf(result.toString());
+		return res;
+	}
 }
