@@ -100,11 +100,9 @@ public class UserMemberService extends BaseServiceLinovCommunityImpl {
 		try {
 			begin();
 			User user = userDao.findById(getIdFromPrincipal());
-			PaymentMethod paymentMethod = paymentMethodDao.findById(data.getIdPaymentMethod());
-
+			
 			Order newOrder = new Order();
 			newOrder.setIdUser(user);
-			newOrder.setIdPaymentMethod(paymentMethod);
 			newOrder.setIsAccept(false);
 			newOrder.setCreatedBy(getIdFromPrincipal());
 			newOrder = orderDao.save(newOrder);
@@ -159,6 +157,9 @@ public class UserMemberService extends BaseServiceLinovCommunityImpl {
 				dataFile.setCreatedBy(getIdFromPrincipal());
 				File fileSave = fileDao.save(dataFile);
 				updateOrder.setFile(fileSave);
+				
+				PaymentMethod paymentMethod = paymentMethodDao.findById(data.getIdPaymentMethod());
+				updateOrder.setIdPaymentMethod(paymentMethod);
 				updateOrder.setUpdatedBy(getIdFromPrincipal());
 				updateOrder = orderDao.save(updateOrder);
 			}
