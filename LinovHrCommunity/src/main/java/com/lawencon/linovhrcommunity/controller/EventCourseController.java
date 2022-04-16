@@ -125,7 +125,7 @@ public class EventCourseController {
 		Map<String, Object> map = new HashMap<>();
 		
 		byte[] out = JasperUtil.responseToByteArray(dataRes, "ReportEventCourseJoin", map);
-		String fileName = "contoh.pdf";
+		String fileName = "ReportUserJoinAdmin.pdf";
 		
 		return ResponseEntity.ok()
 				.contentType(MediaType.APPLICATION_PDF)
@@ -142,7 +142,7 @@ public class EventCourseController {
 		map.put("EventCourseName", dataRes.get(0).getTitle());
 		
 		byte[] out = JasperUtil.responseToByteArray(dataRes, "ReportEventCourseById", map);
-		String fileName = "contoh.pdf";
+		String fileName = "ReportUserJoin.pdf";
 		
 		return ResponseEntity.ok()
 				.contentType(MediaType.APPLICATION_PDF)
@@ -158,7 +158,7 @@ public class EventCourseController {
 		map.put("TotalPrice", data.getTotalPrice());
 		
 		byte[] out = JasperUtil.responseToByteArray(dataRes, "ReportEventCourseByUser", map);
-		String fileName = "contoh.pdf";
+		String fileName = "ReportAllUserJoin.pdf";
 		
 		return ResponseEntity.ok()
 				.contentType(MediaType.APPLICATION_PDF)

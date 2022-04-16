@@ -70,77 +70,36 @@ where to2.is_accept = true]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="126" splitType="Stretch">
-			<staticText>
-				<reportElement x="179" y="17" width="268" height="30" uuid="355c5096-5bad-44fb-bc14-df771e051064"/>
-				<textElement>
-					<font fontName="Montserrat" size="22" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Lawencon Community]]></text>
-			</staticText>
-			<image>
-				<reportElement x="80" y="18" width="80" height="80" uuid="43f1dfed-90cb-4ac7-b929-3158bee63b62"/>
-				<imageExpression><![CDATA["C:/Users/ahmsp/Pictures/Logo_2_LawenCommunity.png"]]></imageExpression>
-			</image>
-			<staticText>
-				<reportElement x="160" y="50" width="268" height="47" uuid="26aa9b34-abff-43d2-86d9-674ec894c838"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Montserrat"/>
-				</textElement>
-				<text><![CDATA[Pakuwon Tower 22nd floor
-Jl Casablanca Kav 88, Jakarta Selatan
-DKI Jakarta , Telp. 12870]]></text>
-			</staticText>
+		<band height="99" splitType="Stretch">
 			<line>
-				<reportElement x="4" y="113" width="546" height="1" uuid="a147b2bc-1d05-4b60-921e-0d4ea1bce1b5"/>
-				<graphicElement>
-					<pen lineWidth="3.0"/>
-				</graphicElement>
-			</line>
-			<line>
-				<reportElement x="4" y="117" width="546" height="1" uuid="50a49d14-846d-4309-ac06-552568eaffd9"/>
+				<reportElement x="4" y="-1" width="546" height="1" uuid="844cea82-b8fe-4983-a627-36b372fbf1cb"/>
 				<graphicElement>
 					<pen lineWidth="1.0"/>
 				</graphicElement>
 			</line>
-		</band>
-	</title>
-	<pageHeader>
-		<band height="62" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="100" height="20" uuid="cf2ba526-d5dd-4827-8a5c-044a98104a36">
-					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
-				</reportElement>
-				<box padding="1">
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
+				<reportElement x="31" y="2" width="268" height="30" uuid="b8f00804-c3a1-4a4d-9cbd-0c5f669d2b7f"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Montserrat" isBold="true"/>
-					<paragraph leftIndent="2"/>
+					<font fontName="Montserrat" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Date :]]></text>
+				<text><![CDATA[Lawencon Community]]></text>
 			</staticText>
+			<image>
+				<reportElement x="0" y="2" width="30" height="30" uuid="75efdc11-6d1e-4e0a-b9a1-1dfc70c6d448"/>
+				<imageExpression><![CDATA["C:/Users/ahmsp/Pictures/Logo_2_LawenCommunity.png"]]></imageExpression>
+			</image>
 			<staticText>
-				<reportElement x="0" y="20" width="100" height="20" uuid="57d6d833-f37b-4637-8286-c66c169e388b">
-					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
-				</reportElement>
-				<box padding="1">
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Montserrat" isBold="true"/>
-					<paragraph leftIndent="2"/>
+				<reportElement x="30" y="32" width="150" height="60" uuid="d76a8e32-1b29-4ef1-b095-d6d1fc433256"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Montserrat"/>
 				</textElement>
-				<text><![CDATA[Report :]]></text>
+				<text><![CDATA[Pakuwon Tower 22nd floor
+Jl Casablanca Kav 88, 
+Jakarta Selatan
+DKI Jakarta , Telp. 12870]]></text>
 			</staticText>
 			<textField pattern="MMMMM dd, yyyy">
-				<reportElement x="100" y="0" width="100" height="20" uuid="9103749b-4225-4451-950c-f3c79ba9e227">
+				<reportElement x="455" y="2" width="100" height="20" uuid="7a23a02a-c39d-46b6-af7a-deb05c586690">
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<box topPadding="0" leftPadding="0" bottomPadding="1" rightPadding="1">
@@ -155,7 +114,43 @@ DKI Jakarta , Telp. 12870]]></text>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="100" y="20" width="160" height="20" uuid="c2b5ac94-aee0-4e88-a411-63c020d6de8e">
+				<reportElement x="395" y="2" width="60" height="20" uuid="933d6aa2-ff67-423e-86d3-7753ddb49668">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box padding="1">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Montserrat" isBold="true"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<text><![CDATA[Date :]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="33" splitType="Stretch">
+			<staticText>
+				<reportElement x="30" y="0" width="70" height="20" uuid="57d6d833-f37b-4637-8286-c66c169e388b">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box padding="1">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Montserrat" isBold="true"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<text><![CDATA[Report :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="160" height="20" uuid="c2b5ac94-aee0-4e88-a411-63c020d6de8e">
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -164,107 +159,113 @@ DKI Jakarta , Telp. 12870]]></text>
 				</textElement>
 				<text><![CDATA[List User Join to Event / Course]]></text>
 			</staticText>
+			<line>
+				<reportElement x="4" y="25" width="546" height="1" uuid="a6732137-68c3-43a9-ba80-e48992f02d19"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</line>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="100" height="20" uuid="0226acc7-4a3f-4b5a-a517-c3aeb805b3e5">
+				<reportElement mode="Opaque" x="0" y="0" width="100" height="20" backcolor="#C5E9FC" uuid="0226acc7-4a3f-4b5a-a517-c3aeb805b3e5">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9767cc71-d4db-40ba-a307-3f27c824ae53"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<box padding="1">
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Montserrat" isBold="true"/>
 					<paragraph leftIndent="2"/>
 				</textElement>
 				<text><![CDATA[title]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="100" y="0" width="100" height="20" uuid="87424219-fdab-4dda-9823-24bcd15596ad">
+				<reportElement mode="Opaque" x="100" y="0" width="100" height="20" backcolor="#C5E9FC" uuid="87424219-fdab-4dda-9823-24bcd15596ad">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e1719122-69ce-4b9f-9364-361419af5ccc"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<box padding="1">
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Montserrat" isBold="true"/>
 					<paragraph leftIndent="2"/>
 				</textElement>
 				<text><![CDATA[email]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="200" y="0" width="100" height="20" uuid="c2f1c7db-7a80-4dd4-9691-356d3b5a289d">
+				<reportElement mode="Opaque" x="200" y="0" width="100" height="20" backcolor="#C5E9FC" uuid="c2f1c7db-7a80-4dd4-9691-356d3b5a289d">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="763d8c16-ab42-430d-ac0b-64bf2ad3f6ea"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<box padding="1">
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Montserrat" isBold="true"/>
 					<paragraph leftIndent="2"/>
 				</textElement>
 				<text><![CDATA[Full Name]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="300" y="0" width="100" height="20" uuid="0e3610b9-85ec-4e06-808b-4cffec0f1ccb">
+				<reportElement mode="Opaque" x="300" y="0" width="100" height="20" backcolor="#C5E9FC" uuid="0e3610b9-85ec-4e06-808b-4cffec0f1ccb">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9b2c3d70-f6d1-499a-97e5-13ff6530b91e"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<box padding="1">
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Montserrat" isBold="true"/>
 					<paragraph leftIndent="2"/>
 				</textElement>
 				<text><![CDATA[company]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="400" y="0" width="60" height="20" uuid="1e2fb760-819e-4bc6-9c86-ca3e10b9eecb">
+				<reportElement mode="Opaque" x="400" y="0" width="60" height="20" backcolor="#C5E9FC" uuid="1e2fb760-819e-4bc6-9c86-ca3e10b9eecb">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bd3cc6f5-954f-4a52-88fa-bc62a3a8133e"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<box padding="1">
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Montserrat" isBold="true"/>
 					<paragraph leftIndent="2"/>
 				</textElement>
 				<text><![CDATA[Type]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="460" y="0" width="90" height="20" uuid="06b23cf1-4971-44c3-a0cc-f842b49364cd">
+				<reportElement mode="Opaque" x="460" y="0" width="90" height="20" backcolor="#C5E9FC" uuid="06b23cf1-4971-44c3-a0cc-f842b49364cd">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e7c46bce-bd38-4ae8-a44b-755588134eca"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<box padding="1">
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Montserrat" isBold="true"/>
 					<paragraph leftIndent="2"/>
 				</textElement>
@@ -280,10 +281,10 @@ DKI Jakarta , Telp. 12870]]></text>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<box padding="1">
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Montserrat"/>
@@ -297,10 +298,10 @@ DKI Jakarta , Telp. 12870]]></text>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<box padding="1">
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Montserrat"/>
@@ -314,10 +315,10 @@ DKI Jakarta , Telp. 12870]]></text>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<box padding="1">
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Montserrat"/>
@@ -331,10 +332,10 @@ DKI Jakarta , Telp. 12870]]></text>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<box padding="1">
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Montserrat"/>
@@ -348,10 +349,10 @@ DKI Jakarta , Telp. 12870]]></text>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<box padding="1">
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Montserrat"/>
@@ -365,10 +366,10 @@ DKI Jakarta , Telp. 12870]]></text>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<box padding="1">
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Montserrat"/>

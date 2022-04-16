@@ -76,7 +76,7 @@ public class EventCoursePaymentController {
 		map.put("TotalPrice", data.getTotalPrice());
 		
 		byte[] out = JasperUtil.responseToByteArray(dataRes, "ReportEventCoursePayment", map);
-		String fileName = "contoh.pdf";
+		String fileName = "List_user_join_to_event_course.pdf";
 		
 		return ResponseEntity.ok()
 				.contentType(MediaType.APPLICATION_PDF)

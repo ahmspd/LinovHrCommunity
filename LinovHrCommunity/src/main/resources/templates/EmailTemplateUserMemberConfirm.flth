@@ -114,7 +114,7 @@ table, td { color: #000000; } </style>
     <tr>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:40px 10px 10px;font-family:arial,helvetica,sans-serif;" align="left">
         
-  <h1 style="margin: 0px; color: #333333; line-height: 140%; text-align: center; word-wrap: break-word; font-weight: normal; font-family: 'Montserrat',sans-serif; font-size: 30px;">
+  <h1 style="margin: 0px; color: #fff; line-height: 140%; text-align: center; word-wrap: break-word; font-weight: normal; font-family: 'Montserrat',sans-serif; font-size: 30px;">
     <strong>Lawencon Community</strong>
   </h1>
 

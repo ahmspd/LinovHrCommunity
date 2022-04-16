@@ -32,7 +32,7 @@ public class OrderDao extends BaseDaoImpl<Order> {
 		StringBuilder sql = new StringBuilder();
 		sql.append("select to2.is_accept , to2.id_file , to2.invoice ");
 		sql.append("from t_order to2 left join t_order_detail tod on to2.id = tod.id_order ");
-		sql.append("where to2.id_user = :id and tod.id_user_member notnull");	
+		sql.append("where to2.id_user = :id and tod.id_user_member notnull and to2.is_active=true");	
 		Object result = null;
 		Long stat = 0L;
 		try {
@@ -60,7 +60,7 @@ public class OrderDao extends BaseDaoImpl<Order> {
 		StringBuilder sql = new StringBuilder();
 		sql.append("select to2.id , to2.id_file , to2.invoice ");
 		sql.append("from t_order to2 left join t_order_detail tod on to2.id = tod.id_order ");
-		sql.append("where to2.id_user = :id and tod.id_user_member notnull");	
+		sql.append("where to2.id_user = :id and tod.id_user_member notnull and to2.is_active = true");	
 		
 		Object result = null;
 		String stat = "";

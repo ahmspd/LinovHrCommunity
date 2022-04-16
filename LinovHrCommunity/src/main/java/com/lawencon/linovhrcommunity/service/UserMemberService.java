@@ -288,6 +288,10 @@ public class UserMemberService extends BaseServiceLinovCommunityImpl {
 			userUpdate.setUpdatedBy(updatedby);
 			userUpdate = userDao.save(userUpdate);
 
+			String idOrder = orderDao.getIdOrderMember(idUser);
+			Order orderMember = orderDao.findById(idOrder);
+			orderMember.setIsActive(false);
+			orderDao.save(orderMember);
 			commit();
 		} catch (Exception e) {
 			e.printStackTrace();

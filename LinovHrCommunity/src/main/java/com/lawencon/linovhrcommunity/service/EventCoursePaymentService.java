@@ -153,19 +153,6 @@ public class EventCoursePaymentService extends BaseServiceLinovCommunityImpl {
 					eventCourseUpdate.setUpdatedBy(getIdFromPrincipal());
 					eventCourseUpdate = eventCourseDao.save(eventCourseUpdate);
 					
-					EmailTemplate emailTemplate = new EmailTemplate();
-					emailTemplate.setFrom("LawenconCommunity");
-					emailTemplate.setSubject("Invoice Event Course");
-					emailTemplate.setTo(userData.getEmail());
-					Map<String, Object> model = new HashMap<>();
-					model.put("profileName", userData.getFullName());
-					model.put("invoice", invoice);
-					emailTemplate.setModel(model);
-					
-					excecutorService.submit(()->{			
-						sendEmail("image/online-payment.png","EmailTemplatePaymentEventCourse.flth",emailTemplate);
-					});
-					excecutorService.shutdown();
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -174,6 +161,20 @@ public class EventCoursePaymentService extends BaseServiceLinovCommunityImpl {
 				
 			});
 			
+			EmailTemplate emailTemplate = new EmailTemplate();
+			emailTemplate.setFrom("LawenconCommunity");
+			emailTemplate.setSubject("Invoice Event Course");
+			emailTemplate.setTo(userData.getEmail());
+			Map<String, Object> model = new HashMap<>();
+			model.put("profileName", userData.getFullName());
+			model.put("invoice", invoice);
+			emailTemplate.setModel(model);
+			
+			excecutorService.submit(()->{			
+				sendEmail("image/online-payment.png","EmailTemplatePaymentEventCourse.flth",emailTemplate);
+			});
+			excecutorService.shutdown();
+
 			UpdateEventCoursePaymentDtoRes result = new UpdateEventCoursePaymentDtoRes();
 			UpdateEventCoursePaymentDtoDataRes dataRes = new UpdateEventCoursePaymentDtoDataRes();
 			dataRes.setVersion(eventCoursePaymentUpdate.getVersion());
