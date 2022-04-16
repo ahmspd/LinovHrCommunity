@@ -14,7 +14,7 @@ public class ThreadDetail extends BaseEntity {
 	private static final long serialVersionUID = -5196455701225322056L;
 
 	@ManyToOne
-	@JoinColumn(name = "id_thread", nullable = false)
+	@JoinColumn(name = "id_thread", referencedColumnName = "id", nullable = false)
 	private ThreadModel threadModel;
 	
 	@Column(nullable = false, columnDefinition="text")

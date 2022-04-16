@@ -20,11 +20,11 @@ public class ThreadModel extends BaseEntity {
 	private String contents;
 	
 	@OneToOne
-	@JoinColumn(name = "id_file")
+	@JoinColumn(name = "id_file", referencedColumnName = "id")
 	private File file;
 	
 	@OneToOne
-	@JoinColumn(name = "id_thread_type")
+	@JoinColumn(name = "id_thread_type", referencedColumnName = "id")
 	private ThreadType threadType;
 	
 	@Column(name = "is_premium")

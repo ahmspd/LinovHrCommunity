@@ -3,11 +3,12 @@ package com.lawencon.linovhrcommunity.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(name = "t_thread_type")
+@Table(name = "t_thread_type", uniqueConstraints = @UniqueConstraint(name = "thread_type_bk", columnNames = "code"))
 public class ThreadType extends BaseEntity {
 	private static final long serialVersionUID = -5196455701225322056L;
 	

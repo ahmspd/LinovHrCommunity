@@ -16,7 +16,7 @@ public class UserMember extends BaseEntity{
 	private static final long serialVersionUID = -5196455701225322056L;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_price_list", nullable = false)
+	@JoinColumn(name = "id_price_list", referencedColumnName = "id", nullable = false)
 	private PriceList priceList;
 	
 	@Column(name = "date_end")

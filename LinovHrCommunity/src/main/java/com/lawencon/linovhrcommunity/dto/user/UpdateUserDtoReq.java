@@ -9,6 +9,7 @@ public class UpdateUserDtoReq {
 	private String idPosition;
 	private String registrationCode;
 	private String idCity;
+	
 	public String getId() {
 		return id;
 	}

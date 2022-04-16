@@ -3,7 +3,6 @@ package com.lawencon.linovhrcommunity.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -15,47 +14,47 @@ public class Profile extends BaseEntity {
 	private static final long serialVersionUID = -5196455701225322056L;
 
 	@OneToOne
-	@JoinColumn(name = "id_user")
+	@JoinColumn(name = "id_user", referencedColumnName = "id", nullable = false)
 	private User user;
-	
+
 	@Column(name = "full_name", length = 50, nullable = false)
 	private String fullName;
-	
-	@Column(name = "phone_number", length = 15, nullable = true)
+
+	@Column(name = "phone_number", length = 15)
 	private String phoneNumber;
-	
-	@Column(name = "postal_code", length = 10, nullable = true)
+
+	@Column(name = "postal_code", length = 10)
 	private String postalCode;
-	
+
 	@Column(name = "company", length = 30, nullable = false)
 	private String company;
-	
+
 	@OneToOne
-	@JoinColumn(name = "id_industry", nullable = false)
+	@JoinColumn(name = "id_industry", referencedColumnName = "id", nullable = false)
 	private Industry industry;
-	
+
 	@OneToOne
-	@JoinColumn(name = "id_position", nullable = false)
+	@JoinColumn(name = "id_position", referencedColumnName = "id", nullable = false)
 	private Position position;
-	
-	@ManyToOne
-	@JoinColumn(name = "id_province" )
-	private Province province;
-	
-	@ManyToOne
-	@JoinColumn(name = "id_city")
-	private City city;
-	
+
 	@OneToOne
-	@JoinColumn(name = "id_file")
+	@JoinColumn(name = "id_province", referencedColumnName = "id")
+	private Province province;
+
+	@OneToOne
+	@JoinColumn(name = "id_city", referencedColumnName = "id")
+	private City city;
+
+	@OneToOne
+	@JoinColumn(name = "id_file", referencedColumnName = "id")
 	private File file;
-	
+
 	@Column(name = "instagram")
 	private String instagram;
-	
+
 	@Column(name = "twitter")
 	private String twitter;
-	
+
 	@Column(name = "facebook")
 	private String facebook;
 

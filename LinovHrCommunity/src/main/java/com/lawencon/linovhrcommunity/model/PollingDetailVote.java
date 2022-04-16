@@ -13,7 +13,7 @@ public class PollingDetailVote extends BaseEntity {
 	private static final long serialVersionUID = -9034083546988015483L;
 
 	@ManyToOne
-	@JoinColumn(name = "id_polling_detail", nullable = false)
+	@JoinColumn(name = "id_polling_detail", referencedColumnName = "id",  nullable = false)
 	private PollingDetail pollingDetail;
 
 	public PollingDetail getPollingDetail() {

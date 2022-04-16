@@ -2,10 +2,14 @@ package com.lawencon.linovhrcommunity.dto.eventcoursepayment;
 
 import java.math.BigInteger;
 
+import javax.validation.constraints.NotNull;
+
 public class InsertEventCoursePaymentDtoReq {
 
 	private String[] idEvenCoursePaymentDetails;
 	private String idPaymentMethod;
+	
+	@NotNull(message = "Total Price is Empty!")
 	private BigInteger totalPrice;
 
 	public String[] getIdEvenCoursePaymentDetails() {

@@ -1,7 +1,5 @@
 package com.lawencon.linovhrcommunity.dto.thread;
 
-import java.util.List;
-
 public class GetThreadPollingDetailDtoRes {
 	private String message;
 	private GetThreadPollingDetailDtoDataRes data;

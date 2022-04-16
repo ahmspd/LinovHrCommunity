@@ -5,11 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(name = "t_user")
+@Table(name = "t_user", uniqueConstraints = @UniqueConstraint(name = "user_bk", columnNames = "email"))
 public class User extends BaseEntity {
 	private static final long serialVersionUID = -5196455701225322056L;
 	
@@ -20,7 +21,7 @@ public class User extends BaseEntity {
 	private String password;
 	
 	@OneToOne
-	@JoinColumn(name = "id_role", nullable = false)
+	@JoinColumn(name = "id_role", referencedColumnName = "id", nullable = false)
 	private Role role;
 	
 	@Column(name="registration_code", length = 10, nullable = false)

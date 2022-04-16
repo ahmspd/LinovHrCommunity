@@ -3,6 +3,7 @@ package com.lawencon.linovhrcommunity.model;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.lawencon.base.BaseEntity;
@@ -12,17 +13,17 @@ import com.lawencon.base.BaseEntity;
 public class CategoryDetail extends BaseEntity {
 
 	private static final long serialVersionUID = -5196455701225322056L;
-	
-	@ManyToOne
-	@JoinColumn(name = "id_category", nullable = false)
-	private Category category;
-	
-	@ManyToOne
-	@JoinColumn(name = "id_thread")
-	private ThreadModel threadModel;
 
 	@ManyToOne
-	@JoinColumn(name = "id_event_course")
+	@JoinColumn(name = "id_category", referencedColumnName = "id", nullable = false)
+	private Category category;
+
+	@OneToOne
+	@JoinColumn(name = "id_thread", referencedColumnName = "id")
+	private ThreadModel threadModel;
+
+	@OneToOne
+	@JoinColumn(name = "id_event_course", referencedColumnName = "id")
 	private EventCourse eventCourse;
 
 	public Category getCategory() {
@@ -48,8 +49,5 @@ public class CategoryDetail extends BaseEntity {
 	public void setEventCourse(EventCourse eventCourse) {
 		this.eventCourse = eventCourse;
 	}
-	
-	
-	
-	
+
 }
