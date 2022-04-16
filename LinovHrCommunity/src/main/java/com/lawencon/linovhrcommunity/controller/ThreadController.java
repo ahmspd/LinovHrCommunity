@@ -90,11 +90,13 @@ public class ThreadController {
 		GetThreadPollingDtoRes response = threadService.getAllThreadPolling();
 		return new ResponseEntity<GetThreadPollingDtoRes>(response, HttpStatus.OK);
 	}
+	
 	@GetMapping("polling/{id}")
 	public ResponseEntity<GetThreadPollingDtoRes> getThreadPollingByUser(@PathVariable("id") String id) throws Exception {
 		GetThreadPollingDtoRes response = threadService.getThreadPollingByUser(id);
 		return new ResponseEntity<GetThreadPollingDtoRes>(response, HttpStatus.OK);
 	}
+	
 	@GetMapping("polling/detail/{id}")
 	public ResponseEntity<GetThreadPollingDetailDtoRes> getThreadPollingById(@PathVariable("id") String id) throws Exception {
 		GetThreadPollingDetailDtoRes response = threadService.getThreadPollingById(id);
@@ -127,9 +129,11 @@ public class ThreadController {
 		UpdateThreadStatusDtoRes dataRes = threadService.updateStatus(dataReq);
 		return new ResponseEntity<UpdateThreadStatusDtoRes>(dataRes, HttpStatus.OK);
 	}
+	
 	@PutMapping("article")
 	public ResponseEntity<UpdateArticleDtoRes> update(@RequestBody @Valid UpdateArticleDtoReq dataReq) throws Exception {
 		UpdateArticleDtoRes dataRes = threadService.updateArticle(dataReq);
 		return new ResponseEntity<UpdateArticleDtoRes>(dataRes, HttpStatus.OK);
 	}
+	
 }

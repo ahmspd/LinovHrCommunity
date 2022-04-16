@@ -4,22 +4,42 @@ import java.math.BigInteger;
 import java.sql.Time;
 import java.util.Date;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class InsertEventCourseDtoReq {
-
+	@NotEmpty(message = "Event Course is Null!")
 	private String idEventCourseType;
+	
+	@NotEmpty(message = "Price List is Null!")
 	private String idPriceList;
+	
+	@NotEmpty(message = "Category is Null!")
 	private String[] idCategories;
+	
+	@NotEmpty(message = "Contents is Empty!")
 	private String contents;
+	
+	@NotEmpty(message = "Title is Empty!")
+	@Size(min = 5, max = 35, message = "Title is out of Range !")
 	private String title;
+	
+	@NotEmpty(message = "Event Course Location is Empty!")
+	@Size(min = 5, max = 50, message = "Event Course Location is Out of Range!")
 	private String eventCourseLocation;
+	
+	@NotNull(message = "Price is Null!")
 	private BigInteger price;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd")
+	@NotNull(message = " Date Start is Null !")
 	private Date dateStart;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd")
+	@NotNull(message = " Date End is Null !")
 	private Date dateEnd;
 	
 	private Time timeStart;

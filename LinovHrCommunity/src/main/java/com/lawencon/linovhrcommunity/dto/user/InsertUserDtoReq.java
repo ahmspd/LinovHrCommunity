@@ -1,8 +1,16 @@
 package com.lawencon.linovhrcommunity.dto.user;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 public class InsertUserDtoReq {
+	@NotEmpty(message = "Email is empty!")
+	@Size(max = 30, message = "Email is out of range!")
 	private String email;
+	
 	private String password;
+	
+	@NotEmpty(message = "Id Role is empty!")
 	private String idRole;
 	private String registrationCode;
 	private String fullName;

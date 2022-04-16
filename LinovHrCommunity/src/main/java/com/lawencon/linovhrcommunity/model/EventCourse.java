@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.lawencon.base.BaseEntity;
@@ -18,8 +19,8 @@ public class EventCourse extends BaseEntity {
 
 	private static final long serialVersionUID = -5196455701225322056L;
 
-	@ManyToOne
-	@JoinColumn(name = "id_event_course_type", nullable = false)
+	@OneToOne
+	@JoinColumn(name = "id_event_course_type", referencedColumnName = "id", nullable = false)
 	private EventCourseType eventCourseType;
 
 	@Column(name = "title", length = 35)
@@ -46,8 +47,8 @@ public class EventCourse extends BaseEntity {
 	@Column(name = "time_end", nullable = true)
 	private Time timeEnd;
 
-	@ManyToOne
-	@JoinColumn(name = "id_price_list", nullable = false)
+	@OneToOne
+	@JoinColumn(name = "id_price_list", referencedColumnName = "id", nullable = false)
 	private PriceList priceList;
 	
 	@ManyToOne

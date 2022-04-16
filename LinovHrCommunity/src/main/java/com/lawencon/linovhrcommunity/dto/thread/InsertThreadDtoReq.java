@@ -3,7 +3,6 @@ package com.lawencon.linovhrcommunity.dto.thread;
 import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.lawencon.linovhrcommunity.dto.category.GetAllCategoryThreadDetail;
@@ -19,9 +18,9 @@ public class InsertThreadDtoReq {
 	@Size(min = 5, message = "Contents Out Of Range")
 	private String contents;
 	
-	@NotNull(message = "Thread Type is required")
+	@NotEmpty(message = "Thread Type is required")
 	private String idThreadType;
-	
+		
 	private Boolean isPremium;
 	private String pollingName;
 	private Boolean isActive;

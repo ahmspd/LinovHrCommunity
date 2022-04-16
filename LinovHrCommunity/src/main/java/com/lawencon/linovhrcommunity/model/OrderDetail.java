@@ -9,8 +9,8 @@ import javax.persistence.UniqueConstraint;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(name = "order_detail_ck", columnNames = { "id",
-		"id_event_course" }) }, name = "t_order_detail")
+@Table(name = "t_order_detail", uniqueConstraints = { @UniqueConstraint(name = "order_detail_ck", columnNames = { "id",
+		"id_event_course" }) })
 public class OrderDetail extends BaseEntity {
 	private static final long serialVersionUID = -5196455701225322056L;
 

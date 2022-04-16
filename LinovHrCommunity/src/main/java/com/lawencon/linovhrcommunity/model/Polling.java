@@ -3,7 +3,7 @@ package com.lawencon.linovhrcommunity.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.lawencon.base.BaseEntity;
@@ -13,8 +13,8 @@ import com.lawencon.base.BaseEntity;
 public class Polling extends BaseEntity {
 	private static final long serialVersionUID = -9034083546988015483L;
 
-	@ManyToOne
-	@JoinColumn(name = "id_thread", nullable = false)
+	@OneToOne
+	@JoinColumn(name = "id_thread", referencedColumnName = "id", nullable = false)
 	private ThreadModel threadModel;
 
 	@Column(name = "polling_name", length = 50, nullable = false)

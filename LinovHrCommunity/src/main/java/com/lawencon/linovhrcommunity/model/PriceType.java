@@ -3,11 +3,12 @@ package com.lawencon.linovhrcommunity.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(name = "t_price_type")
+@Table(name = "t_price_type", uniqueConstraints = @UniqueConstraint(name = "price_type_code_bk", columnNames = "code"))
 public class PriceType extends BaseEntity {
 	private static final long serialVersionUID = -9034083546988015483L;
 

@@ -19,7 +19,7 @@ public class InsertPriceListDtoReq {
 	@NotNull(message = "Price Is Null")
 	private BigInteger price;
 
-	@NotNull(message = "ID Price Type Is Null")
+	@NotEmpty(message = "ID Price Type Is Null")
 	private String idPriceType;
 
 	public String getCode() {

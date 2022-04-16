@@ -3,11 +3,12 @@ package com.lawencon.linovhrcommunity.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(name = "t_role")
+@Table(name = "t_role", uniqueConstraints = @UniqueConstraint(name = "role_bk", columnNames = "code"))
 public class Role extends BaseEntity {
 	private static final long serialVersionUID = -5196455701225322056L;
 	

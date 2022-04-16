@@ -9,6 +9,7 @@ import com.lawencon.base.BaseEntity;
 
 @Entity
 @Table(name = "t_industry", uniqueConstraints = {
+		@UniqueConstraint(name="industry_bk", columnNames = "code"),
 		@UniqueConstraint(
 					name = "industry_ck",
 					columnNames = {"id", "code"}
@@ -18,7 +19,7 @@ public class Industry extends BaseEntity {
 
 	private static final long serialVersionUID = -5196455701225322056L;
 
-	@Column(name = "code", nullable = false, unique = true)
+	@Column(name = "code", nullable = false)
 	private String code;
 
 	@Column(name = "industry_name", nullable = false, length = 30)
